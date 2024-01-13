@@ -38,7 +38,6 @@ public class DrivetrainSubsystem {
    * This can be reduced to cap the robot's maximum speed. Typically, this is useful during initial testing of the robot.
    */
    private static final double MAX_VOLTAGE = 12.0; //TODO: double check this; previously 16.3
-
   /* The formula for calculating the theoretical maximum velocity is:
    * <Motor free speed RPM> / 60 * <Drive reduction> * <Wheel diameter meters> * pi
    * The maximum velocity of the robot in meters per second.
@@ -77,7 +76,7 @@ public class DrivetrainSubsystem {
 
    //ChassisSpeeds takes in y velocity, x velocity, speed of rotation
    private ChassisSpeeds chassisSpeeds; //sets expected chassis speed to be called the next time drive is run
-
+   public boolean isSlow;
    //constructor is called every time code is deployed, onEnable is called every time the robot is enabled.
    public DrivetrainSubsystem() {
       pigeon = new PigeonIMU(Constants.DRIVETRAIN_PIGEON_ID);
@@ -141,6 +140,7 @@ public class DrivetrainSubsystem {
 
    public void onEnable(){
       System.out.println("Initializing drivetrain subsystem vars");
+      isSlow = false;
       /* 
        * Positive x values represent moving toward the front of the robot whereas positive y values represent moving toward the left of the robot.
        * Setting up location of modules relative to the center of the robot 
@@ -205,6 +205,25 @@ public class DrivetrainSubsystem {
    * this method is responsible for getting values from the xbox controller and setting the speed that drive will call
    * this will be called right before drive() in teleopPeriodic in Robot.java 
    */
+  public void slowDriveTeleop(){
+   if(isSlow == true){
+      DoubleSupplier translationXSupplier;
+      DoubleSupplier translationYSupplier;
+      DoubleSupplier rotationSupplier;
+      //TODO: check negative signs
+      translationXSupplier = () -> -modifyJoystickAxis(OI.m_controller.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND;
+      translationYSupplier = () -> -modifyJoystickAxis(OI.m_controller.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND;
+      rotationSupplier = () -> -modifyJoystickAxis(OI.m_controller.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
+      setSpeed(
+         ChassisSpeeds.fromFieldRelativeSpeeds(
+            0.5*translationXSupplier.getAsDouble(),
+            0.5*translationYSupplier.getAsDouble(),
+            0.5*rotationSupplier.getAsDouble(),
+            getPoseRotation()
+         )
+      );
+   }
+   }
    public void driveTeleop(){
       DoubleSupplier translationXSupplier;
       DoubleSupplier translationYSupplier;
@@ -222,6 +241,7 @@ public class DrivetrainSubsystem {
          )
       );
    }
+   
 
    //responsible for moving the robot, called after a chassisSpeed is set
    public void drive() { //runs periodically

@@ -48,4 +48,6 @@ public final class Constants {
 
     public static final double TICKS_PER_REV = 2048;
     public static final double METERS_PER_INCH = 0.0254;
+
+    public static final double SLOWSPEED = 0.1;
 }
