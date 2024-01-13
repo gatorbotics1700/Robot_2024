@@ -74,8 +74,8 @@ public final class Constants {
     //public static final double TELESCOPING_ARM_GEAR_RATIO = 36.0; //In case we need this later
     
     //LAUNCHER
-    public static final int LAUNCH_MOTOR_ID = 1; // change later and ask build
-    public static final int FEED_MOTOR_ID = 1; // change later and ask build
+    public static final int LAUNCH_MOTOR_ID = 15;
+    public static final int FEED_MOTOR_ID = 14; 
    
 
     //INTAKE
