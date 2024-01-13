@@ -32,6 +32,7 @@ public class DrivetrainSubsystem {
    private static final double SWERVE_WHEEL_DIAMETER = 4.0; //inches
    private static final double SWERVE_TICKS_PER_INCH = Constants.TICKS_PER_REV*SWERVE_GEAR_RATIO/(SWERVE_WHEEL_DIAMETER*Math.PI); //talonfx drive encoder
    private static final double SWERVE_TICKS_PER_METER = SWERVE_TICKS_PER_INCH/Constants.METERS_PER_INCH;
+   
 
   /*
    * The maximum voltage that will be delivered to the motors.
@@ -77,10 +78,12 @@ public class DrivetrainSubsystem {
 
    //ChassisSpeeds takes in y velocity, x velocity, speed of rotation
    private ChassisSpeeds chassisSpeeds; //sets expected chassis speed to be called the next time drive is run
+   private double initialRotation;
 
    //constructor is called every time code is deployed, onEnable is called every time the robot is enabled.
    public DrivetrainSubsystem() {
       pigeon = new PigeonIMU(Constants.DRIVETRAIN_PIGEON_ID);
+      initialRotation = pigeon.getYaw();
       tab = Shuffleboard.getTab("Drivetrain");
 
       // We will use mk4 modules with Falcon 500s with the L2 configuration. 
