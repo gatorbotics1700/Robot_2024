@@ -44,5 +44,9 @@ public class LauncherSubsystem {
        feedWheelMotor.set(ControlMode.PercentOutput, 0);
     }
 
+    public void getLaunchRPM(){
+        System.out.println("Launch wheel motor percent output: " + launchWheelMotor.getMotorOutputPercent());
+    }
+
     
 }

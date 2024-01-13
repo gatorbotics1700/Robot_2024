@@ -13,15 +13,19 @@ public class Buttons {
   //private PneumaticArmPivot armPneumaticPivot = m_mechanisms.armPneumaticPivot;
   
   public void buttonsPeriodic(){
-
+    m_launcher.getLaunchRPM();
     //codriver
       if(OI.m_controller_two.getYButton()){  
-        if(m_launcher.launchSpeed <= 0.95) {
-          m_launcher.launchSpeed += 0.05;
+        /*if(m_launcher.launchSpeed <= 0.95) {
+          m_launcher.launchSpeed += 0.03;
         } else {
           System.out.println("exceeded limit");
         }
         System.out.println("speed:" + m_launcher.launchSpeed);
+        */
+        m_launcher.isRunning = true;
+        m_launcher.launchSpeed = 0.2;
+
       }
 
       if(OI.m_controller_two.getAButton()){ 
@@ -35,14 +39,14 @@ public class Buttons {
     
       if(OI.m_controller_two.getBButton()){ //intake
         m_launcher.isRunning = true;
-        m_launcher.launchSpeed = -0.5;
-        m_launcher.feedSpeed = -0.5;
+        m_launcher.launchSpeed = -0.2;
+        m_launcher.feedSpeed = -0.2;
         System.out.println("intaking!!");
       }
     
       if(OI.m_controller_two.getXButtonPressed()){ //set feed speed
         m_launcher.isRunning = true;
-        m_launcher.feedSpeed = 0.5;
+        m_launcher.feedSpeed = 0.3;
         System.out.println("feeding!!");
       }
     
@@ -54,6 +58,8 @@ public class Buttons {
 
       if(OI.m_controller_two.getRightBumperReleased()){ 
         m_launcher.isRunning = false;
+        m_launcher.launchSpeed = 0;
+        m_launcher.feedSpeed = 0;
         System.out.println("stopping!");
       }
   
