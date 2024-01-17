@@ -30,7 +30,6 @@ public class AutonomousBasePD extends AutonomousBase{
     private double testingDriveVelocity = 0.5; 
     private double testingSteerVelocity = 1; 
     
-
     //pids
     private PIDController turnController;
     private PIDController xController;
@@ -136,15 +135,15 @@ public class AutonomousBasePD extends AutonomousBase{
         System.out.println("error:" + errorX + ", " + errorY + ", " + errorRotate);
     }
 
-    private boolean xAtSetpoint(){
+    public boolean xAtSetpoint(){
         return Math.abs(xController.getPositionError()) <= DRIVE_DEADBAND;
     }
 
-    private boolean yAtSetpoint(){
+    public boolean yAtSetpoint(){
         return Math.abs(yController.getPositionError()) <= DRIVE_DEADBAND;
     }
 
-    private boolean turnAtSetpoint(){
+    public boolean turnAtSetpoint(){
         return Math.abs(turnController.getPositionError()) <= TURN_DEADBAND;
     }
 
