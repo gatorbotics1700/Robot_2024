@@ -59,12 +59,12 @@ public class AprilTagSubsystem {
         aprilTagDetector.addFamily(family, 0);
     }
 
-    public void addVisionToOdometry(){
+    public void addVisionToPositionManager(){
         Transform3d aprilTagError = aprilTagPoseEstimator.estimate(detectedAprilTag); //april tag pose estimator in Transform 3d
         Pose2d aprilTagPose2D = AprilTagLocation.aprilTagPoses [detectedAprilTag.getID()-1].toPose2d(); //pose 2d of the actual april tag
         Rotation2d robotSubtractedAngle = Rotation2d.fromDegrees(aprilTagPose2D.getRotation().getDegrees()-aprilTagError.getRotation().toRotation2d().getDegrees()); //angle needed to create pose 2d of robot position, don't know if toRotation2D converts Rotation2D properly
         Pose2d robotPose2DAprilTag = new Pose2d(aprilTagPose2D.getX()-aprilTagError.getX(), aprilTagPose2D.getY()-aprilTagError.getY(), robotSubtractedAngle);
-        swerveDrivePoseEstimator.addVisionMeasurement(robotPose2DAprilTag, Timer.getFPGATimestamp());
+        drivetrainSubsystem.getPositionManager().addVisionMeasurement(robotPose2DAprilTag, Timer.getFPGATimestamp());
     }
 
     public void periodic(){
@@ -73,8 +73,9 @@ public class AprilTagSubsystem {
             //detectTag();
             if(LimeLightSubsystem.tv!=0){
                 System.out.println("APRIL TAG DETECTED!!!!!!");
+                addVisionToPositionManager();
                 setState(AprilTagSequence.CORRECTPOSITION);
-                System.out.println("Reset odometry to this pose: " + DrivetrainSubsystem.pose);
+                System.out.println("Reset odometry to this pose: " + drivetrainSubsystem.getPose());
                 autonomousBasePD.preDDD(drivetrainSubsystem.getPose(), AprilTagLocation.scoringPoses[1]);
             }
         } else if(states == AprilTagSequence.CORRECTPOSITION) {
