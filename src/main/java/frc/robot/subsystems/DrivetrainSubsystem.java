@@ -302,5 +302,29 @@ public class DrivetrainSubsystem {
       };
       positionManager.resetPosition(getGyroscopeRotation(), modulePositions, currentPose);
    }
+
+   public SwerveDriveKinematics getKinematics(){
+      return kinematics;
+   }
+   
+   public SwerveModule getFrontLeftModule(){
+      return frontLeftModule;
+   }
+
+   public SwerveModule getFrontRightModule(){
+      return frontRightModule;
+   }
+
+   public SwerveModule getBackLeftModule(){
+      return backLeftModule;
+   }
+
+   public SwerveModule getBackRightModule(){
+      return backRightModule;
+   }
+
+   public SwerveDrivePoseEstimator getPositionManager(){
+      return positionManager;
+   }
 }
 
