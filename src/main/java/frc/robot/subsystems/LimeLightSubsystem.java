@@ -26,14 +26,13 @@ public class LimeLightSubsystem {
 
     public NetworkTable networkTable = NetworkTableInstance.getDefault().getTable("limelight");
 
-    private static AprilTagSubsystem aprilTagSubsystem = new AprilTagSubsystem();
     // this variable determines whether the Limelight has a valid target
 
     public void reset(){
-        tv = networkTable.getEntry("tv").getDouble(0.0);
-        tx = networkTable.getEntry("tx").getDouble(0.0);
-        ty = networkTable.getEntry("ty").getDouble(0.0);
-        ta = networkTable.getEntry("ta").getDouble(0.0);
+        tv = networkTable.getEntry("tv").getDouble(0.0);//valid targets? 0 or 1
+        tx = networkTable.getEntry("tx").getDouble(0.0);//horizontal offset -27-27 degrees
+        ty = networkTable.getEntry("ty").getDouble(0.0); //vertical offset from -20.5-20.5 degrees
+        ta = networkTable.getEntry("ta").getDouble(0.0); //target area 0-100% of limelight camera area taken up by april tag 
     }
 
     public static void limelightData(){
@@ -49,15 +48,7 @@ public class LimeLightSubsystem {
         System.out.println("tv: " + networkTable.getEntry("tv").getDouble(0.0));
     }
 
-    public static enum LimelightStates{
-        SCANTAPE,
-        OFF;   
-    } 
-
-    public static LimelightStates state = LimelightStates.OFF;
-
     public void init(){
-        setState(LimelightStates.SCANTAPE);
         //initialPosition = DrivetrainSubsystem.getTicks();
         tx_0 = 0.0;
         tx_1 = 0.0;        
@@ -65,10 +56,6 @@ public class LimeLightSubsystem {
 
     public void periodic(){
 
-    }
-
-    public static void setState(LimelightStates newState){
-        state = newState;
     }
 
     // turning tx and ty into distance (in)
