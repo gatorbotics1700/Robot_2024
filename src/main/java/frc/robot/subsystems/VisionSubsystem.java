@@ -1,5 +1,5 @@
 package frc.robot.subsystems;
-import static frc.robot.Constants.VISION_TURN_DEADBAND;
+import static frc.robot.Constants.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
