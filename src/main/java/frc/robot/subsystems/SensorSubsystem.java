@@ -38,6 +38,12 @@ public class SensorSubsystem {
 
     private SensorStates sensorState;
     public boolean seesNote;
+    private final I2C.Port i2cPort = I2C.Port.kOnboard; // TODO: change port if needed
+    private ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+    private final ColorMatch m_colorMatcher = new ColorMatch();
+
+    private final Color noteColor = new Color(0, 0, 0); // TODO: make the right color
+    public double colorThreshold = 0.03;
 
     public SensorSubsystem(){
         init();
@@ -52,10 +58,13 @@ public class SensorSubsystem {
         System.out.println("sensor init");
         setState(SensorStates.OFF);
         seesNote = false;
+        m_colorMatcher.addColorMatch(noteColor);
     
     }
 
     public void periodic(){
+        detectColor();
+
         if(seesNote == false){
             setState(SensorStates.ON);
         }
@@ -67,7 +76,22 @@ public class SensorSubsystem {
         }
    
     }
-    
+
+    public void detectColor(){ //TODO: this should be in the transition and should stop the transition
+        Color detectedColor = colorSensor.getColor();
+
+        boolean redThreshold = (Math.abs(detectedColor.red-noteColor.red) <= colorThreshold);
+        boolean greenThreshold = (Math.abs(detectedColor.green-noteColor.green) <= colorThreshold);
+        boolean blueThreshold = (Math.abs(detectedColor.blue-noteColor.blue) <= colorThreshold);
+
+        if(redThreshold && greenThreshold && blueThreshold) {
+            System.out.println("WE'VE HIT THAT NOTE!!");
+            sensorState = SensorStates.OFF;
+        } else {
+            sensorState = SensorStates.ON;
+        }
+    }
+
     private void setState(SensorStates sensorState){
         this.sensorState = sensorState;
     }
