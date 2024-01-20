@@ -86,9 +86,9 @@ public class SensorSubsystem {
 
         if(redThreshold && greenThreshold && blueThreshold) {
             System.out.println("WE'VE HIT THAT NOTE!!");
-            sensorState = SensorStates.OFF;
+            seesNote = true;
         } else {
-            sensorState = SensorStates.ON;
+            seesNote = false;
         }
     }
 
