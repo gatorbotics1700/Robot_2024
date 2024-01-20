@@ -77,7 +77,7 @@ public class SensorSubsystem {
    
     }
 
-    public void detectColor(){ //TODO: this should be in the transition and should stop the transition
+    public void detectColor(){
         Color detectedColor = colorSensor.getColor();
 
         boolean redThreshold = (Math.abs(detectedColor.red-noteColor.red) <= colorThreshold);
@@ -86,9 +86,9 @@ public class SensorSubsystem {
 
         if(redThreshold && greenThreshold && blueThreshold) {
             System.out.println("WE'VE HIT THAT NOTE!!");
-            seesNote = true;
+            seesNote = true; //off
         } else {
-            seesNote = false;
+            seesNote = false; //on
         }
     }
 
