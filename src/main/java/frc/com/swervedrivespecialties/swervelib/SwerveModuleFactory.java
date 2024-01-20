@@ -18,7 +18,6 @@ public class SwerveModuleFactory<DriveConfiguration, SteerConfiguration> {
         this.driveControllerFactory = driveControllerFactory;
         this.steerControllerFactory = steerControllerFactory;
     }
-
     public SwerveModule create(DriveConfiguration driveConfiguration, SteerConfiguration steerConfiguration) {
         var driveController = driveControllerFactory.create(driveConfiguration, moduleConfiguration);
         var steerController = steerControllerFactory.create(steerConfiguration, moduleConfiguration);

@@ -22,6 +22,7 @@ public final class Constants {
     public static final double DRIVETRAIN_WHEELBASE_METERS = 0.4690872; //TODO: check this (distance between wheels, not size of drivetrain //units = meter //previously 18.468
 
     public static final int DRIVETRAIN_PIGEON_ID = 6; 
+    public static final int TRANSITION_CAN_ID = 0; //TODO: MAKE ACTUAL VALUE
 
     //offsets
     public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(216.299);
