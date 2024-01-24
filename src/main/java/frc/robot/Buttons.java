@@ -17,10 +17,7 @@ public class Buttons {
         m_shooterSubsystem.setState(ShooterStates.AMP);
       }
       if (OI.m_controller.getYButton()){ 
-        m_shooterSubsystem.setState(ShooterStates.SPEAKER_BLUE);
-      }
-      if (OI.m_controller.getBButton()){ 
-        m_shooterSubsystem.setState(ShooterStates.SPEAKER_RED);
+        m_shooterSubsystem.setState(ShooterStates.SPEAKER);
       }
       if (OI.m_controller.getRightBumper()){ 
         m_shooterSubsystem.setState(ShooterStates.OFF);
