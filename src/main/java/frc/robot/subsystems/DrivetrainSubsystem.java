@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.wpilibj.SPI;
+import com.kauailabs.navx.frc.AHRS; 
 
 import java.util.function.DoubleSupplier;
 
@@ -33,6 +35,8 @@ public class DrivetrainSubsystem {
    private static final double SWERVE_WHEEL_DIAMETER = 4.0; //inches
    private static final double SWERVE_TICKS_PER_INCH = Constants.TICKS_PER_REV*SWERVE_GEAR_RATIO/(SWERVE_WHEEL_DIAMETER*Math.PI); //talonfx drive encoder
    private static final double SWERVE_TICKS_PER_METER = SWERVE_TICKS_PER_INCH/Constants.METERS_PER_INCH;
+
+   public static AHRS Navx = new AHRS(SPI.Port.kMXP);
 
   /*
    * The maximum voltage that will be delivered to the motors.
