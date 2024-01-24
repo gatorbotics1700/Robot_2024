@@ -33,7 +33,12 @@ public class ElevatorSubsystem {
     private static final double DEADBAND = 5000; //15000;
 
     public static enum ElevatorStates{
-        ZERO, LOW_ELEVATOR_HEIGHT, MID_ELEVATOR_HEIGHT, SHELF_ELEVATOR_HEIGHT, AUTO_HEIGHT, MANUAL, STOPPED; 
+        ZERO, 
+        LOW_ELEVATOR_HEIGHT, 
+        SHELF_ELEVATOR_HEIGHT, 
+        AUTO_HEIGHT, 
+        MANUAL,
+        STOPPED; 
     }
 
     public ElevatorSubsystem(){
@@ -66,9 +71,6 @@ public class ElevatorSubsystem {
             elevatorDeadband(desiredTicks);
         } else if (elevatorState == ElevatorStates.SHELF_ELEVATOR_HEIGHT) {
             double desiredTicks = determineRightTicks(SHELF_HEIGHT_INCHES);
-            elevatorDeadband(desiredTicks);
-        } else if (elevatorState == ElevatorStates.MID_ELEVATOR_HEIGHT){
-            double desiredTicks = determineRightTicks(MID_HEIGHT_INCHES);
             elevatorDeadband(desiredTicks);
         } else if(elevatorState == ElevatorStates.AUTO_HEIGHT){
             elevatorDeadband(AUTO_HEIGHT_TICKS);
