@@ -41,6 +41,7 @@ public class LimeLightSubsystem {
         SmartDashboard.putNumber("ty:", ty);
         SmartDashboard.putNumber("ta:", ta);
     }
+
     
     public void setPipeline(double pipeline){
         networkTable.getEntry("pipeline").setNumber(pipeline);
@@ -86,7 +87,11 @@ public class LimeLightSubsystem {
     }
 
     public double getTx(){
-        return tx;
+        return tx; //get horizontal angle
+    }
+
+    public double getTy(){
+        return ty; //get vertical angle
     }
 
     public boolean seeSomething(){

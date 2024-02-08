@@ -9,8 +9,7 @@ import frc.robot.subsystems.LimeLightSubsystem;
 
 public class VisionSubsystem {
     public static enum VisionStates{
-        DETECT_RED_APRILTAG,
-        DETECT_BLUE_APRILTAG,
+        SPEAKER_LINE_UP,
         OFF;
     }
 
@@ -28,7 +27,7 @@ public class VisionSubsystem {
     }
 
     public void periodic() {
-        if(visionState == VisionStates.DETECT_RED_APRILTAG) {
+        /*if(visionState == VisionStates.DETECT_RED_APRILTAG) {
             limeLightSubsystem.setPipeline(0.0);
             if (LimeLightSubsystem.tv == 0) {
                 return;
@@ -48,6 +47,15 @@ public class VisionSubsystem {
             setState(VisionStates.OFF);
         }else{
             //comment for if testing System.out.println("not detecting"); 
+        }*/
+        if(visionState == VisionStates.SPEAKER_LINE_UP) {
+            limeLightSubsystem.setPipeline(1.0);
+            if(LimeLightSubsystem.tv == 0.0){
+                return;
+            } else {
+                //need to figure out how to line up
+                
+            }
         }
     }
 }
