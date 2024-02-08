@@ -39,12 +39,14 @@ public class DrivetrainSubsystem {
    */
    private static final double MAX_VOLTAGE = 12.0; //TODO: double check this; previously 16.3
 
+ 
+   // = 5.38281261 
   /* The formula for calculating the theoretical maximum velocity is:
    * <Motor free speed RPM> / 60 * <Drive reduction> * <Wheel diameter meters> * pi
    * The maximum velocity of the robot in meters per second.
    * This is a measure of how fast the robot should be able to drive in a straight line.
    */
-   private static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 * // <-- these are copied from SDS library 
+   public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 * // <-- these are copied from SDS library 
       SdsModuleConfigurations.MK4_L2.getDriveReduction() *
       SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI;
       // = 5.38281261
@@ -72,7 +74,7 @@ public class DrivetrainSubsystem {
    private SwerveModule backLeftModule;
    private SwerveModule backRightModule;
 
-   private SwerveDrivePoseEstimator positionManager;
+   public SwerveDrivePoseEstimator positionManager;
    private ShuffleboardTab tab;
 
    //ChassisSpeeds takes in y velocity, x velocity, speed of rotation
