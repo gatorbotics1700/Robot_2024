@@ -11,6 +11,7 @@ import frc.robot.autonomous.AutonomousBase;
 import frc.robot.autonomous.AutonomousBasePD; 
 import frc.robot.autonomous.PDState;
 import frc.robot.autonomous.Paths;
+import frc.robot.subsystems.ShooterSubsystem;
 
 
 /**
@@ -29,6 +30,7 @@ public class Robot extends TimedRobot {
     public static final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(); //if anything breaks in the future it might be this
     public static Buttons m_buttons = new Buttons();
     private AutonomousBase m_auto; 
+    public static ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
 
     double mpi = Constants.METERS_PER_INCH;
     public static Boolean isBlueAlliance = true;

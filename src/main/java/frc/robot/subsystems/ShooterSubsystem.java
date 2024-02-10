@@ -85,13 +85,13 @@ public class ShooterSubsystem {
             high.set(ControlMode.PercentOutput, HIGH_SPEAKER_SPEED);
             mid.set(ControlMode.PercentOutput, -MID_SPEAKER_SPEED);
 
+        }else if(currentShooterState == ShooterStates.ADJUSTING){
+            visionAdjusting();
         }else if(currentShooterState == ShooterStates.OFF){
             low.set(ControlMode.PercentOutput, 0);
             high.set(ControlMode.PercentOutput, 0);
             mid.set(ControlMode.PercentOutput, 0);
 
-        }else if(currentShooterState == ShooterStates.ADJUSTING){
-            visionAdjusting();
         }else{
             low.set(ControlMode.PercentOutput, 0);
             high.set(ControlMode.PercentOutput, 0);

@@ -13,11 +13,11 @@ public class LimelightSubsystem {
     }
 
     public double getTv(){
-        return networkTable.getEntry("tv").getDouble(0.0);
+        return networkTable.getEntry("tv").getDouble(0.0); //0.0 or 1.0 depending on whether it sees the target
     }
 
     public double getTy(){
-        return networkTable.getEntry("ty").getDouble(0.0); //get vertical angle
+        return networkTable.getEntry("ty").getDouble(0.0); //get vertical angle (crosshair to target)
     }
 
 }
