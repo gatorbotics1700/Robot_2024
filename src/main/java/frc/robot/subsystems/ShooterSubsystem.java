@@ -26,17 +26,18 @@ public class ShooterSubsystem {
     private final double AMP_ANGLE = 85.0; // TODO: this is a placeholder value, please test
     private final double SPEAKER_ANGLE = 45.0; // TODO: this is a placeholder value, please test
     private final double PIVOT_TICKS_PER_DEGREE = (Constants.TICKS_PER_REV * Constants.REVS_PER_ROTATION)/180.0;
-    private final double PIVOT_DEADBAND_TICKS = 5000;
+    private final double PIVOT_DEADBAND_TICKS = 1000; //TODO: figure out deadband
 
-
-
+    private LimelightSubsystem limelightSubsystem = new LimelightSubsystem(); 
+    
     public static enum ShooterStates {
         OFF,
         INTAKING,
         AMP_HOLDING,
         SPEAKER_HOLDING,
         AMP,
-        SPEAKER; 
+        SPEAKER,
+        ADJUSTING; 
     }
 
     private ShooterStates currentShooterState; //REVIEW: previously initialized to ShooterStates.AMP
@@ -66,15 +67,13 @@ public class ShooterSubsystem {
             low.set(ControlMode.PercentOutput, 0);
             high.set(ControlMode.PercentOutput, -AMP_SPEED);
             mid.set(ControlMode.PercentOutput, AMP_SPEED);
-            double desiredTicks = determineRightTicks(AMP_ANGLE);
-            setPivot(desiredTicks);
+            double desiredTicks = getAngleTicks(AMP_ANGLE);
 
         } else if(currentShooterState == ShooterStates.SPEAKER_HOLDING){
             low.set(ControlMode.PercentOutput, 0);
             high.set(ControlMode.PercentOutput, HIGH_SPEAKER_SPEED);
             mid.set(ControlMode.PercentOutput, -MID_SPEAKER_SPEED);
-            double desiredTicks = determineRightTicks(SPEAKER_ANGLE);
-            setPivot(desiredTicks);
+            double desiredTicks = getAngleTicks(SPEAKER_ANGLE);
 
         }else if(currentShooterState == ShooterStates.AMP){//check negative signs here
             low.set(ControlMode.PercentOutput, AMP_SPEED);
@@ -91,6 +90,8 @@ public class ShooterSubsystem {
             high.set(ControlMode.PercentOutput, 0);
             mid.set(ControlMode.PercentOutput, 0);
 
+        }else if(currentShooterState == ShooterStates.ADJUSTING){
+            visionAdjusting();
         }else{
             low.set(ControlMode.PercentOutput, 0);
             high.set(ControlMode.PercentOutput, 0);
@@ -100,11 +101,21 @@ public class ShooterSubsystem {
 
     }
 
-    private double determineRightTicks(double desiredDegrees){
+    private double getAngleTicks(double desiredDegrees){
         return desiredDegrees * PIVOT_TICKS_PER_DEGREE;
     }
 
-    public void adjusting() {
+    public void visionAdjusting(){
+        if(getAngleTicks(limelightSubsystem.getTy()) > PIVOT_DEADBAND_TICKS){
+            pivot.set(ControlMode.PercentOutput, 0.2); //check direction of motors
+        } else if (getAngleTicks(limelightSubsystem.getTy()) < -PIVOT_DEADBAND_TICKS){
+            pivot.set(ControlMode.PercentOutput, -0.2); //check direction of motors
+        }else{
+            pivot.set(ControlMode.PercentOutput, 0);
+        }
+    } 
+
+    public void manualAdjusting() {
         // TODO: when we know the max rotation of the pivot motor we need to intergrate that here 
         if(OI.getTwoRightAxis() > 0.2) {
             pivot.set(ControlMode.PercentOutput, 0.2);    
