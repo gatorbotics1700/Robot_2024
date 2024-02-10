@@ -53,6 +53,7 @@ public class Mechanisms {
             shooterSubsystem.setState(ShooterSubsystem.ShooterStates.AMP_HOLDING);
             //we stop transition motor in the shooter subsystem right now
         } else if(mechanismState == MechanismStates.SPEAKER_HOLDING){
+            ledsSubsystem.setState(LEDSSubsystem.LEDStates.HAS_NOTE);
             intakeSubsystem.setState(IntakeSubsystem.IntakeStates.OFF);
             shooterSubsystem.setState(ShooterSubsystem.ShooterStates.SPEAKER_HOLDING);
         }else if(mechanismState == MechanismStates.SHOOTING_AMP){
