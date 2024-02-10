@@ -34,13 +34,13 @@ public class LimeLightSubsystem {
     }
 
     // turning tx and ty into distance (in)
-    /*public double yDistanceFromIdeal(){
+    public double yDistanceFromIdeal(){
         double distanceFromTarget = (LOWERHEIGHT- ROBOTHEIGHT)/Math.tan(Math.toRadians(MOUNTINGANGLE + ty));
         System.out.println("distance from target: " + distanceFromTarget);
         double distanceFromIdeal = distanceFromTarget - IDEALDISTANCE;
         System.out.println("distance from ideal: " + distanceFromIdeal);
         return distanceFromIdeal;
-    }*/
+    }
 
 
     public double getTv(){
