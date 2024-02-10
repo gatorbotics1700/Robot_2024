@@ -18,5 +18,4 @@ public class LimelightSubsystem {
     public double getTy(){
         return networkTable.getEntry("ty").getDouble(0.0); //get vertical angle (crosshair to target)
     }
-
 }

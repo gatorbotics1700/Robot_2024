@@ -29,7 +29,9 @@ public class ShooterSubsystem {
     private final double PIVOT_DEADBAND_TICKS = 1000; //TODO: figure out deadband
 
     private LimelightSubsystem limelightSubsystem = new LimelightSubsystem(); 
-    
+    private AutonomousBasePD autonomousBasePD = new AutonomousBasePD();
+    private DrivatrainSubsystem drivetrainSubsystem = Robot.m_drivetrainSubsystem();
+
     public static enum ShooterStates {
         OFF,
         INTAKING,
@@ -124,6 +126,10 @@ public class ShooterSubsystem {
         } else {
             pivot.set(ControlMode.PercentOutput, 0);
         }
+    }
+
+    public void CorrectHorizontalError(){
+        autonomousBasePD.driveToLocation(new Pose2d(drivetrainSubsystem.getPoseX(), drivetrainSubsystem.getPoseY(), new Rotation2d(drivetrainSubsystem.getPoseDegrees()+limelightSubsystem.getTy())));
     }
 
     public void setState(ShooterStates newState) {
