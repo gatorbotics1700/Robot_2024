@@ -30,11 +30,6 @@ import frc.robot.Constants;
 import frc.robot.OI;
 
 public class DrivetrainSubsystem {
-   private static final double SWERVE_GEAR_RATIO = 6.75; 
-   private static final double SWERVE_WHEEL_DIAMETER = 4.0; //inches
-   private static final double SWERVE_TICKS_PER_INCH = Constants.TICKS_PER_REV*SWERVE_GEAR_RATIO/(SWERVE_WHEEL_DIAMETER*Math.PI); //talonfx drive encoder
-   private static final double SWERVE_TICKS_PER_METER = SWERVE_TICKS_PER_INCH/Constants.METERS_PER_INCH;
-
   /*
    * The maximum voltage that will be delivered to the motors.
    * This can be reduced to cap the robot's maximum speed. Typically, this is useful during initial testing of the robot.
@@ -233,7 +228,10 @@ public class DrivetrainSubsystem {
       backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[2].angle.getRadians());
       backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[3].angle.getRadians());
       //System.out.println("robot position: "+ getPose());
-      System.out.println("=====robot position   X: "+ getPoseX() + "   Y: " + getPoseY() + "   Rotation (Degrees): " + getPoseDegrees());
+      System.out.println("robot position   X: "+ getPoseX() + "   Y: " + getPoseY() + "   Rotation (Degrees): " + getPoseDegrees());
+      //System.out.println("robot position   X: "+ getPoseX() + "   Y: " + getPoseY() + "   Rotation (Degrees): " + getPoseDegrees());
+      System.out.println("========== speed x:" + chassisSpeeds.vxMetersPerSecond + "    speed y: " + chassisSpeeds.vyMetersPerSecond + "     speed rot: " + chassisSpeeds.omegaRadiansPerSecond);
+
 
    }
 
@@ -291,10 +289,10 @@ public class DrivetrainSubsystem {
 
     public SwerveModulePosition[] getModulePositionArray(){
       return new SwerveModulePosition[] {
-         new SwerveModulePosition((frontLeftModule.getPositionRotation() * Constants.TICKS_PER_REV)/SWERVE_TICKS_PER_METER, new Rotation2d(frontLeftModule.getSteerAngle())), //from steer motor
-         new SwerveModulePosition((frontRightModule.getPositionRotation() * Constants.TICKS_PER_REV)/SWERVE_TICKS_PER_METER, new Rotation2d(frontRightModule.getSteerAngle())), 
-         new SwerveModulePosition((backLeftModule.getPositionRotation() * Constants.TICKS_PER_REV)/SWERVE_TICKS_PER_METER, new Rotation2d(backLeftModule.getSteerAngle())),
-         new SwerveModulePosition((backRightModule.getPositionRotation() * Constants.TICKS_PER_REV)/SWERVE_TICKS_PER_METER, new Rotation2d(backRightModule.getSteerAngle()))
+         new SwerveModulePosition(frontLeftModule.getPositionRotation()/Constants.SWERVE_TICKS_PER_METER, new Rotation2d(frontLeftModule.getSteerAngle())), //from steer motor
+         new SwerveModulePosition(frontRightModule.getPositionRotation()/Constants.SWERVE_TICKS_PER_METER, new Rotation2d(frontRightModule.getSteerAngle())), 
+         new SwerveModulePosition(backLeftModule.getPositionRotation()/Constants.SWERVE_TICKS_PER_METER, new Rotation2d(backLeftModule.getSteerAngle())),
+         new SwerveModulePosition(backRightModule.getPositionRotation()/Constants.SWERVE_TICKS_PER_METER, new Rotation2d(backRightModule.getSteerAngle()))
       };
     }
     

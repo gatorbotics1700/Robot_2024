@@ -21,6 +21,12 @@ public final class Constants {
      */
     public static final double DRIVETRAIN_WHEELBASE_METERS = 0.4690872; //TODO: check this (distance between wheels, not size of drivetrain //units = meter //previously 18.468
 
+    public static final double SWERVE_GEAR_RATIO = 6.75; 
+    public static final double SWERVE_WHEEL_DIAMETER = 4.0; //inches
+    public static final double SWERVE_TICKS_PER_INCH = Constants.TICKS_PER_REV*SWERVE_GEAR_RATIO/(SWERVE_WHEEL_DIAMETER*Math.PI); //talonfx drive encoder
+    public static final double SWERVE_TICKS_PER_METER = SWERVE_TICKS_PER_INCH/Constants.METERS_PER_INCH;
+
+
     public static final int DRIVETRAIN_PIGEON_ID = 6; 
 
     //offsets Hulk
