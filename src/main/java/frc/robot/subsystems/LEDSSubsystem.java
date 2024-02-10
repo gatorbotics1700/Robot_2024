@@ -25,7 +25,7 @@ public class LEDSSubsystem {
     //0 is placeholder for roborio pwm port
     AddressableLED m_led;
     AddressableLEDBuffer m_ledBuffer;
-    AutonomousBasePD mauto;
+    AutonomousBasePD autonomousBasePD;
     LEDStates state = LEDStates.NEUTRAL;
 
 
@@ -56,27 +56,27 @@ public class LEDSSubsystem {
 
     public void periodic(){
         if (state == LEDStates.AUTO){
-            if(mauto.getStateSequence()[mauto.getStateIndex()].name == PDState.AutoStates.DRIVE){
+            if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.DRIVE){
                 m_ledBuffer.setRGB(60, 0,255,0);
 
 
             }
-            else if(mauto.getStateSequence()[mauto.getStateIndex()].name == PDState.AutoStates.STOP){
+            else if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.STOP){
                 m_ledBuffer.setRGB(60, 255,0,0);
 
 
             }
-            else if(mauto.getStateSequence()[mauto.getStateIndex()].name == PDState.AutoStates.FIRST){
+            else if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.FIRST){
                 m_ledBuffer.setRGB(60, 255,235,0);
 
 
             }
-            else if(mauto.getStateSequence()[mauto.getStateIndex()].name == PDState.AutoStates.INTAKING){
+            else if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.INTAKING){
                 m_ledBuffer.setRGB(60, 0,119,255);
 
 
             }
-            else if(mauto.getStateSequence()[mauto.getStateIndex()].name == PDState.AutoStates.OUTTAKING){
+            else if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.OUTTAKING){
                 m_ledBuffer.setRGB(60, 255,136,0);
 
 

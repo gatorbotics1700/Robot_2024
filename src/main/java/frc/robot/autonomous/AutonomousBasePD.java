@@ -156,6 +156,14 @@ public class AutonomousBasePD extends AutonomousBase{
 
     }
 
+    public PDState[] getStateSequence(){
+        return stateSequence;
+    }
+
+    public int getStateIndex(){
+        return stateIndex;
+    }
+
     private boolean xAtSetpoint(){
         return Math.abs(xController.getPositionError()) <= DRIVE_DEADBAND;
     }
