@@ -1,19 +1,13 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import frc.robot.subsystems.*;
-import frc.robot.Constants; 
 
 public class LimeLightSubsystem {
-    private final double MOUNTINGANGLE = 2.0; //degrees change
-    private final double LOWERHEIGHT = 22.124; //inches height of bottom to bottom of tape of shorter pole
-    private final double HIGHERHEIGHT = 41.125; //inches height of bottom to bottom of tape of shorter pole
-    private final double ROBOTHEIGHT = 20.0; //inches change
-    private final double IDEALDISTANCE = 40.0; //inches change
+    private final double MOUNTING_ANGLE = 2.0; //degrees change
+    private final double SPEAKER_HEIGHT = 2.045; //This is the middle of the speaker hole
+    private final double ROBOT_HEIGHT = 20.0; //inches change
+    private final double IDEAL_DISTANCE = 40.0; //inches change
     private static double tv;
     private static double ty;
 
@@ -35,9 +29,9 @@ public class LimeLightSubsystem {
 
     // turning tx and ty into distance (in)
     public double yDistanceFromIdeal(){
-        double distanceFromTarget = (LOWERHEIGHT- ROBOTHEIGHT)/Math.tan(Math.toRadians(MOUNTINGANGLE + ty));
+        double distanceFromTarget = (SPEAKER_HEIGHT- ROBOT_HEIGHT)/Math.tan(Math.toRadians(MOUNTING_ANGLE + ty));
         System.out.println("distance from target: " + distanceFromTarget);
-        double distanceFromIdeal = distanceFromTarget - IDEALDISTANCE;
+        double distanceFromIdeal = distanceFromTarget - IDEAL_DISTANCE;
         System.out.println("distance from ideal: " + distanceFromIdeal);
         return distanceFromIdeal;
     }
