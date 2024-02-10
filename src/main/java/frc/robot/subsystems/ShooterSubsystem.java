@@ -5,8 +5,6 @@ import static frc.robot.Constants.TICKS_PER_REV;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
-import frc.robot.subsystems.IntakeSubsystem.IntakeStates;
-import frc.robot.subsystems.Mechanisms.MechanismStates;
 import frc.robot.Constants;
 import frc.robot.OI;
 
@@ -41,13 +39,7 @@ public class ShooterSubsystem {
         SPEAKER; 
     }
 
-    public static enum LimitSwitchStates{
-        TOO_HIGH, TOO_LOW, CORRECT_ANGLE; 
-    }
-
     private ShooterStates currentShooterState; //REVIEW: previously initialized to ShooterStates.AMP
-    public LimitSwitchStates limitSwitchState; 
-
     
     public ShooterSubsystem() {
         high = new TalonFX(Constants.SHOOTER_HIGH_CAN_ID);
@@ -65,8 +57,6 @@ public class ShooterSubsystem {
 
     public void periodic(){
         System.out.println("CURRENT SHOOTER STATE: " + currentShooterState);
-        angleLimit();
-        System.out.println("CURRENT ANGLE STATE: " + limitSwitchState);
         if (currentShooterState == ShooterStates.INTAKING){
             low.set(ControlMode.PercentOutput, AMP_SPEED);
             high.set(ControlMode.PercentOutput, 0);
@@ -110,42 +100,8 @@ public class ShooterSubsystem {
 
     }
 
-    public void angleLimit(){
-        if (topLimitSwitch.get()){
-            limitSwitchState = LimitSwitchStates.TOO_HIGH;
-        } else if (bottomLimitSwitch.get()){
-            limitSwitchState = LimitSwitchStates.TOO_LOW;
-        } else{
-            limitSwitchState = LimitSwitchStates.CORRECT_ANGLE;
-        }
-    }
-
-
-
     private double determineRightTicks(double desiredDegrees){
         return desiredDegrees * PIVOT_TICKS_PER_DEGREE;
-    }
-
-    private void setPivot(double desiredTicks){
-         if(Math.abs(desiredTicks - pivot.getSelectedSensorPosition()) > PIVOT_DEADBAND_TICKS){
-            if(limitSwitchState == LimitSwitchStates.TOO_HIGH){
-                if(desiredTicks >= pivot.getSelectedSensorPosition()){
-                    currentShooterState = ShooterStates.OFF;
-                }else{
-                    pivot.set(ControlMode.Position, desiredTicks);
-                }
-            }else if(limitSwitchState == LimitSwitchStates.TOO_LOW){
-                if(desiredTicks <= pivot.getSelectedSensorPosition()){
-                    currentShooterState = ShooterStates.OFF;
-                }else{
-                    pivot.set(ControlMode.Position, desiredTicks);
-                }
-            }else{
-                pivot.set(ControlMode.Position, desiredTicks);
-            }
-        }else{
-            currentShooterState = ShooterStates.OFF;
-        }
     }
 
     public void adjusting() {
