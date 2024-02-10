@@ -102,13 +102,17 @@ public class CanCoderFactoryBuilder {
 
 //     public AbsoluteEncoderFactory<CanCoderAbsoluteConfiguration> build() {
 //         return configuration -> {
-//             CANcoderConfiguration config = new CANcoderConfiguration();
-//             //config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition; //TODO: THIS SHOULD AUTOMATICALLY BOOT TO ABSOLUTE WITH V6
-//             config.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1;
-//             config.MagnetSensor.MagnetOffset = configuration.getOffset()/(2*Math.PI); //TODO: CHECK THIS IF SOMETHING GOES WRONG
-//             // config.MagnetSensor.MagnetOffset = configuration.getOffset() * 0.159155; //TODO: CHECK THIS IF SOMETHING GOES WRONG //the hardcoded number is radian to revolution conversion
-//             config.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
-            
+//              CANcoderConfiguration config = new CANcoderConfiguration();
+//                config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition; //TODO: THIS SHOULD AUTOMATICALLY BOOT TO ABSOLUTE WITH V6
+//               config.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0_to_360;
+//                //config.MagnetSensor.MagnetOffset = configuration.getOffset()/(2*Math.PI); //TODO: CHECK THIS IF SOMETHING GOES WRONG
+//                config.MagnetSensor.MagnetOffset = configuration.getOffset() * 0.159155; //TODO: ASSUME THIS DOESNT WORK //the hardcoded number is radian to revolution conversion
+//                if (direction == Direction.COUNTER_CLOCKWISE){
+//                    config.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
+//                } else{
+//                    config.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+//                }
+//            
 //             CANcoder encoder = new CANcoder(configuration.getId());
 //             boolean haveError = CtreUtils.checkCtreError(encoder.getConfigurator().apply(config, 0.25), "Failed to configure CANCoder");
 //             for(int i = 0; i < 10; i++){
