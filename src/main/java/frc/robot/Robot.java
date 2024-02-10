@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -16,6 +18,7 @@ import frc.robot.subsystems.ShooterSubsystem.ShooterStates;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Mechanism;
+import frc.robot.subsystems.LEDSSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -108,6 +111,9 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() {}
 
     /* This function is called once when test mode is enabled. */
+    AddressableLED m_led;
+    AddressableLEDBuffer m_ledBuffer;
+    
     @Override
     public void testInit() {
         //m_drivetrainSubsystem.onEnable();
@@ -125,17 +131,17 @@ public class Robot extends TimedRobot {
         //m_drivetrainSubsystem.driveTeleop();
         //m_drivetrainSubsystem.setSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(0.3, 0, 0, m_drivetrainSubsystem.getPoseRotation()));
         //m_drivetrainSubsystem.drive();
-        m_buttons.buttonsPeriodic();
+        //m_buttons.buttonsPeriodic();
         //m_shooterSubsystem.highLeft.set(ControlMode.PercentOutput, 0.3);
         //m_shooterSubsystem.midRight.set(ControlMode.PercentOutput, -0.3);
         //m_intakingSubsystem.setState(IntakeStates.INTAKING.INTAKING);
         //m_sensorSubsystem.periodic();
         //System.out.println("COLOR IS: " + m_sensorSubsystem.colorSensor.getColor());
-        m_mechanismSubsystem.periodic();
+        //m_mechanismSubsystem.periodic();
         //m_mechanismSubsystem.setState(MechanismStates.INTAKING);
         //m_intakingSubsystem.intakeMotor.set(ControlMode.PercentOutput, -0.6);
         //m_intakingSubsystem.transitionMotor.set(ControlMode.PercentOutput, -0.6);
-
+        m_ledBuffer.setRGB(60, 217, 43, 127);//pink
     }
     /* This function is called once when the robot is first started up. */
     @Override
