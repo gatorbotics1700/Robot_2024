@@ -178,7 +178,7 @@ public class DrivetrainSubsystem {
    //from pigeon used for updating our odometry
    //in an unknown, arbitrary frame
    //"do not use unless you know what you are doing" - patricia
-   private Rotation2d getGyroscopeRotation() {
+   public Rotation2d getGyroscopeRotation() {
       return new Rotation2d(Math.toRadians(pigeon.getYaw())); //getYaw() returns degrees
    }
 
@@ -202,6 +202,8 @@ public class DrivetrainSubsystem {
    public void setSpeed(ChassisSpeeds chassisSpeeds) { 
       this.chassisSpeeds = chassisSpeeds;
    }
+
+   
   
   /* 
    * this method is responsible for getting values from the xbox controller and setting the speed that drive will call
@@ -290,11 +292,16 @@ public class DrivetrainSubsystem {
     //resets to pose set in the constructor of the SwerveDrivePoseEstimator positionManager
     //only use in test, do not use in a match
     public void resetPositionManager(){
-        SwerveModulePosition[] positionArray =  new SwerveModulePosition[] {
-                new SwerveModulePosition(frontLeftModule.getPosition()/SWERVE_TICKS_PER_METER, new Rotation2d(frontLeftModule.getSteerAngle())),
-                new SwerveModulePosition(frontRightModule.getPosition()/SWERVE_TICKS_PER_METER, new Rotation2d(frontRightModule.getSteerAngle())), 
-                new SwerveModulePosition(backLeftModule.getPosition()/SWERVE_TICKS_PER_METER, new Rotation2d(backLeftModule.getSteerAngle())),
-                new SwerveModulePosition(backRightModule.getPosition()/SWERVE_TICKS_PER_METER, new Rotation2d(backRightModule.getSteerAngle()))};
-        positionManager.resetPosition(getGyroscopeRotation(), positionArray, getPose());
-    }
+      positionManager.resetPosition(getGyroscopeRotation(), getModulePositionArray(), getPose());
+  }
+
+  public SwerveModulePosition[] getModulePositionArray(){
+   return new SwerveModulePosition[] {
+      new SwerveModulePosition(frontLeftModule.getPosition()/SWERVE_TICKS_PER_METER, new Rotation2d(frontLeftModule.getSteerAngle())), //from steer motor
+      new SwerveModulePosition(frontRightModule.getPosition()/SWERVE_TICKS_PER_METER, new Rotation2d(frontRightModule.getSteerAngle())), 
+      new SwerveModulePosition(backLeftModule.getPosition()/SWERVE_TICKS_PER_METER, new Rotation2d(backLeftModule.getSteerAngle())),
+      new SwerveModulePosition(backRightModule.getPosition()/SWERVE_TICKS_PER_METER, new Rotation2d(backRightModule.getSteerAngle()))
+   };
+ }
+
 }

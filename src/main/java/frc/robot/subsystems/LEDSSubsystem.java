@@ -57,35 +57,35 @@ public class LEDSSubsystem {
     public void periodic(){
         if (state == LEDStates.AUTO){
             if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.DRIVE){
-                m_ledBuffer.setRGB(60, 0,255,0);
-
+                m_ledBuffer.setRGB(60, 217, 43, 127);//pink
+                
 
             }
             else if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.STOP){
-                m_ledBuffer.setRGB(60, 255,0,0);
+                m_ledBuffer.setRGB(60, 255,0,0);//red
 
 
             }
             else if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.FIRST){
-                m_ledBuffer.setRGB(60, 255,235,0);
+                m_ledBuffer.setRGB(60, 255,235,0);//yellow
 
 
             }
             else if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.INTAKING){
-                m_ledBuffer.setRGB(60, 0,119,255);
+                m_ledBuffer.setRGB(60, 0,119,255);//blue
 
 
             }
             else if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.OUTTAKING){
-                m_ledBuffer.setRGB(60, 255,136,0);
+                m_ledBuffer.setRGB(60, 182, 64, 255);//purple
 
 
             }
             // the index for all these needs to be changed to however many LED's there are
         } else if (state == LEDStates.HAS_NOTE){
-            m_ledBuffer.setRGB(60, 255,137,64);
+            m_ledBuffer.setRGB(60, 255,136,0);//orange
         } else {
-            m_ledBuffer.setRGB(60, 116,184,110);
+            m_ledBuffer.setRGB(60, 0,255,0);//green
         }
     }  
 

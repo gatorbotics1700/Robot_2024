@@ -5,6 +5,7 @@ public class Mechanisms {
     public ShooterSubsystem shooterSubsystem;
     public IntakeSubsystem intakeSubsystem;
     public SensorSubsystem sensorSubsystem;
+    public LEDSSubsystem ledsSubsystem; 
 
     private boolean isFirstTimeInState;
     private double stateStartTime;
@@ -24,6 +25,7 @@ public class Mechanisms {
         shooterSubsystem = new ShooterSubsystem();
         sensorSubsystem = new SensorSubsystem();
         intakeSubsystem = new IntakeSubsystem();
+        ledsSubsystem = new LEDSSubsystem(10);//TODO: number is a placeholder 
         isFirstTimeInState = true;
         init();
     }
@@ -46,6 +48,7 @@ public class Mechanisms {
                 setState(MechanismStates.SPEAKER_HOLDING);//TODO how to account for amp holding??
             }
         } else if(mechanismState == MechanismStates.AMP_HOLDING){
+            ledsSubsystem.setState(LEDSSubsystem.LEDStates.HAS_NOTE);
             intakeSubsystem.setState(IntakeSubsystem.IntakeStates.OFF);
             shooterSubsystem.setState(ShooterSubsystem.ShooterStates.AMP_HOLDING);
             //we stop transition motor in the shooter subsystem right now

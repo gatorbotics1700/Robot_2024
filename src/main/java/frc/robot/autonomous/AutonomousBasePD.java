@@ -8,7 +8,9 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.autonomous.PDState.AutoStates;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.LEDSSubsystem;
 import frc.robot.subsystems.Mechanisms;
+import frc.robot.subsystems.LEDSSubsystem.LEDStates;
 
 public class AutonomousBasePD extends AutonomousBase{
    //hulk
@@ -43,6 +45,7 @@ public class AutonomousBasePD extends AutonomousBase{
     private double testingDriveVelocity = 0.5; 
     private double testingSteerVelocity = 1; 
     
+    LEDSSubsystem ledsSubsystem;
 
     //pids
     private PIDController turnController;
@@ -52,7 +55,7 @@ public class AutonomousBasePD extends AutonomousBase{
     public AutonomousBasePD(Pose2d startingCoordinate, PDState[] stateSequence){
         super(startingCoordinate);
         this.stateSequence =  stateSequence;
-
+        ledsSubsystem = new LEDSSubsystem(10);//TODO: this is a placeholder, change later
         init();
     }
 
@@ -85,7 +88,7 @@ public class AutonomousBasePD extends AutonomousBase{
         }
         if(currentState.name == AutoStates.FIRST){ //TODO: can we move the code in this to init?
            drivetrainSubsystem.positionManager.resetPosition(drivetrainSubsystem.getGyroscopeRotation(), drivetrainSubsystem.getModulePositionArray(), startingCoordinate); 
-
+            ledsSubsystem.setState(LEDSSubsystem.LEDStates.AUTO);
             turnController.setTolerance(TURN_DEADBAND); 
             xController.setTolerance(DRIVE_DEADBAND);
             yController.setTolerance(DRIVE_DEADBAND);
@@ -97,6 +100,7 @@ public class AutonomousBasePD extends AutonomousBase{
             return; //first is a pass through state, we don't have to call drive we can just move on
         } else if(currentState.name == AutoStates.DRIVE){
             mechanismSubsystem.setState(Mechanisms.MechanismStates.INTAKING);
+            ledsSubsystem.setState(LEDSSubsystem.LEDStates.AUTO);
             driveToLocation(currentState.coordinate);
             if(robotAtSetpoint()){
                 moveToNextState();
@@ -107,9 +111,11 @@ public class AutonomousBasePD extends AutonomousBase{
                 mechanismSubsystem.setState(Mechanisms.MechanismStates.OFF);
                 moveToNextState();
             }
+            ledsSubsystem.setState(LEDSSubsystem.LEDStates.AUTO);
         } else if(currentState.name == AutoStates.STOP){
             drivetrainSubsystem.stopDrive();
             System.out.println("stopped in auto");
+            ledsSubsystem.setState(LEDSSubsystem.LEDStates.AUTO);
         } else {
             System.out.println("============================UNRECOGNIZED STATE!!!! PANICK!!!! " + currentState.name + "============================"); 
             drivetrainSubsystem.stopDrive();
