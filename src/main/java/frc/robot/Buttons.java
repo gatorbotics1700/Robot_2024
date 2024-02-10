@@ -6,7 +6,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class Buttons {
     
   private DrivetrainSubsystem m_drivetrainSubsystem = Robot.m_drivetrainSubsystem;
-  private ShooterSubsystem m_shooterSubsystem = Robot.m_shooterSubsystem;
+  private ShooterSubsystem m_shooterSubsystem = Robot.m_shooterSubsystem; //TODO write this in robot
   
   public void buttonsPeriodic(){
 
