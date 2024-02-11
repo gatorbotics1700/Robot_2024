@@ -26,8 +26,8 @@ public class CanCoderFactoryBuilder {
      public AbsoluteEncoderFactory<CanCoderAbsoluteConfiguration> build() {
         return configuration -> {
             CANcoderConfiguration config = new CANcoderConfiguration();
-            config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition; //TODO: THIS SHOULD AUTOMATICALLY BOOT TO ABSOLUTE WITH V6
-            config.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.;
+            //config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition; //TODO: THIS SHOULD AUTOMATICALLY BOOT TO ABSOLUTE WITH V6
+            config.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1; //changed from 0-360 -- so could cause
             //config.MagnetSensor.MagnetOffset = configuration.getOffset()/(2*Math.PI); //TODO: CHECK THIS IF SOMETHING GOES WRONG
             config.MagnetSensor.MagnetOffset = configuration.getOffset() * 0.159155; //TODO: ASSUME THIS DOESNT WORK //the hardcoded number is radian to revolution conversion
             if (direction == Direction.COUNTER_CLOCKWISE){

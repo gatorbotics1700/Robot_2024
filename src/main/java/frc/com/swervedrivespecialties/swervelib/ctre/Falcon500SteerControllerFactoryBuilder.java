@@ -1,10 +1,18 @@
 package frc.com.swervedrivespecialties.swervelib.ctre;
 
-import com.ctre.phoenix.motorcontrol.*;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+//import com.ctre.phoenix.motorcontrol.*;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import frc.com.swervedrivespecialties.swervelib.*;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.sensors.CANCoder;
 
 import frc.com.swervedrivespecialties.swervelib.ctre.CtreUtils;
@@ -91,35 +99,37 @@ public final class Falcon500SteerControllerFactoryBuilder {
 
             final double sensorPositionCoefficient = 2.0 * Math.PI / TICKS_PER_ROTATION * moduleConfiguration.getSteerReduction();
             final double sensorVelocityCoefficient = sensorPositionCoefficient * 10.0;
-
+            var talonFXConfigs = new TalonFXConfiguration();
+            var slot0Configs = new Slot0Configs();
+            var motionMagicConfigs = talonFXConfigs.MotionMagic;
             TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
             if (hasPidConstants()) {
-                motorConfiguration.slot0.kP = proportionalConstant;
-                motorConfiguration.slot0.kI = integralConstant;
-                motorConfiguration.slot0.kD = derivativeConstant;
+                slot0Configs.kP = proportionalConstant;
+                slot0Configs.kI = integralConstant;
+                slot0Configs.kD = derivativeConstant;
             }
             if (hasMotionMagic()) {
                 if (hasVoltageCompensation()) {
-                    motorConfiguration.slot0.kF = (1023.0 * sensorVelocityCoefficient / nominalVoltage) * velocityConstant;
+                    slot0Configs.kF = (1023.0 * sensorVelocityCoefficient / nominalVoltage) * velocityConstant; //TODO:kF doesn't exist in v6, but kv does?? check docs
                 }
                 // TODO: What should be done if no nominal voltage is configured? Use a default voltage?
 
                 // TODO: Make motion magic max voltages configurable or dynamically determine optimal values
-                motorConfiguration.motionCruiseVelocity = 2.0 / velocityConstant / sensorVelocityCoefficient;
-                motorConfiguration.motionAcceleration = (8.0 - 2.0) / accelerationConstant / sensorVelocityCoefficient;
+                motionMagicConfigs.MotionMagicCruiseVelocity = 2.0 / velocityConstant / sensorVelocityCoefficient;
+                motionMagicConfigs.MotionMagicAcceleration = (8.0 - 2.0) / accelerationConstant / sensorVelocityCoefficient;
             }
             if (hasVoltageCompensation()) {
-                motorConfiguration.voltageCompSaturation = nominalVoltage;
+                motorConfiguration.voltageCompSaturation = nominalVoltage; //we could use .configVoltageComSaturation() to set the voltage but it doesn't work on the type motorConfiguration
             }
             if (hasCurrentLimit()) {
-                motorConfiguration.supplyCurrLimit.currentLimit = currentLimit;
-                motorConfiguration.supplyCurrLimit.enable = true;
+                motorConfiguration.CurrentLimits.withSupplyCurrentLimit(currentLimit);
+                motorConfiguration.CurrentLimits.withSupplyCurrentLimitEnable(true);
             }
 
             TalonFX motor = new TalonFX(steerConfiguration.getMotorPort());
-            boolean haveError = CtreUtils.checkCtreError(motor.configAllSettings(motorConfiguration, CAN_TIMEOUT_MS), "Failed to configure steer Falcon 500 settings");
+            boolean haveError = CtreUtils.checkCtreError(motor.getConfigurator().apply(motorConfiguration, CAN_TIMEOUT_MS), "Failed to configure CANCoder");
             for(int i = 0; i < 5; i++){
-                haveError =  CtreUtils.checkCtreError(motor.configAllSettings(motorConfiguration, CAN_TIMEOUT_MS), "Failed to configure steer Falcon 500 settings");
+                haveError =  CtreUtils.checkCtreError(motor.getConfigurator().apply(motorConfiguration, CAN_TIMEOUT_MS), "Failed to configure CANCoder");
                 if(!haveError){
                     break;
                 }
