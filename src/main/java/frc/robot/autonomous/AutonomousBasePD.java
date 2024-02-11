@@ -41,6 +41,12 @@ public class AutonomousBasePD extends AutonomousBase{
         init();
     }
 
+    public AutonomousBasePD(){
+        this.startingCoordinate = null;
+        this.stateSequence = null;
+        init();
+    }
+
     @Override
     public void init(){
         System.out.println("AUTONOMOUS INIT!\nINIT!\nINIT!");

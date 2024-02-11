@@ -7,7 +7,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import frc.robot.Constants;
 import frc.robot.OI;
-
+import frc.robot.Robot;
+import frc.robot.autonomous.AutonomousBasePD;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DigitalInput; 
 
 
@@ -30,7 +33,7 @@ public class ShooterSubsystem {
 
     private LimelightSubsystem limelightSubsystem = new LimelightSubsystem(); 
     private AutonomousBasePD autonomousBasePD = new AutonomousBasePD();
-    private DrivatrainSubsystem drivetrainSubsystem = Robot.m_drivetrainSubsystem();
+    private DrivetrainSubsystem drivetrainSubsystem = Robot.m_drivetrainSubsystem;
 
     public static enum ShooterStates {
         OFF,
