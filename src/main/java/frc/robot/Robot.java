@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -123,12 +125,17 @@ public class Robot extends TimedRobot {
   /** This function is called once when test mode is enabled. */
   @Override
   public void testInit() {
+    m_shooterSubsystem.init();
     //m_drivetrainSubsystem.init();
   }
 
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
+    //System.out.println(m_shooterSubsystem.pivot.getSelectedSensorVelocity());
+    //System.out.println("==============================RAN CODE!! MOTOR SHOULD WORK???? ==============================");
+    m_buttons.buttonsPeriodic();
+    m_shooterSubsystem.periodic();
     //OFFSETS
     //m_drivetrainSubsystem.driveTeleop();
     //m_drivetrainSubsystem.setSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(0.2, 0, 0, m_drivetrainSubsystem.getPoseRotation()));
@@ -141,4 +148,5 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+  
 }

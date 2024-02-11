@@ -46,7 +46,7 @@ public class ShooterSubsystem {
         high = new TalonFX(Constants.SHOOTER_HIGH_CAN_ID);
         mid = new TalonFX(Constants.SHOOTER_MID_CAN_ID);
         low = new TalonFX(Constants.AMP_MOTOR_CAN_ID);
-        pivot = new TalonFX(Constants.PIVOT_MOTOR_CAN_ID);
+        pivot = new TalonFX(12);//used to be constants.pivot_motor_can_id
         topLimitSwitch = new DigitalInput(0); //check these ports
         bottomLimitSwitch = new DigitalInput(1); 
         init();
@@ -54,6 +54,7 @@ public class ShooterSubsystem {
 
     public void init(){
         currentShooterState = ShooterStates.OFF;
+        System.out.println("===SHOOTER INIT METHOD===");
     }
 
     public void periodic(){
@@ -107,10 +108,16 @@ public class ShooterSubsystem {
 
     public void visionAdjusting(){
         if(getAngleTicks(limelightSubsystem.getTy()) > PIVOT_DEADBAND_TICKS){
+            System.out.println(limelightSubsystem.getTy());
+            System.out.println("adjusting positive");
             pivot.set(ControlMode.PercentOutput, 0.2); //check direction of motors
         } else if (getAngleTicks(limelightSubsystem.getTy()) < -PIVOT_DEADBAND_TICKS){
+           System.out.println(limelightSubsystem.getTy());
+            System.out.println("adjusting negative");
             pivot.set(ControlMode.PercentOutput, -0.2); //check direction of motors
         }else{
+            System.out.println(limelightSubsystem.getTy());
+            System.out.println("done adjusting");
             pivot.set(ControlMode.PercentOutput, 0);
         }
     } 

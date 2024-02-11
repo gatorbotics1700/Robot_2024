@@ -12,7 +12,7 @@ public class IntakeSubsystem {
 
     private final double INTAKE_SPEED = 0.45; //build says this is optimal after testing, DO NOT CHANGE
 
-    private SensorSubsystem sensorSubsystem;
+   // private SensorSubsystem sensorSubsystem;
     private IntakeStates intakeState;
 
     public static enum IntakeStates {
@@ -57,9 +57,9 @@ public class IntakeSubsystem {
         return intakeState;
     }
 
-    public SensorSubsystem getSensorSubsystem(){
-        return sensorSubsystem;
-    }
+    // public SensorSubsystem getSensorSubsystem(){
+    //     return sensorSubsystem;
+    // }
 
     public void setIntakeState(IntakeStates newIntakeState){
         intakeState = newIntakeState;
