@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Mechanism;
-import frc.robot.subsystems.DrivetrainSubsystem;
+//import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Mechanisms;
 import frc.robot.subsystems.Mechanisms.MechanismStates;
@@ -17,7 +17,7 @@ import frc.robot.subsystems.ShooterSubsystem.ShooterStates;
 
 public class Buttons {
     
-  private DrivetrainSubsystem m_drivetrainSubsystem = Robot.m_drivetrainSubsystem;
+  //private DrivetrainSubsystem m_drivetrainSubsystem = Robot.m_drivetrainSubsystem;
   private Mechanisms m_mechanismSubsystem = Robot.m_mechanismSubsystem;
   private IntakeSubsystem m_intakeSubsystem = Robot.m_mechanismSubsystem.intakeSubsystem;
   private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -31,7 +31,7 @@ public class Buttons {
       }*/
       
       if (OI.m_controller.getLeftBumper()){ //emergency stop EVERYTHING
-        m_drivetrainSubsystem.stopDrive(); 
+       // m_drivetrainSubsystem.stopDrive(); 
       }
       if (OI.m_controller_two.getAButton()){ 
         m_mechanismSubsystem.setState(MechanismStates.SHOOTING_AMP);

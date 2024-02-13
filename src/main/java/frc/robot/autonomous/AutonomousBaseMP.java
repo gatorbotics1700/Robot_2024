@@ -9,7 +9,7 @@ import edu.wpi.first.math.geometry.*;
 import frc.robot.Robot;
 import frc.robot.autonomous.MPState;
 import frc.robot.autonomous.MPState.StatesName;
-import frc.robot.subsystems.DrivetrainSubsystem; 
+// import frc.robot.subsystems.DrivetrainSubsystem; 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -27,7 +27,7 @@ public class AutonomousBaseMP extends AutonomousBase{
         // PIDController #1: the first arg rep how many m/s added in the x direction for every meter of error in the x direction
         // PIDController #2 : the first arg rep how many m/s added in the y direction for every meter of error in the y direction
     
-    private static DrivetrainSubsystem drivetrainSubsystem;
+    // private static DrivetrainSubsystem drivetrainSubsystem;
     public MPState mpStates;
     private MPState[] mpStateSequence;
 
@@ -47,7 +47,7 @@ public class AutonomousBaseMP extends AutonomousBase{
             new PIDController(1, 0, 0), new PIDController(1, 0, 0), //TODO: CHANGE KP
             new ProfiledPIDController(1, 0, 0,
             new TrapezoidProfile.Constraints(6.28, Math.PI))); //Check max vel. 
-        drivetrainSubsystem = Robot.m_drivetrainSubsystem;
+        // drivetrainSubsystem = Robot.m_drivetrainSubsystem;
         init();
     }
 
@@ -65,7 +65,7 @@ public class AutonomousBaseMP extends AutonomousBase{
         //isFirst = true;
         currentState = mpStateSequence[stateIndex];
         //drivetrainSubsystem.resetPositionManager(getStartPoseTrajectory());
-        System.out.println("Init pose: " + drivetrainSubsystem.getPose());
+        // System.out.println("Init pose: " + drivetrainSubsystem.getPose());
         System.out.println("just started");
     }
     
@@ -77,7 +77,7 @@ public class AutonomousBaseMP extends AutonomousBase{
         if(currentState.name == StatesName.FIRST){
             timeStart = System.currentTimeMillis();  // made one state for trajectory and are putting individual trajectories in followTradjectory()
             System.out.println("Doing first");
-            System.out.println("initial pose: " + drivetrainSubsystem.getPoseX());
+            // System.out.println("initial pose: " + drivetrainSubsystem.getPoseX());
             stateIndex++;
             setStates(mpStateSequence[stateIndex]);
             System.out.println("moving on to " + mpStateSequence[stateIndex]);
@@ -92,7 +92,7 @@ public class AutonomousBaseMP extends AutonomousBase{
                 double timeCheck = mpStateSequence[stateIndex].trajectory.getTotalTimeSeconds();
                 currentTrajState = mpStateSequence[stateIndex].trajectory.sample(timeCheck);
                 System.out.println("total time: " + timeCheck);
-                System.out.println("trajectory End X: "+ currentTrajState.poseMeters.getX() + " trajectory Get X: " + drivetrainSubsystem.getPoseX()); 
+                // System.out.println("trajectory End X: "+ currentTrajState.poseMeters.getX() + " trajectory Get X: " + drivetrainSubsystem.getPoseX()); 
                 followTrajectory(mpStateSequence[stateIndex].trajectory); 
                 if(trajectoryDone(mpStateSequence[stateIndex].trajectory)){
                     stateIndex++;
@@ -101,10 +101,10 @@ public class AutonomousBaseMP extends AutonomousBase{
                 }
             }
         } else if(currentState.name == StatesName.STOP){
-            drivetrainSubsystem.stopDrive();
+            // drivetrainSubsystem.stopDrive();
             System.out.println("state STOP!/nstate STOP!/nstate STOP!");
         }else{
-            drivetrainSubsystem.stopDrive();
+            // drivetrainSubsystem.stopDrive();
             System.out.println("else STOP!/nelse STOP!/nelse STOP!");
         }
 
@@ -122,29 +122,29 @@ public class AutonomousBaseMP extends AutonomousBase{
     }
 
     public boolean trajectoryDone(Trajectory trajectory){
-        double errorX = Math.abs(currentTrajState.poseMeters.getX() - drivetrainSubsystem.getPoseX());
-        double errorY = Math.abs(currentTrajState.poseMeters.getY() - drivetrainSubsystem.getPoseY()); 
-        double errorRotate = Math.abs((currentTrajState.poseMeters.getRotation()).getDegrees() - drivetrainSubsystem.getPoseDegrees()); 
+        // double errorX = Math.abs(currentTrajState.poseMeters.getX() - drivetrainSubsystem.getPoseX());
+        // double errorY = Math.abs(currentTrajState.poseMeters.getY() - drivetrainSubsystem.getPoseY()); 
+        // double errorRotate = Math.abs((currentTrajState.poseMeters.getRotation()).getDegrees() - drivetrainSubsystem.getPoseDegrees()); 
 
-        System.out.println("x error: " + errorX + " y error: " + errorY + " rotate error: " + errorRotate);
-        if(errorX <= 0.5 && errorY <= 0.5 && errorRotate <= 0.5){
+        // System.out.println("x error: " + errorX + " y error: " + errorY + " rotate error: " + errorRotate);
+        // if(errorX <= 0.5 && errorY <= 0.5 && errorRotate <= 0.5){
             return true;
-        }else{
-            return false;
-        }
+        // }else{
+        //     return false;
+        //}
     }
 
     public void followTrajectory(Trajectory trajectory){
         Trajectory.State goal = trajectory.sample(timeElapsed/1000); //Avery Note: maybe we should think about sampling something a little more in the future
-        System.out.println("follow End X: "+ currentTrajState.poseMeters.getX() + " follow Get X: " + drivetrainSubsystem.getPoseX()); 
-        System.out.println("follow End Y: "+ currentTrajState.poseMeters.getY() + " follow Get Y: " + drivetrainSubsystem.getPoseY()); 
-        ChassisSpeeds adjustedSpeeds = controller.calculate(
-            drivetrainSubsystem.getPose(), goal, currentTrajState.poseMeters.getRotation());
+        // System.out.println("follow End X: "+ currentTrajState.poseMeters.getX() + " follow Get X: " + drivetrainSubsystem.getPoseX()); 
+        // System.out.println("follow End Y: "+ currentTrajState.poseMeters.getY() + " follow Get Y: " + drivetrainSubsystem.getPoseY()); 
+        // ChassisSpeeds adjustedSpeeds = controller.calculate(
+            // drivetrainSubsystem.getPose(), goal, currentTrajState.poseMeters.getRotation());
 
         
-        drivetrainSubsystem.setSpeed(adjustedSpeeds);
-        System.out.println("Adjusted speed: " + adjustedSpeeds);
-        drivetrainSubsystem.drive();
+        // drivetrainSubsystem.setSpeed(adjustedSpeeds);
+        // System.out.println("Adjusted speed: " + adjustedSpeeds);
+        // drivetrainSubsystem.drive();
     }
 
 }

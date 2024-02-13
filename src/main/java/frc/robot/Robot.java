@@ -6,7 +6,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.TimedRobot;
-import frc.robot.subsystems.DrivetrainSubsystem;
+// import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Mechanisms;
 import frc.robot.subsystems.Mechanisms.MechanismStates;
@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
     public static final IntakeSubsystem m_intakingSubsystem = new IntakeSubsystem();
     public static final Mechanisms m_mechanismSubsystem = new Mechanisms();
     public static final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-    public static final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(); //if anything breaks in the future it might be this
+    // public static final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(); //if anything breaks in the future it might be this
     public static Buttons m_buttons = new Buttons();
     public static final SensorSubsystem m_sensorSubsystem = new SensorSubsystem();
     public static final LEDSSubsystem ledSubsystem = new LEDSSubsystem();
@@ -66,9 +66,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-        SmartDashboard.putNumber("x odometry",m_drivetrainSubsystem.getPoseX()/Constants.METERS_PER_INCH);
-        SmartDashboard.putNumber("y odometry",m_drivetrainSubsystem.getPoseY()/Constants.METERS_PER_INCH);
-        SmartDashboard.putNumber("angle odometry",m_drivetrainSubsystem.getPoseDegrees()%360);
+        // SmartDashboard.putNumber("x odometry",m_drivetrainSubsystem.getPoseX()/Constants.METERS_PER_INCH);
+        // SmartDashboard.putNumber("y odometry",m_drivetrainSubsystem.getPoseY()/Constants.METERS_PER_INCH);
+        // SmartDashboard.putNumber("angle odometry",m_drivetrainSubsystem.getPoseDegrees()%360);
     }
 
     /*
@@ -92,15 +92,15 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() { //BEFORE TESTING: MAKE SURE YOU HAVE EITHER DEPLOYED OR ADDED DRIVETRAIN INIT
         isBlueAlliance = allianceChooser.getSelected();
-        m_drivetrainSubsystem.onEnable();
+        // m_drivetrainSubsystem.onEnable();
     }
 
     /* This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() { 
         m_buttons.buttonsPeriodic();
-        m_drivetrainSubsystem.driveTeleop();
-        m_drivetrainSubsystem.drive();   
+        // m_drivetrainSubsystem.driveTeleop();
+        // m_drivetrainSubsystem.drive();   
     }
 
     /* This function is called once when the robot is disabled. */
@@ -141,9 +141,10 @@ public class Robot extends TimedRobot {
         //m_intakingSubsystem.intakeMotor.set(ControlMode.PercentOutput, -0.6);
         //m_intakingSubsystem.transitionMotor.set(ControlMode.PercentOutput, -0.6);
         for (int i = 0; i < ledSubsystem.m_ledBuffer.getLength(); i++){
-            ledSubsystem.m_ledBuffer.setRGB(i, 217, 43, 127);//pink
+            ledSubsystem.m_ledBuffer.setRGB(i, 0, 255, 0);//green
         }
         ledSubsystem.m_led.setData(ledSubsystem.m_ledBuffer);
+        System.out.println("================LEDS TURN ON================");
     }
     /* This function is called once when the robot is first started up. */
     @Override
