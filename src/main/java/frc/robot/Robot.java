@@ -121,6 +121,11 @@ public class Robot extends TimedRobot {
 
         //m_mechanismSubsystem.init();
         //m_mechanismSubsystem.setState(MechanismStates.INTAKING);
+        for (int i = 0; i < ledSubsystem.m_ledBuffer.getLength(); i++){
+            ledSubsystem.m_ledBuffer.setRGB(i, 0, 255, 0);//green
+        }
+        ledSubsystem.m_led.setData(ledSubsystem.m_ledBuffer);
+        System.out.println("================LEDS TURN ON================");
     }
 
     /* This function is called periodically during test mode. */
@@ -140,11 +145,6 @@ public class Robot extends TimedRobot {
         //m_mechanismSubsystem.setState(MechanismStates.INTAKING);
         //m_intakingSubsystem.intakeMotor.set(ControlMode.PercentOutput, -0.6);
         //m_intakingSubsystem.transitionMotor.set(ControlMode.PercentOutput, -0.6);
-        for (int i = 0; i < ledSubsystem.m_ledBuffer.getLength(); i++){
-            ledSubsystem.m_ledBuffer.setRGB(i, 0, 255, 0);//green
-        }
-        ledSubsystem.m_led.setData(ledSubsystem.m_ledBuffer);
-        System.out.println("================LEDS TURN ON================");
     }
     /* This function is called once when the robot is first started up. */
     @Override

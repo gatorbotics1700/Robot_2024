@@ -31,9 +31,9 @@ public class LEDSSubsystem {
     }
 
     public void init(){ //was onEnable
+        m_led.start();//TODO: 2/13/2024 originally was after set data, but switched to before. check if correct
         //sets data
         m_led.setData(m_ledBuffer);
-        m_led.start();
     }
 
     public void periodic(){
