@@ -40,6 +40,7 @@ public class Robot extends TimedRobot {
     public static final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(); //if anything breaks in the future it might be this
     public static Buttons m_buttons = new Buttons();
     public static final SensorSubsystem m_sensorSubsystem = new SensorSubsystem();
+    public static final LEDSSubsystem ledSubsystem = new LEDSSubsystem();
 
     double mpi = Constants.METERS_PER_INCH;
     public static Boolean isBlueAlliance = true;
@@ -111,8 +112,6 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() {}
 
     /* This function is called once when test mode is enabled. */
-    AddressableLED m_led;
-    AddressableLEDBuffer m_ledBuffer;
     
     @Override
     public void testInit() {
@@ -120,8 +119,8 @@ public class Robot extends TimedRobot {
         //m_shooterSubsystem.setState(ShooterStates.AMP);
         //m_sensorSubsystem.init();
 
-        m_mechanismSubsystem.init();
-        m_mechanismSubsystem.setState(MechanismStates.INTAKING);
+        //m_mechanismSubsystem.init();
+        //m_mechanismSubsystem.setState(MechanismStates.INTAKING);
     }
 
     /* This function is called periodically during test mode. */
@@ -141,7 +140,10 @@ public class Robot extends TimedRobot {
         //m_mechanismSubsystem.setState(MechanismStates.INTAKING);
         //m_intakingSubsystem.intakeMotor.set(ControlMode.PercentOutput, -0.6);
         //m_intakingSubsystem.transitionMotor.set(ControlMode.PercentOutput, -0.6);
-        m_ledBuffer.setRGB(60, 217, 43, 127);//pink
+        for (int i = 0; i < ledSubsystem.m_ledBuffer.getLength(); i++){
+            ledSubsystem.m_ledBuffer.setRGB(i, 217, 43, 127);//pink
+        }
+        ledSubsystem.m_led.setData(ledSubsystem.m_ledBuffer);
     }
     /* This function is called once when the robot is first started up. */
     @Override

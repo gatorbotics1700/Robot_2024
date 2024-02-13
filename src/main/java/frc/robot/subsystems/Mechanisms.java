@@ -25,7 +25,7 @@ public class Mechanisms {
         shooterSubsystem = new ShooterSubsystem();
         sensorSubsystem = new SensorSubsystem();
         intakeSubsystem = new IntakeSubsystem();
-        ledsSubsystem = new LEDSSubsystem(10);//TODO: number is a placeholder 
+        ledsSubsystem = new LEDSSubsystem();//TODO: number is a placeholder 
         isFirstTimeInState = true;
         init();
     }

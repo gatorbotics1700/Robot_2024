@@ -21,17 +21,19 @@ public class LEDSSubsystem {
     final Color INTAKING_COLOR = new Color(0, 119, 255);
     final Color OUTTAKING_COLOR = new Color(255, 136, 0); *///THIS IS NOT VALID ANYMORE
 
-
     //0 is placeholder for roborio pwm port
-    AddressableLED m_led;
-    AddressableLEDBuffer m_ledBuffer;
+    public AddressableLED m_led;
+    private final int numLED = 150; // change if needed
+
+    public AddressableLEDBuffer m_ledBuffer;
     AutonomousBasePD autonomousBasePD;
     LEDStates state = LEDStates.NEUTRAL;
 
+    
 
    
     //getting class to draw getStateSequence
-    public LEDSSubsystem(int numLED){ //AutonomousBasePD auto
+    public LEDSSubsystem(){ //AutonomousBasePD auto
        // mauto = auto;
         m_led = new AddressableLED(9); // port will change when actually plugged in
         m_ledBuffer = new AddressableLEDBuffer(numLED); // # of LEDS

@@ -55,7 +55,7 @@ public class AutonomousBasePD extends AutonomousBase{
     public AutonomousBasePD(Pose2d startingCoordinate, PDState[] stateSequence){
         super(startingCoordinate);
         this.stateSequence =  stateSequence;
-        ledsSubsystem = new LEDSSubsystem(10);//TODO: this is a placeholder, change later
+        ledsSubsystem = new LEDSSubsystem();//TODO: this is a placeholder, change later
         init();
     }
 
