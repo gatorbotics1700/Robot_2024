@@ -141,7 +141,7 @@ public class Robot extends TimedRobot {
         //m_mechanismSubsystem.setState(MechanismStates.INTAKING);
         //m_intakingSubsystem.intakeMotor.set(ControlMode.PercentOutput, -0.6);
         //m_intakingSubsystem.transitionMotor.set(ControlMode.PercentOutput, -0.6);
-        m_ledBuffer.setRGB(60, 217, 43, 127);//pink
+        m_ledBuffer.setRGB(m_ledBuffer.getLength(), 217, 43, 127);//pink
     }
     /* This function is called once when the robot is first started up. */
     @Override
