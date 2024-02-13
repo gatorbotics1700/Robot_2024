@@ -11,4 +11,5 @@ public interface AbsoluteEncoder {
     double getAbsoluteAngle();
     
     CANcoder getCANCoderFB();
+    //v5 version CANCoder getCANCoderFB();
 }
