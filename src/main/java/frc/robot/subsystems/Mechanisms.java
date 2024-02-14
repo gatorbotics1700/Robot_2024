@@ -4,7 +4,7 @@ public class Mechanisms {
 
     private ShooterSubsystem shooterSubsystem;
     private IntakeSubsystem intakeSubsystem;
-    private SensorSubsystem sensorSubsystem;
+    //private SensorSubsystem sensorSubsystem;
     private double stateStartTime;
 
     private MechanismStates mechanismState;
@@ -20,7 +20,7 @@ public class Mechanisms {
 
     public Mechanisms(){
         shooterSubsystem = new ShooterSubsystem();
-        sensorSubsystem = new SensorSubsystem();
+        //sensorSubsystem = new SensorSubsystem();
         intakeSubsystem = new IntakeSubsystem();
         init();
     }
@@ -28,7 +28,7 @@ public class Mechanisms {
     public void init(){
         shooterSubsystem.init();
         intakeSubsystem.init();
-        sensorSubsystem.init();
+        //sensorSubsystem.init();
 
         setState(MechanismStates.OFF);
     }
@@ -39,10 +39,10 @@ public class Mechanisms {
             System.out.println("======IN INTAKING=======");
             intakeSubsystem.setState(IntakeSubsystem.IntakeStates.INTAKING);
             shooterSubsystem.setState(ShooterSubsystem.ShooterStates.INTAKING);
-            if (sensorSubsystem.detectNote()){
+            /*if (sensorSubsystem.detectNote()){
                 intakeSubsystem.setState(IntakeSubsystem.IntakeStates.OFF); 
                 shooterSubsystem.setState(ShooterSubsystem.ShooterStates.OFF);           
-            }
+            }*/
         } else if(mechanismState == MechanismStates.AMP_HOLDING){
             intakeSubsystem.setState(IntakeSubsystem.IntakeStates.OFF);
             shooterSubsystem.setState(ShooterSubsystem.ShooterStates.AMP_HOLDING);
@@ -71,7 +71,7 @@ public class Mechanisms {
         }
         intakeSubsystem.periodic();
         shooterSubsystem.periodic();
-        sensorSubsystem.detectNote(); //for printing only
+        //sensorSubsystem.detectNote(); //for printing only
     }
 
     public void setState(MechanismStates newState){

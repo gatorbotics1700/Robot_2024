@@ -41,8 +41,7 @@ public class ShooterSubsystem {
         AMP_HOLDING,
         SPEAKER_HOLDING,
         AMP,
-        SPEAKER,
-        ADJUSTING; 
+        SPEAKER; 
     }
 
     private ShooterStates currentShooterState; //REVIEW: previously initialized to ShooterStates.AMP
@@ -63,6 +62,7 @@ public class ShooterSubsystem {
 
     public void periodic(){
         System.out.println("CURRENT SHOOTER STATE: " + currentShooterState);
+        visionAdjusting();
         if (currentShooterState == ShooterStates.INTAKING){
             low.set(ControlMode.PercentOutput, AMP_SPEED);
             high.set(ControlMode.PercentOutput, 0);
@@ -90,8 +90,6 @@ public class ShooterSubsystem {
             high.set(ControlMode.PercentOutput, HIGH_SPEAKER_SPEED);
             mid.set(ControlMode.PercentOutput, -MID_SPEAKER_SPEED);
 
-        }else if(currentShooterState == ShooterStates.ADJUSTING){
-            visionAdjusting();
         }else if(currentShooterState == ShooterStates.OFF){
             low.set(ControlMode.PercentOutput, 0);
             high.set(ControlMode.PercentOutput, 0);
@@ -111,13 +109,20 @@ public class ShooterSubsystem {
     }
 
     public void visionAdjusting(){
-        if(getAngleTicks(limelightSubsystem.getTy()) > PIVOT_DEADBAND_TICKS){
+        if(getAngleTicks(limelightSubsystem.getDesiredShooterAngle()) > PIVOT_DEADBAND_TICKS){
             pivot.set(ControlMode.PercentOutput, 0.2); //check direction of motors
-        } else if (getAngleTicks(limelightSubsystem.getTy()) < -PIVOT_DEADBAND_TICKS){
+        } else if (getAngleTicks(limelightSubsystem.getDesiredShooterAngle()) < -PIVOT_DEADBAND_TICKS){
             pivot.set(ControlMode.PercentOutput, -0.2); //check direction of motors
         }else{
             pivot.set(ControlMode.PercentOutput, 0);
         }
+        // if(getAngleTicks(limelightSubsystem.getTy()) > PIVOT_DEADBAND_TICKS){
+        //     pivot.set(ControlMode.PercentOutput, 0.2); //check direction of motors
+        // } else if (getAngleTicks(limelightSubsystem.getTy()) < -PIVOT_DEADBAND_TICKS){
+        //     pivot.set(ControlMode.PercentOutput, -0.2); //check direction of motors
+        // }else{
+        //     pivot.set(ControlMode.PercentOutput, 0);
+        // }
     } 
 
     public void manualAdjusting() {

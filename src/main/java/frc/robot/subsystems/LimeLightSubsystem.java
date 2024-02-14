@@ -1,11 +1,9 @@
 package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTable;
-import frc.robot.Constants;
 
 
 public class LimelightSubsystem {
-
     public static final double HEIGHT_TO_TAG = 57.1225; //height from limelight to center of aprilTag, TODO: subtract limelight height
     public static final double HEIGHT_TO_SPEAKER = 79.3725; //height from shooter hinge to speaker, TODO: subtract shooter height
     public static final double LIMELIGHT_SHOOTER_DIST = 31; //lateral distance between limelight and shooter hinge, TODO: placeholder value, ask build for actual number

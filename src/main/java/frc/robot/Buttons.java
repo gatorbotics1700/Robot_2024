@@ -16,7 +16,7 @@ public class Buttons {
         m_drivetrainSubsystem.stopDrive(); 
       }
       if (OI.m_controller_two.getAButton()){
-        m_shooterSubsystem.setState(ShooterStates.ADJUSTING);
+        //m_shooterSubsystem.setState(ShooterStates.ADJUSTING);
       }
   }
 }
