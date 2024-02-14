@@ -17,6 +17,7 @@ import frc.robot.subsystems.IntakeSubsystem.IntakeStates;
 import frc.robot.subsystems.ShooterSubsystem.ShooterStates;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Mechanism;
 import frc.robot.subsystems.LEDSSubsystem;
 
@@ -40,11 +41,13 @@ public class Robot extends TimedRobot {
     // public static final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(); //if anything breaks in the future it might be this
     public static Buttons m_buttons = new Buttons();
     public static final SensorSubsystem m_sensorSubsystem = new SensorSubsystem();
-    public static final LEDSSubsystem ledSubsystem = new LEDSSubsystem();
+    //public static final LEDSSubsystem ledSubsystem = new LEDSSubsystem();
+  
 
     double mpi = Constants.METERS_PER_INCH;
     public static Boolean isBlueAlliance = true;
-  
+    AddressableLED m_led = new AddressableLED(0);
+    AddressableLEDBuffer m_LedBuffer = new AddressableLEDBuffer(150);
     /*
      * This function is run when the robot is turned on and should be used for any
      * initialization code.
@@ -54,6 +57,10 @@ public class Robot extends TimedRobot {
         System.out.println("#I'm Awake");
         inverted.setDefaultOption("true", true);
         inverted.addOption("false", false);
+        
+        m_led.setLength(m_LedBuffer.getLength());
+        
+        //m_led.close();
     }
 
     /*
@@ -69,6 +76,11 @@ public class Robot extends TimedRobot {
         // SmartDashboard.putNumber("x odometry",m_drivetrainSubsystem.getPoseX()/Constants.METERS_PER_INCH);
         // SmartDashboard.putNumber("y odometry",m_drivetrainSubsystem.getPoseY()/Constants.METERS_PER_INCH);
         // SmartDashboard.putNumber("angle odometry",m_drivetrainSubsystem.getPoseDegrees()%360);
+        for(var i = 0; i <m_LedBuffer.getLength(); i++){
+            m_LedBuffer.setRGB(i, 0, 255, 0);
+        }
+        m_led.setData(m_LedBuffer);
+        m_led.start();
     }
 
     /*
@@ -115,22 +127,16 @@ public class Robot extends TimedRobot {
     
     @Override
     public void testInit() {
-        //m_drivetrainSubsystem.onEnable();
-        //m_shooterSubsystem.setState(ShooterStates.AMP);
-        //m_sensorSubsystem.init();
-
-        //m_mechanismSubsystem.init();
-        //m_mechanismSubsystem.setState(MechanismStates.INTAKING);
-        for (int i = 0; i < ledSubsystem.m_ledBuffer.getLength(); i++){
-            ledSubsystem.m_ledBuffer.setRGB(i, 0, 255, 0);//green
-        }
+        /*ledSubsystem.m_led.setLength(ledSubsystem.m_ledBuffer.getLength());
         ledSubsystem.m_led.setData(ledSubsystem.m_ledBuffer);
-        System.out.println("================LEDS TURN ON================");
+        ledSubsystem.m_led.start();*/
     }
 
     /* This function is called periodically during test mode. */
     @Override
     public void testPeriodic() {
+        //ledSubsystem.m_led.setData(ledSubsystem.m_ledBuffer);
+
         //OFFSETS
         //m_drivetrainSubsystem.driveTeleop();
         //m_drivetrainSubsystem.setSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(0.3, 0, 0, m_drivetrainSubsystem.getPoseRotation()));
