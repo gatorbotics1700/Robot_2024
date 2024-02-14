@@ -5,6 +5,7 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autonomous.AutonomousBase;
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
     public static Buttons m_buttons = new Buttons();
     private AutonomousBase m_auto; 
     public static ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+    public static LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
 
     double mpi = Constants.METERS_PER_INCH;
     public static Boolean isBlueAlliance = true;
@@ -133,6 +135,7 @@ public class Robot extends TimedRobot {
     //m_drivetrainSubsystem.driveTeleop();
     //m_drivetrainSubsystem.setSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(0.2, 0, 0, m_drivetrainSubsystem.getPoseRotation()));
     //m_drivetrainSubsystem.drive();
+    m_shooterSubsystem.periodic();
   }
   /** This function is called once when the robot is first started up. */
   @Override

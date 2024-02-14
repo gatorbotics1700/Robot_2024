@@ -25,6 +25,7 @@ public class LimelightSubsystem {
     }
 
     public double getDesiredShooterAngle(){
+        
         return Math.atan(HEIGHT_TO_SPEAKER/(distToTag() + LIMELIGHT_SHOOTER_DIST - SPEAKER_DEPTH));
     }
 
@@ -33,3 +34,4 @@ public class LimelightSubsystem {
     }
     
 }
+

@@ -61,8 +61,9 @@ public class ShooterSubsystem {
     }
 
     public void periodic(){
-        System.out.println("CURRENT SHOOTER STATE: " + currentShooterState);
+       // System.out.println("CURRENT SHOOTER STATE: " + currentShooterState);
         visionAdjusting();
+        
         if (currentShooterState == ShooterStates.INTAKING){
             low.set(ControlMode.PercentOutput, AMP_SPEED);
             high.set(ControlMode.PercentOutput, 0);
@@ -109,9 +110,13 @@ public class ShooterSubsystem {
     }
 
     public void visionAdjusting(){
+        System.out.println("DESIRED SHOOTER ANGLE: " + limelightSubsystem.getDesiredShooterAngle());
+        System.out.println("CURRENT SHOOTER ANGLE: " + getAngleTicks(limelightSubsystem.getDesiredShooterAngle()));
         if(getAngleTicks(limelightSubsystem.getDesiredShooterAngle()) > PIVOT_DEADBAND_TICKS){
+            System.out.println("ADJUSTING POSITIVE!");
             pivot.set(ControlMode.PercentOutput, 0.2); //check direction of motors
         } else if (getAngleTicks(limelightSubsystem.getDesiredShooterAngle()) < -PIVOT_DEADBAND_TICKS){
+            System.out.println("ADJUSTING NEGATIVE!");
             pivot.set(ControlMode.PercentOutput, -0.2); //check direction of motors
         }else{
             pivot.set(ControlMode.PercentOutput, 0);
