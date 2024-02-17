@@ -1,7 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
+//import edu.wpi.first.wpilibj.XboxController.Button;
 
 public class OI {
     //deleted getters because variables are public
@@ -16,4 +16,3 @@ public class OI {
         return m_controller_two.getRightY(); 
     }
 }
-
