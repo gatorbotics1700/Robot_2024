@@ -128,7 +128,6 @@ public class Robot extends TimedRobot {
         //m_drivetrainSubsystem.driveTeleop();
         //m_drivetrainSubsystem.setSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(0.3, 0, 0, m_drivetrainSubsystem.getPoseRotation()));
         //m_drivetrainSubsystem.drive();
-        m_buttons.buttonsPeriodic();
         //m_shooterSubsystem.highLeft.set(ControlMode.PercentOutput, 0.3);
         //m_shooterSubsystem.midRight.set(ControlMode.PercentOutput, -0.3);
         //m_intakingSubsystem.setState(IntakeStates.INTAKING.INTAKING);
@@ -139,6 +138,7 @@ public class Robot extends TimedRobot {
         //m_intakingSubsystem.intakeMotor.set(ControlMode.PercentOutput, -0.6);
         //m_intakingSubsystem.transitionMotor.set(ControlMode.PercentOutput, -0.6);
         m_pivotSubsystem.periodic();
+        m_buttons.buttonsPeriodic();
       // m_pivotSubsystem.pivot.set(ControlMode.PercentOutput, 0.05);
         //System.out.println("top limit switch: " + m_pivotSubsystem.topLimitSwitch.get());
         //System.out.println("bottom limit switch: " + m_pivotSubsystem.bottomLimitSwitch.get());
