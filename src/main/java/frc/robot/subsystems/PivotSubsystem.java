@@ -77,6 +77,7 @@ public class PivotSubsystem{
     }
 
     public void visionAdjusting(){
+        System.out.println("DISTANCE TO TAG: " + limelightSubsystem.distToTag());
         System.out.println("DESIRED SHOOTER ANGLE: " + limelightSubsystem.getDesiredShooterAngle());
         System.out.println("CURRENT SHOOTER ANGLE: " + getAngleTicks(limelightSubsystem.getDesiredShooterAngle()));
         if(getAngleTicks(limelightSubsystem.getDesiredShooterAngle()) > PIVOT_DEADBAND_TICKS){

@@ -30,7 +30,7 @@ public class LimelightSubsystem {
         return Math.atan(HEIGHT_TO_SPEAKER/(distToTag() + LIMELIGHT_SHOOTER_DIST - SPEAKER_DEPTH));
     }
 
-    private double distToTag(){
+    public double distToTag(){
         return HEIGHT_TO_TAG/Math.tan(Math.toRadians(getTy()));
     }
     
