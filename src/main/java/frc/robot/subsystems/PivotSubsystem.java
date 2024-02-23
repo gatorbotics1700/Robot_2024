@@ -16,6 +16,10 @@ public class PivotSubsystem{
 
     private final double PIVOT_SPEED = 0.08;
     private final double MANUAL_SPEED = 0.06;
+    private final double PIVOT_TICKS_PER_DEGREE = (Constants.TICKS_PER_REV * Constants.REVS_PER_ROTATION)/180.0;
+    private final double PIVOT_DEADBAND_TICKS = 1000; //TODO: figure out deadband
+
+    private LimelightSubsystem limelightSubsystem = new LimelightSubsystem(); 
     
 
     public static enum PivotStates{
@@ -42,6 +46,7 @@ public class PivotSubsystem{
     }
 
     public void periodic(){//limit switches true, then false when pressed
+        visionAdjusting();
         System.out.println("CURRENT PIVOT STATE: " + pivotState);
         System.out.println("top limit switch: " + topLimitSwitch.get());
         System.out.println("bottom limit switch: " + bottomLimitSwitch.get());
@@ -63,6 +68,24 @@ public class PivotSubsystem{
                 pivotState = PivotStates.AMP;
             }*/
             pivotState = PivotStates.OFF;
+            pivot.set(ControlMode.PercentOutput, 0);
+        }
+    }
+
+    private double getAngleTicks(double desiredDegrees){
+        return desiredDegrees * PIVOT_TICKS_PER_DEGREE;
+    }
+
+    public void visionAdjusting(){
+        System.out.println("DESIRED SHOOTER ANGLE: " + limelightSubsystem.getDesiredShooterAngle());
+        System.out.println("CURRENT SHOOTER ANGLE: " + getAngleTicks(limelightSubsystem.getDesiredShooterAngle()));
+        if(getAngleTicks(limelightSubsystem.getDesiredShooterAngle()) > PIVOT_DEADBAND_TICKS){
+            System.out.println("ADJUSTING POSITIVE!");
+            pivot.set(ControlMode.PercentOutput, 0.2); //check direction of motors
+        } else if (getAngleTicks(limelightSubsystem.getDesiredShooterAngle()) < -PIVOT_DEADBAND_TICKS){
+            System.out.println("ADJUSTING NEGATIVE!");
+            pivot.set(ControlMode.PercentOutput, -0.2); //check direction of motors
+        }else{
             pivot.set(ControlMode.PercentOutput, 0);
         }
     }
