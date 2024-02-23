@@ -85,11 +85,13 @@ public class PivotSubsystem{
         System.out.println("DESIRED SHOOTER ANGLE: " + limelightSubsystem.getDesiredShooterAngle());
         //System.out.println("CURRENT SHOOTER ANGLE: " + "insert current angle here");
         if((currentAngle - getAngleTicks(limelightSubsystem.getDesiredShooterAngle())) > PIVOT_DEADBAND_TICKS && topLimitSwitch.get()){
-            System.out.println("ADJUSTING POSITIVE!");
-            pivot.set(ControlMode.PercentOutput, PIVOT_SPEED); //check direction of motors
-        } else if (getAngleTicks(limelightSubsystem.getDesiredShooterAngle()) < -PIVOT_DEADBAND_TICKS && bottomLimitSwitch.get()){
             System.out.println("ADJUSTING NEGATIVE!");
             pivot.set(ControlMode.PercentOutput, -PIVOT_SPEED); //check direction of motors
+            currentAngle --; 
+        } else if ((currentAngle - getAngleTicks(limelightSubsystem.getDesiredShooterAngle())) < -PIVOT_DEADBAND_TICKS && bottomLimitSwitch.get()){
+            System.out.println("ADJUSTING POSITIVE!");
+            pivot.set(ControlMode.PercentOutput, PIVOT_SPEED); //check direction of motors
+            currentAngle ++; 
         }else{
             pivot.set(ControlMode.PercentOutput, 0);
         }
