@@ -78,20 +78,18 @@ public class PivotSubsystem{
         return desiredDegrees * PIVOT_TICKS_PER_DEGREE;
     }
 
-    private double currentAngle = 30; //placeholder until we can get an encoder to give us an actual angle
+   // private double currentAngle = 30; //placeholder until we can get an encoder to give us an actual angle
 
     public void visionAdjusting(){
         System.out.println("DISTANCE TO TAG: " + limelightSubsystem.distToTag());
         System.out.println("DESIRED SHOOTER ANGLE: " + limelightSubsystem.getDesiredShooterAngle());
         //System.out.println("CURRENT SHOOTER ANGLE: " + "insert current angle here");
-        if((currentAngle - getAngleTicks(limelightSubsystem.getDesiredShooterAngle())) > PIVOT_DEADBAND_TICKS && topLimitSwitch.get()){
+        if((pivot.getSelectedSensorPosition() - getAngleTicks(limelightSubsystem.getDesiredShooterAngle())) > PIVOT_DEADBAND_TICKS && topLimitSwitch.get()){
             System.out.println("ADJUSTING NEGATIVE!");
             pivot.set(ControlMode.PercentOutput, -PIVOT_SPEED); //check direction of motors
-            currentAngle --; 
-        } else if ((currentAngle - getAngleTicks(limelightSubsystem.getDesiredShooterAngle())) < -PIVOT_DEADBAND_TICKS && bottomLimitSwitch.get()){
+        } else if ((pivot.getSelectedSensorPosition() - getAngleTicks(limelightSubsystem.getDesiredShooterAngle())) < -PIVOT_DEADBAND_TICKS && bottomLimitSwitch.get()){
             System.out.println("ADJUSTING POSITIVE!");
             pivot.set(ControlMode.PercentOutput, PIVOT_SPEED); //check direction of motors
-            currentAngle ++; 
         }else{
             pivot.set(ControlMode.PercentOutput, 0);
         }
