@@ -25,12 +25,12 @@ public class SensorSubsystem { //TODO not done yet
     public void init(){
         System.out.println("sensor init");
         m_colorMatcher.addColorMatch(NOTE_COLOR);
-        System.out.println(colorSensor.getColor());
+       // System.out.println(colorSensor.getColor());
     }
 
     public boolean detectNote(){//TODO
         Color detectedColor = colorSensor.getColor();
-        System.out.println(detectedColor);
+       // System.out.println(detectedColor);
 
         boolean redThreshold = (Math.abs(detectedColor.red-NOTE_COLOR.red) <= colorThreshold);
         boolean greenThreshold = (Math.abs(detectedColor.green-NOTE_COLOR.green) <= colorThreshold);
@@ -40,7 +40,7 @@ public class SensorSubsystem { //TODO not done yet
             System.out.println("WE'VE HIT THAT NOTE!!");
             return true; //off
         } else {
-            System.out.println("We don't see the note");
+           // System.out.println("We don't see the note");
             return false; //on
             
         }

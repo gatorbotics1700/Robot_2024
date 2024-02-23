@@ -42,7 +42,7 @@ public class ShooterSubsystem {
     }
 
     public void periodic(){
-        System.out.println("CURRENT SHOOTER STATE: " + currentShooterState);
+      //  System.out.println("CURRENT SHOOTER STATE: " + currentShooterState);
         if (currentShooterState == ShooterStates.INTAKING){
             low.set(ControlMode.PercentOutput, AMP_SPEED);
             high.set(ControlMode.PercentOutput, 0);

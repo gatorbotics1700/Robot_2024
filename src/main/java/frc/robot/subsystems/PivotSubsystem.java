@@ -27,6 +27,7 @@ public class PivotSubsystem{
         AMP,
         MANUAL_UP,
         MANUAL_DOWN,
+        VISION,
         OFF;
     }
 
@@ -42,14 +43,13 @@ public class PivotSubsystem{
     }
     
     public void init(){
-        pivotState = PivotStates.OFF;
+        pivotState = PivotStates.VISION;
     }
 
     public void periodic(){//limit switches true, then false when pressed
-        visionAdjusting();
-        System.out.println("CURRENT PIVOT STATE: " + pivotState);
-        System.out.println("top limit switch: " + topLimitSwitch.get());
-        System.out.println("bottom limit switch: " + bottomLimitSwitch.get());
+     //   System.out.println("CURRENT PIVOT STATE: " + pivotState);
+      //  System.out.println("top limit switch: " + topLimitSwitch.get());
+        // System.out.println("bottom limit switch: " + bottomLimitSwitch.get());
         if((pivotState == PivotStates.SPEAKER) && topLimitSwitch.get()){
             pivot.set(ControlMode.PercentOutput, PIVOT_SPEED);
         }else if((pivotState == PivotStates.AMP) && bottomLimitSwitch.get()){
@@ -59,6 +59,8 @@ public class PivotSubsystem{
     
         }else if((pivotState == PivotStates.MANUAL_DOWN) && bottomLimitSwitch.get()){
             pivot.set(ControlMode.PercentOutput, -MANUAL_SPEED);
+        }else if(pivotState == PivotStates.VISION){
+            visionAdjusting();
         }else{
             //these if statements are for the "windshield wiper" motion (back and forth)
             /*if(pivotState == PivotStates.AMP && !bottomLimitSwitch.get()){
@@ -76,16 +78,18 @@ public class PivotSubsystem{
         return desiredDegrees * PIVOT_TICKS_PER_DEGREE;
     }
 
+    private double currentAngle = 30; //placeholder until we can get an encoder to give us an actual angle
+
     public void visionAdjusting(){
         System.out.println("DISTANCE TO TAG: " + limelightSubsystem.distToTag());
         System.out.println("DESIRED SHOOTER ANGLE: " + limelightSubsystem.getDesiredShooterAngle());
-        System.out.println("CURRENT SHOOTER ANGLE: " + getAngleTicks(limelightSubsystem.getDesiredShooterAngle()));
-        if(getAngleTicks(limelightSubsystem.getDesiredShooterAngle()) > PIVOT_DEADBAND_TICKS){
+        //System.out.println("CURRENT SHOOTER ANGLE: " + "insert current angle here");
+        if((currentAngle - getAngleTicks(limelightSubsystem.getDesiredShooterAngle())) > PIVOT_DEADBAND_TICKS && topLimitSwitch.get()){
             System.out.println("ADJUSTING POSITIVE!");
-            pivot.set(ControlMode.PercentOutput, 0.2); //check direction of motors
-        } else if (getAngleTicks(limelightSubsystem.getDesiredShooterAngle()) < -PIVOT_DEADBAND_TICKS){
+            pivot.set(ControlMode.PercentOutput, PIVOT_SPEED); //check direction of motors
+        } else if (getAngleTicks(limelightSubsystem.getDesiredShooterAngle()) < -PIVOT_DEADBAND_TICKS && bottomLimitSwitch.get()){
             System.out.println("ADJUSTING NEGATIVE!");
-            pivot.set(ControlMode.PercentOutput, -0.2); //check direction of motors
+            pivot.set(ControlMode.PercentOutput, -PIVOT_SPEED); //check direction of motors
         }else{
             pivot.set(ControlMode.PercentOutput, 0);
         }

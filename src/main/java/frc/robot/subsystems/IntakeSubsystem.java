@@ -40,7 +40,7 @@ public class IntakeSubsystem {
     }
 
     public void periodic() {
-        System.out.println("CURRENT INTAKE STATE IS: " + intakeState);
+      //  System.out.println("CURRENT INTAKE STATE IS: " + intakeState);
         if(intakeState == IntakeStates.INTAKING) {
             intakeMotor.set(ControlMode.PercentOutput, INTAKE_SPEED);
             

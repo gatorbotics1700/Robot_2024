@@ -27,10 +27,11 @@ public class LimelightSubsystem {
     }
 
     public double getDesiredShooterAngle(){
-        return Math.atan(HEIGHT_TO_SPEAKER/(distToTag() + LIMELIGHT_SHOOTER_DIST - SPEAKER_DEPTH));
+        return Math.toDegrees(Math.atan(HEIGHT_TO_SPEAKER/(distToTag() + LIMELIGHT_SHOOTER_DIST - SPEAKER_DEPTH)));
     }
 
     public double distToTag(){
+        System.out.println("TY IN RADIANS: " + Math.toRadians(getTy()));
         return HEIGHT_TO_TAG/Math.tan(Math.toRadians(getTy()));
     }
     

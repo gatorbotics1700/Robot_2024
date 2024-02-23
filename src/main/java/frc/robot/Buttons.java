@@ -34,7 +34,7 @@ public class Buttons {
       // if (OI.m_controller.getLeftBumper()){ //emergency stop EVERYTHING
       //   m_drivetrainSubsystem.stopDrive(); 
       // } 
-      System.out.println("in buttons periodic");
+      //System.out.println("in buttons periodic");
 
       if (OI.m_controller_two.getAButton()){ 
         System.out.println("A BUTTON: SPEAKER");
