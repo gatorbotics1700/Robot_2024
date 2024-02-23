@@ -31,7 +31,7 @@ public class LimelightSubsystem {
     }
 
     public double distToTag(){
-        System.out.println("TY IN RADIANS: " + Math.toRadians(getTy()));
+        //System.out.println("TY IN RADIANS: " + Math.toRadians(getTy()));
         return HEIGHT_TO_TAG/Math.tan(Math.toRadians(getTy()));
     }
     

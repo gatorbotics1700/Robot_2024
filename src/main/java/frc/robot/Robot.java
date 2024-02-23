@@ -119,6 +119,7 @@ public class Robot extends TimedRobot {
        // m_mechanismSubsystem.init();
         //m_mechanismSubsystem.setState(MechanismStates.INTAKING);
        //m_pivotSubsystem.setState(PivotStates.SPEAKER);
+       m_pivotSubsystem.init();
     }
 
     /* This function is called periodically during test mode. */

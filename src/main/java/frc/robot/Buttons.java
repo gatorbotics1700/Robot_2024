@@ -35,19 +35,23 @@ public class Buttons {
       //   m_drivetrainSubsystem.stopDrive(); 
       // } 
       //System.out.println("in buttons periodic");
+      if (OI.m_controller_two.getBButton()){ 
+        //System.out.println("B BUTTON: VISION");
+        m_pivotSubsystem.setState(PivotStates.VISION); 
+      }
 
       if (OI.m_controller_two.getAButton()){ 
-        System.out.println("A BUTTON: SPEAKER");
+        //System.out.println("A BUTTON: SPEAKER");
         m_pivotSubsystem.setState(PivotStates.SPEAKER); 
       }
 
       if (OI.m_controller_two.getXButton()){ 
-        System.out.println("X BUTTON: OFF");
+        //System.out.println("X BUTTON: OFF");
         m_pivotSubsystem.setState(PivotStates.OFF); 
       }
 
       if (OI.m_controller_two.getYButton()){ 
-        System.out.println("Y BUTTON AMP");
+        //System.out.println("Y BUTTON AMP");
         m_pivotSubsystem.setState(PivotStates.AMP); 
       }
 
