@@ -54,11 +54,9 @@ public class Buttons {
       //manual
       //from patricia: maybe use dpad instead
              // TODO: when we know the max rotation of the pivot motor we need to intergrate that here 
-      if(OI.getTwoRightAxis() > 0.2) {
-        m_pivotSubsystem.setState(PivotStates.MANUAL_UP);    
-      } else if(OI.getTwoRightAxis() < - 0.2) {
-        m_pivotSubsystem.setState(PivotStates.MANUAL_DOWN); 
-      }else if(m_pivotSubsystem.getState()== PivotStates.MANUAL_UP || m_pivotSubsystem.getState()== PivotStates.MANUAL_DOWN){
+      if(OI.getTwoRightAxis() > 0.2 && OI.getTwoRightAxis() < - 0.2) {
+        m_pivotSubsystem.setState(PivotStates.MANUAL); 
+      }else if(m_pivotSubsystem.getState() == PivotStates.MANUAL){
         m_pivotSubsystem.setState(PivotStates.OFF);
       }
 
