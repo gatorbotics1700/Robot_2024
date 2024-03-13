@@ -1,11 +1,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants;
 import frc.robot.OI;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
@@ -33,11 +31,11 @@ public class PivotSubsystem{
     public static enum PivotStates{
         SPEAKER, //TODO add to PID if wanted
         AMP,
+        STAGE, //TODO add to buttons/mechanisms
         MANUAL,
         OFF;
         //TODO add climb state?
     }
-
 
     private PivotStates pivotState;
 
@@ -47,8 +45,8 @@ public class PivotSubsystem{
 
         pivot = new TalonFX(Constants.PIVOT_MOTOR_CAN_ID);
         pivot.setNeutralMode(NeutralMode.Brake);
-        pivot.setSelectedSensorPosition(0);//TODO make this the top degree (flat to ground is 0 deg)
-        pivot.configAllowableClosedloopError(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs); //TODO: figure out what this line does
+        pivot.setSelectedSensorPosition(AMP_ANGLE*PIVOT_TICKS_PER_DEGREE);//TODO make this the top degree (flat to ground is 0 deg)
+        pivot.configAllowableClosedloopError(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 		/* Config Position Closed Loop gains in slot0, typically kF stays zero. */
             pivot.config_kP(Constants.kPIDLoopIdx, pivotGains.kP, Constants.kTimeoutMs); //TODO add to constants
             pivot.config_kI(Constants.kPIDLoopIdx, pivotGains.kI, Constants.kTimeoutMs);
@@ -94,14 +92,11 @@ public class PivotSubsystem{
     }
 
     public void setPivot(double desiredAngle){
-        //calculate right ticks
-        double desiredTicks = desiredAngle * PIVOT_TICKS_PER_DEGREE;
-
-        //set motor to right ticks
+        double desiredTicks = desiredAngle * PIVOT_TICKS_PER_DEGREE; //calculate right ticks
         double diff = desiredTicks - pivot.getSelectedSensorPosition();
 
-        if(Math.abs(diff) > deadband){
-            pivotMotor.set(ControlMode.Position, Math.signum(diff) * desiredTicks);//TODO could error if diff is 0, but the chance of it being 0 seems highly unlikely
+        if(Math.abs(diff) > deadband){ //set motor to right ticks
+            pivotMotor.set(ControlMode.Position, Math.signum(diff) * desiredTicks);
         }else{
             pivotMotor.set(ControlMode.Output, 0);
         }

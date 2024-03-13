@@ -1,7 +1,5 @@
 package frc.robot;
-public class Gains {
 //Class that organizes gains used when assigning values to slots
-
 public class Gains { //Gain is a proportional value that shows the relationship between the magnitude of an input signal to the magnitude of an output signal at steady-state.
 
     public final double kP;
@@ -18,5 +16,4 @@ public class Gains { //Gain is a proportional value that shows the relationship 
         kIzone = _kIzone;
         kPeakOutput = _kPeakOutput;
     }
-}
 }
