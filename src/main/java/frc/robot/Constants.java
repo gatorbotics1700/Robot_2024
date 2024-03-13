@@ -80,6 +80,6 @@ public final class Constants {
     public static final int SHOOTER_MID_CAN_ID = 38;
 
     //pivot
-    public static final int kTimeoutMs = 1000;//TODO test and get shorter if possible
+    public static final int kTimeoutMs = 500;//TODO test that this doesn't timeout so quickly
     public static final int kPIDLoopIdx = 0;
 }

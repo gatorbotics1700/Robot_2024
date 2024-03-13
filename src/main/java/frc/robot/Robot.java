@@ -8,8 +8,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-// import frc.robot.subsystems.Mechanisms;
-// import frc.robot.subsystems.Mechanisms.MechanismStates;
+import frc.robot.subsystems.Mechanisms;
+import frc.robot.subsystems.Mechanisms.MechanismStates;
 import frc.robot.subsystems.SensorSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
     public static final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
     public static final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
     public static final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-    // public static final Mechanisms m_mechanismSubsystem = new Mechanisms();
+    public static final Mechanisms m_mechanismSubsystem = new Mechanisms();
     public static final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(); //if anything breaks in the future it might be this
     private AutonomousBase m_auto; 
     public static Buttons m_buttons = new Buttons();
@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        // m_mechanismSubsystem.init();
+        m_mechanismSubsystem.init();
         Paths.AUTO_OPTIONS selectedAuto = auto_chooser.getSelected(); 
         m_auto = Paths.constructAuto(selectedAuto); 
         m_auto.init();
@@ -132,7 +132,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         
-        // m_mechanismSubsystem.periodic();
+        m_mechanismSubsystem.periodic();
         m_drivetrainSubsystem.drive();
         m_auto.periodic();
 
@@ -142,8 +142,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() { //BEFORE TESTING: MAKE SURE YOU HAVE EITHER DEPLOYED OR ADDED DRIVETRAIN INIT
         m_drivetrainSubsystem.onEnable(); 
-        // m_mechanismSubsystem.setState(MechanismStates.OFF);
-        // m_mechanismSubsystem.init();
+        m_mechanismSubsystem.init();
     }
 
     /* This function is called periodically during operator control. */
