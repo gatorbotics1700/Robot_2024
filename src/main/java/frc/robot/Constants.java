@@ -78,4 +78,8 @@ public final class Constants {
     public static final int LOW_MOTOR_CAN_ID = 30;
     public static final int SHOOTER_HIGH_CAN_ID = 34;
     public static final int SHOOTER_MID_CAN_ID = 38;
+
+    //pivot
+    public static final int kTimeoutMs = 1000;//TODO test and get shorter if possible
+    public static final int kPIDLoopIdx = 0;
 }
