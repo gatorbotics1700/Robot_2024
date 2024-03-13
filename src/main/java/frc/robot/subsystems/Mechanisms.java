@@ -26,6 +26,7 @@ public class Mechanisms {
         SHOOTING_SPEAKER,
         SHOOTING_AMP,
         VOMITING,
+        SWALLOWING,
         TESTING,
         MANUAL,
         OFF;
@@ -92,6 +93,13 @@ public class Mechanisms {
             pivotSubsystem.setState(PivotStates.AMP);
             intakeSubsystem.setState(IntakeStates.VOMITING);
             shooterSubsystem.setState(ShooterStates.VOMITING); // TODO change if needed
+        } else if(mechanismState == MechanismStates.SWALLOWING){
+            pivotSubsystem.setState(PivotStates.AMP);
+            intakeSubsystem.setState(IntakeStates.OFF);
+            shooterSubsystem.setState(ShooterStates.SWALLOWING);
+            if (sensorSubsystem.detectNote() || sensorSubsystem.isBeamBroken()){ // once note is in place, set back to holding
+                setState(MechanismStates.OFF);      
+            }
         } else if(mechanismState == MechanismStates.OFF){
             pivotSubsystem.setState(PivotStates.OFF);
             shooterSubsystem.setState(ShooterStates.OFF);

@@ -4,6 +4,9 @@ import frc.robot.subsystems.PivotSubsystem.PivotStates;
 import frc.robot.subsystems.Mechanisms;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.Mechanisms.MechanismStates;
+
+import com.ctre.phoenix6.mechanisms.MechanismState;
+
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class Buttons {
@@ -97,6 +100,11 @@ public class Buttons {
           System.out.println("=====VOMITING NOTE=====");
           m_mechanismSubsystem.setState(MechanismStates.VOMITING);
         }
+      }
+
+      if(OI.codriver.getPOV() > 225 && OI.codriver.getPOV() < 315){
+        System.out.println("========SWALLOWING NOTE BACK IN========");
+        m_mechanismSubsystem.setState(MechanismStates.SWALLOWING);
       }
   }
 }
