@@ -15,7 +15,7 @@ public class LEDSSubsystem {
 
     public AddressableLEDBuffer m_ledBuffer;
     AutonomousBasePD autonomousBasePD;
-    LEDStates state = LEDStates.NEUTRAL;
+    LEDStates state;
 
     //getting class to draw getStateSequence
     public LEDSSubsystem(){ //AutonomousBasePD auto
@@ -25,9 +25,10 @@ public class LEDSSubsystem {
     }
 
     public static enum LEDStates {
-        AUTO, // different colors for each state within auto (drive, stop, first, intaking, outtaking)
-        HAS_NOTE, // turns orange
-        AT_AMP,
+        INTAKING, // turns red
+        HOLDING, // turns orange
+        AT_AMP, // turns blue
+        SHOOTING, // turns purple
         NEUTRAL; // turns green
     }
 
@@ -35,46 +36,29 @@ public class LEDSSubsystem {
         m_led.start();//TODO: 2/13/2024 originally was after set data, but switched to before. check if correct
         //sets data
         m_led.setData(m_ledBuffer);
+        state = LEDStates.NEUTRAL;
     }
 
     public void periodic(){
-        if (state == LEDStates.AUTO){
-            if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.DRIVE){
-                for(int i = 0; i < m_ledBuffer.getLength(); i++){
-                    m_ledBuffer.setRGB(i, 217, 43, 127);//pink
-                }
-            }
-            else if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.STOP){
-                for(int i = 0; i < m_ledBuffer.getLength(); i++){
-                    m_ledBuffer.setRGB(i, 255,0,0);//red
-                }
-            }
-            else if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.FIRST){
-                for(int i = 0; i < m_ledBuffer.getLength(); i++){
-                    m_ledBuffer.setRGB(i, 255,235,0);//yellow
-                }
-            }
-            else if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.INTAKING){
-                for(int i = 0; i < m_ledBuffer.getLength(); i++){
-                    m_ledBuffer.setRGB(i, 0,119,255);//blue
-                }
-            }
-            else if(autonomousBasePD.getStateSequence()[autonomousBasePD.getStateIndex()].name == PDState.AutoStates.OUTTAKING){
-                for(int i = 0; i < m_ledBuffer.getLength(); i++){
-                    m_ledBuffer.setRGB(i, 182, 64, 255);//purple
-                }
-            }
-        } else if (state == LEDStates.HAS_NOTE){
+        if (state == LEDStates.INTAKING){
             for(int i = 0; i < m_ledBuffer.getLength(); i++){
-                m_ledBuffer.setRGB(i, 255,136,0);//orange
+                m_ledBuffer.setRGB(i, 235, 64, 52); //red
             }
-        }else if(state == LEDStates.AT_AMP) {
+        } else if (state == LEDStates.HOLDING) {
             for(int i = 0; i < m_ledBuffer.getLength(); i++){
-                m_ledBuffer.setRGB(i, 128, 20, 32);//burgundy
+                m_ledBuffer.setRGB(i, 245, 133, 73); //orange
             }
-        } else {
+        } else if (state == LEDStates.AT_AMP) {
             for(int i = 0; i < m_ledBuffer.getLength(); i++){
-                m_ledBuffer.setRGB(i, 0,255,0);//green
+                m_ledBuffer.setRGB(i, 95, 140, 237); //blue
+            }
+        } else if (state == LEDStates.SHOOTING) {
+            for(int i = 0; i < m_ledBuffer.getLength(); i++){
+                m_ledBuffer.setRGB(i, 175, 95, 237); //purple
+            }
+        } else if (state == LEDStates.NEUTRAL) {
+            for(int i = 0; i < m_ledBuffer.getLength(); i++){
+                m_ledBuffer.setRGB(i, 109, 252, 116); //green
             }
         }
     }  
