@@ -25,6 +25,7 @@ public class Mechanisms {
         SPEAKER_HOLDING,
         SHOOTING_SPEAKER,
         SHOOTING_AMP,
+        VOMITING,
         TESTING,
         MANUAL,
         OFF;
@@ -54,14 +55,14 @@ public class Mechanisms {
             pivotSubsystem.setState(PivotStates.AMP); //need to be at amp angle in order to intake
             intakeSubsystem.setState(IntakeStates.INTAKING);
             shooterSubsystem.setState(ShooterStates.INTAKING);
-            if (sensorSubsystem.detectNote()){
+            if (sensorSubsystem.detectNote() || sensorSubsystem.isBeamBroken()){
                 setState(MechanismStates.OFF);      
             }
         } else if (mechanismState == MechanismStates.INTAKING_WITH_SHOOTER_WARMUP){ //just for auto
             pivotSubsystem.setState(PivotStates.AMP);
             intakeSubsystem.setState(IntakeStates.INTAKING);
             shooterSubsystem.setState(ShooterStates.WARMUP);
-            if (sensorSubsystem.detectNote()){
+            if (sensorSubsystem.detectNote() || sensorSubsystem.isBeamBroken()){
                 setState(MechanismStates.SPEAKER_HOLDING); //TODO: this will change depending on if we're in teleop or auto        
             }
         } else if(mechanismState == MechanismStates.AMP_HOLDING){
@@ -87,7 +88,11 @@ public class Mechanisms {
                 //setState(MechanismStates.INTAKING); //sets to intaking right after shooting
                 mechanismState = MechanismStates.INTAKING;
             }
-        } else if (mechanismState == MechanismStates.OFF){
+        } else if(mechanismState == MechanismStates.VOMITING){
+            pivotSubsystem.setState(PivotStates.AMP);
+            intakeSubsystem.setState(IntakeStates.VOMITING);
+            shooterSubsystem.setState(ShooterStates.VOMITING); // TODO change if needed
+        } else if(mechanismState == MechanismStates.OFF){
             pivotSubsystem.setState(PivotStates.OFF);
             shooterSubsystem.setState(ShooterStates.OFF);
             intakeSubsystem.setState(IntakeStates.OFF);

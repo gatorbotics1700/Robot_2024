@@ -32,6 +32,7 @@ public class ShooterSubsystem {
         AMP_HOLDING,
         SPEAKER_HOLDING,
         AMP,
+        VOMITING, //TODO check if we actually need this
         SPEAKER,
         TESTING; 
     }
@@ -61,7 +62,7 @@ public class ShooterSubsystem {
         System.out.println("CURRENT SHOOTER STATE: " + currentShooterState);
         if (currentShooterState == ShooterStates.INTAKING){
             high.setControl(highDutyCycleOut.withOutput(0));
-            mid.setControl(midDutyCycleOut.withOutput(0));
+            mid.setControl(midDutyCycleOut.withOutput(TESTING_SPEED)); // warming up mid motor earlier to save time
             low.setControl(lowDutyCycleOut.withOutput(LOW_INTAKING_SPEED));
         }else if (currentShooterState == ShooterStates.WARMUP){ //same as speaking holding but doesnt assume we have a note
             high.setControl(highDutyCycleOut.withOutput(HIGH_SPEAKER_SPEED));
@@ -83,6 +84,10 @@ public class ShooterSubsystem {
             high.setControl(highDutyCycleOut.withOutput(HIGH_SPEAKER_SPEED));
             mid.setControl(midDutyCycleOut.withOutput(-MID_SPEAKER_SPEED)); //negative
             low.setControl(lowDutyCycleOut.withOutput(LOW_SHOOTING_SPEED)); //TESTING
+        } else if(currentShooterState == ShooterStates.VOMITING){ // TODO check if we need this, maybe just in case it gets stuck in low
+            high.setControl(highDutyCycleOut.withOutput(0));
+            mid.setControl(midDutyCycleOut.withOutput(0)); // TODO check - we might not want this if we want to warmup mid
+            low.setControl(lowDutyCycleOut.withOutput(-LOW_INTAKING_SPEED));
         }else if(currentShooterState == ShooterStates.OFF){
             high.setControl(highDutyCycleOut.withOutput(0));
             mid.setControl(midDutyCycleOut.withOutput(0));

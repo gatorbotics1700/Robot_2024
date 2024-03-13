@@ -89,5 +89,14 @@ public class Buttons {
           m_mechanismSubsystem.setState(MechanismStates.MANUAL);
         }
       }
+
+      if(OI.codriver.getPOV() > 45 && OI.codriver.getPOV() < 135){
+        // if statement is just in case so that we only switch to vomiting if we are intaking
+        // TODO might need to change this
+        if(m_mechanismSubsystem.getMechanismState() == MechanismStates.INTAKING){ 
+          System.out.println("=====VOMITING NOTE=====");
+          m_mechanismSubsystem.setState(MechanismStates.VOMITING);
+        }
+      }
   }
 }

@@ -4,11 +4,11 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3; 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
-
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class SensorSubsystem {
 
-    
+    private DigitalInput beambreakSensor;
     private ColorSensorV3 colorSensor;
     private final ColorMatch m_colorMatcher = new ColorMatch();
     private final Color NOTE_COLOR = new Color(98, 106, 50);
@@ -20,6 +20,7 @@ public class SensorSubsystem {
     public SensorSubsystem(){
         I2C.Port i2cPort = I2C.Port.kOnboard;
         colorSensor = new ColorSensorV3(i2cPort);
+        beambreakSensor = new DigitalInput(10); //TODO change port number
         init();
     }
 
@@ -44,5 +45,9 @@ public class SensorSubsystem {
             //System.out.println("We don't see the note");
             return false;
         }
+    }
+
+    public boolean isBeamBroken(){
+        return beambreakSensor.get();
     }
 }

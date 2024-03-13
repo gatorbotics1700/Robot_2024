@@ -18,6 +18,7 @@ public class IntakeSubsystem {
 
     public static enum IntakeStates {
         INTAKING,
+        VOMITING,
         OFF;
     }
 
@@ -42,7 +43,9 @@ public class IntakeSubsystem {
         if(intakeState == IntakeStates.INTAKING) {
             //System.out.println("***********INTAKING*************");
             intakeMotor.setControl(dutyCycleOut.withOutput(INTAKE_SPEED));
-        } else if (intakeState == IntakeStates.OFF){
+        } else if(intakeState == IntakeStates.VOMITING){ // ejects the note if not intaking properly
+            intakeMotor.setControl(dutyCycleOut.withOutput(-INTAKE_SPEED)); 
+        } else if(intakeState == IntakeStates.OFF){
             intakeMotor.setControl(dutyCycleOut.withOutput(0));
         } else {
             intakeMotor.setControl(dutyCycleOut.withOutput(0));
