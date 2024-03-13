@@ -111,15 +111,15 @@ public class PivotSubsystem{
     }
 
     public boolean atSpeaker(){
-        return Math.abs((pivot.getSelectedSensorPosition()-SPEAKER_ANGLE)*PIVOT_TICKS_PER_DEGREE)< DEADBAND;
+        return Math.abs(pivot.getSelectedSensorPosition()-(SPEAKER_ANGLE*PIVOT_TICKS_PER_DEGREE))< DEADBAND;
     }
 
     public boolean atAmp(){
-        return Math.abs((pivot.getSelectedSensorPosition()-AMP_ANGLE)*PIVOT_TICKS_PER_DEGREE)< DEADBAND;
+        return Math.abs(pivot.getSelectedSensorPosition()-(AMP_ANGLE*PIVOT_TICKS_PER_DEGREE))< DEADBAND;
     }
 
     public boolean atStage(){
-        return Math.abs((pivot.getSelectedSensorPosition()-STAGE_ANGLE)*PIVOT_TICKS_PER_DEGREE)< DEADBAND;
+        return Math.abs(pivot.getSelectedSensorPosition()-(STAGE_ANGLE*PIVOT_TICKS_PER_DEGREE))< DEADBAND;
     }
 
     public boolean getSpeakerLimitSwitch(){ // false when NOT pressed, true when pressed
