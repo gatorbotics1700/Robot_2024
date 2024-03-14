@@ -141,16 +141,16 @@ public class Robot extends TimedRobot {
     /* This function is called once when teleop is enabled. */
     @Override
     public void teleopInit() { //BEFORE TESTING: MAKE SURE YOU HAVE EITHER DEPLOYED OR ADDED DRIVETRAIN INIT
-        m_drivetrainSubsystem.onEnable(); 
+        //m_drivetrainSubsystem.onEnable(); 
         m_mechanismSubsystem.init();
     }
 
     /* This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() { 
-        m_drivetrainSubsystem.driveTeleop();
-        m_drivetrainSubsystem.drive();   
-        // m_mechanismSubsystem.periodic();
+        //m_drivetrainSubsystem.driveTeleop();
+        //m_drivetrainSubsystem.drive();   
+         m_mechanismSubsystem.periodic();
         m_buttons.buttonsPeriodic();
     }
 
@@ -170,8 +170,8 @@ public class Robot extends TimedRobot {
        // m_mechanismSubsystem.intakeSubsystem.init();
         //m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.MANUAL);
         
-        
-        m_drivetrainSubsystem.onEnable();
+        m_pivotSubsystem.init();
+        //m_drivetrainSubsystem.onEnable();
     }
 
     /* This function is called periodically during test mode. */
@@ -182,12 +182,12 @@ public class Robot extends TimedRobot {
       //m_pivotSubsystem.setState(PivotStates.SPEAKER);
         //OFFSETS
        // m_drivetrainSubsystem.driveTeleop();
+       m_pivotSubsystem.pivot.setSelectedSensorPosition(90*2048*100/360);
+       System.out.println("SENSOR POSITION: " + m_pivotSubsystem.pivot.getSelectedSensorPosition());
        
        
-       
-       
-       m_drivetrainSubsystem.setSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(0.3, 0, 0, m_drivetrainSubsystem.getPoseRotation()));
-       m_drivetrainSubsystem.drive();
+       //m_drivetrainSubsystem.setSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(0.3, 0, 0, m_drivetrainSubsystem.getPoseRotation()));
+       //m_drivetrainSubsystem.drive();
 
         //m_intakeSubsystem.testIntake();
         //m_shooterSubsystem.testShooter();

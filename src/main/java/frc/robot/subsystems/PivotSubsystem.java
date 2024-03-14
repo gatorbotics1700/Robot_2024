@@ -8,24 +8,24 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 public class PivotSubsystem{
-    private TalonFX pivot;
+    public TalonFX pivot;
     private DigitalInput ampLimitSwitch;
     private DigitalInput stageLimitSwitch;
 
-    private static final double _kP = 0.2;//TODO tune PID
+    private static final double _kP = 0.1;//TODO tune PID
     private static final double _kI = 0.0;
     private static final double _kD = 0.0;
     private static final int _kIzone = 0;
     private static final double _kPeakOutput = 1.0;
 
     private Gains pivotGains = new Gains(_kP, _kI, _kD, _kIzone, _kPeakOutput);
-    private static double deadband = 7000; //TODO change deadband (in ticks)
 
-    private final double PIVOT_TICKS_PER_DEGREE = 0;//TODO ask build for diameters, etc.
+    private final double PIVOT_TICKS_PER_DEGREE = 2048*100*(1/360);//TODO sanity check
     private final double MANUAL_SPEED = 0.1;
     private final double AMP_ANGLE = 93; //try 93 for now, 96 is more realistic
-    private final double SPEAKER_ANGLE = 0;//TODO determine angle
-    private final double STAGE_ANGLE = 0; //TODO determine angle (highest possible angle to go under stage)
+    private final double SPEAKER_ANGLE = 45;//TODO test
+    private final double STAGE_ANGLE = 25;
+    private double deadband = 5 * PIVOT_TICKS_PER_DEGREE; //TODO change deadband (in ticks)
     
     public static enum PivotStates{
         AMP,
@@ -60,11 +60,14 @@ public class PivotSubsystem{
 
     public void periodic(){
         System.out.println("CURRENT PIVOT STATE: " + pivotState);
+        System.out.println("position ticks: " + pivot.getSelectedSensorPosition());
+        System.out.println(pivot.getSelectedSensorPosition()/PIVOT_TICKS_PER_DEGREE);
         if((pivotState == PivotStates.AMP) && !atAmp() && !ampLimitSwitch.get()){
             setPivot(AMP_ANGLE);
         }else if((pivotState == PivotStates.SPEAKER) && !atSpeaker()){
             setPivot(SPEAKER_ANGLE);
         }else if(pivotState == PivotStates.STAGE && !atStage() && !stageLimitSwitch.get()){
+            System.out.println("IN STAGE!!!!!!!!");
             setPivot(STAGE_ANGLE);
         }else if(pivotState == PivotStates.MANUAL){
             manual();
