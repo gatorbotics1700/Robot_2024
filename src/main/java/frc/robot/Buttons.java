@@ -33,10 +33,7 @@ public class Buttons {
       
 
     //CODRIVER
-      if (OI.codriver.getXButton()){ //manual
-        m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.SPEAKER);
-        System.out.println("=======X BUTTON====SPEAKER PIVOT=======");
-      }
+      //if (OI.codriver.getXButton()){ }
 
       if (OI.codriver.getYButton()){ //all off mech
         m_mechanismSubsystem.setState(MechanismStates.OFF);
@@ -85,8 +82,7 @@ public class Buttons {
         }
       }
 
-      //set to speaker
-      if(OI.codriver.getBackButtonPressed()){
+      if(OI.codriver.getBackButtonPressed()){//NEW ADDITION! set to stage
         System.out.println("back button pressed");
         m_mechanismSubsystem.setState(MechanismStates.STAGE);
       }

@@ -23,9 +23,9 @@ public class PivotSubsystem{
 
     private final double PIVOT_TICKS_PER_DEGREE = 0;//TODO ask build for diameters, etc.
     private final double MANUAL_SPEED = 0.1;
-    private final double AMP_ANGLE = 0; //try 93 for now, 96 is more realistic
+    private final double AMP_ANGLE = 93; //try 93 for now, 96 is more realistic
     private final double SPEAKER_ANGLE = 0;//TODO determine angle
-    private final double STAGE_ANGLE = 0; //TODO determine angle
+    private final double STAGE_ANGLE = 0; //TODO determine angle (highest possible angle to go under stage)
     
     public static enum PivotStates{
         AMP,
@@ -40,7 +40,7 @@ public class PivotSubsystem{
 
     public PivotSubsystem(){
         ampLimitSwitch = new DigitalInput(9); 
-        stageLimitSwitch = new DigitalInput(8);//stage limit switch
+        stageLimitSwitch = new DigitalInput(8);
 
         pivot = new TalonFX(Constants.PIVOT_MOTOR_CAN_ID);
         pivot.setNeutralMode(NeutralMode.Brake);
@@ -58,7 +58,7 @@ public class PivotSubsystem{
         setState(PivotStates.OFF);
     }
 
-    public void periodic(){//TODO get angles and adjust (is stage lower than amp??)
+    public void periodic(){
         System.out.println("CURRENT PIVOT STATE: " + pivotState);
         if((pivotState == PivotStates.AMP) && !atAmp() && !ampLimitSwitch.get()){
             setPivot(AMP_ANGLE);
@@ -90,10 +90,10 @@ public class PivotSubsystem{
     }
 
     public void setPivot(double desiredAngle){
-        double desiredTicks = desiredAngle * PIVOT_TICKS_PER_DEGREE; //calculate right ticks
+        double desiredTicks = desiredAngle * PIVOT_TICKS_PER_DEGREE; //calculates right ticks
         double diff = desiredTicks - pivot.getSelectedSensorPosition();
 
-        if(Math.abs(diff) > deadband){ //set motor to right ticks
+        if(Math.abs(diff) > deadband){ //sets motor to right ticks
             pivot.set(ControlMode.Position, Math.signum(diff) * desiredTicks);
         }else{
             pivot.set(ControlMode.PercentOutput, 0);

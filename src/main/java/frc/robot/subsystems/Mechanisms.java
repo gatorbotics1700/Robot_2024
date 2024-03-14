@@ -47,7 +47,7 @@ public class Mechanisms {
 
         setState(MechanismStates.OFF);
     }
-    //TODO walk through states
+
     public void periodic(){
         System.out.println("=======CURRENT STATE IS: " + mechanismState + "=======");
         if (mechanismState == MechanismStates.INTAKING){
@@ -91,12 +91,12 @@ public class Mechanisms {
             pivotSubsystem.setState(PivotStates.OFF);
             shooterSubsystem.setState(ShooterStates.OFF);
             intakeSubsystem.setState(IntakeStates.OFF);
-        }else if (mechanismState == MechanismStates.TESTING){
-            //pivotSubsystem.setState(PivotStates.MANUAL);
-            shooterSubsystem.setState(ShooterStates.TESTING);
-            //intakeSubsystem.setState(IntakeStates.INTAKING);
         }else if (mechanismState == MechanismStates.MANUAL){
             pivotSubsystem.setState(PivotStates.MANUAL);
+        }else if (mechanismState == MechanismStates.TESTING){
+            //pivotSubsystem.setState(PivotStates.MANUAL);
+            //shooterSubsystem.setState(ShooterStates.TESTING);
+            //intakeSubsystem.setState(IntakeStates.INTAKING);
         } else {
             pivotSubsystem.setState(PivotStates.OFF);
             shooterSubsystem.setState(ShooterStates.OFF);
