@@ -46,7 +46,6 @@ public class AutonomousBasePD extends AutonomousBase{
     private PIDController xController;
     private PIDController yController;
 
-
     private Boolean isFirstTimeInState;
 
     public AutonomousBasePD(Pose2d startingCoordinate, PDState[] stateSequence){
