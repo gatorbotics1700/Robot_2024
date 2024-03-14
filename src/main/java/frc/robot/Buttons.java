@@ -33,7 +33,7 @@ public class Buttons {
       
 
     //CODRIVER
-      //if (OI.codriver.getXButton()){ }
+      //if (OI.codriver.getXButton()){}
 
       if (OI.codriver.getYButton()){ //all off mech
         m_mechanismSubsystem.setState(MechanismStates.OFF);
@@ -41,35 +41,41 @@ public class Buttons {
       }
 
       if (OI.codriver.getAButton()){  //amp/speaker shooting
-          if(m_mechanismSubsystem.getMechanismState() == MechanismStates.AMP_HOLDING){
-            m_mechanismSubsystem.setState(MechanismStates.SHOOTING_AMP);
-            System.out.println("=====A BUTTON=====SHOOTING IN AMP!!");
-          }else if(m_mechanismSubsystem.getMechanismState() == MechanismStates.SPEAKER_HOLDING){
-            m_mechanismSubsystem.setState(MechanismStates.SHOOTING_SPEAKER);
-            System.out.println("=====A BUTTON=====SHOOTING IN SPEAKER!!");
-          }else{
-            System.out.println("=====A BUTTON=====ERROR NOT IN HOLDING CANNOT SHOOT !!!!!!!!!!!!!!!!!");
-          }
+        if(m_mechanismSubsystem.getMechanismState() == MechanismStates.AMP_HOLDING){
+          m_mechanismSubsystem.setState(MechanismStates.SHOOTING_AMP);
+          System.out.println("=====A BUTTON=====SHOOTING IN AMP!!");
+        }else if(m_mechanismSubsystem.getMechanismState() == MechanismStates.SPEAKER_HOLDING){
+          m_mechanismSubsystem.setState(MechanismStates.SHOOTING_SPEAKER);
+          System.out.println("=====A BUTTON=====SHOOTING IN SPEAKER!!");
+        }else{
+          System.out.println("=====A BUTTON=====ERROR NOT IN HOLDING CANNOT SHOOT !!!!!!!!!!!!!!!!!");
+        }
       }
       
       if (OI.codriver.getBButtonPressed()){ //intaking toggle
-        if(m_mechanismSubsystem.getMechanismState() == MechanismStates.INTAKING){
-          m_mechanismSubsystem.setState(MechanismStates.OFF);
-          System.out.println("=======B BUTTON====INTAKING OFF=======");
-        } else {
-          m_mechanismSubsystem.setState(MechanismStates.INTAKING);
-          System.out.println("=======B BUTTON====INTAKING ON=======");
-        }
+        // if(m_mechanismSubsystem.getMechanismState() == MechanismStates.INTAKING){
+        //   m_mechanismSubsystem.setState(MechanismStates.OFF);
+        //   System.out.println("=======B BUTTON====INTAKING OFF=======");
+        // } else {
+        //   m_mechanismSubsystem.setState(MechanismStates.INTAKING);
+        //   System.out.println("=======B BUTTON====INTAKING ON=======");
+        // }
+        System.out.println("====BACK BUTTON PRESSED====PIVOT STAGE====");
+        m_mechanismSubsystem.setState(MechanismStates.STAGE);
       }
 
       if(OI.codriver.getLeftBumper()){
-        m_mechanismSubsystem.setState(MechanismStates.SPEAKER_HOLDING);
-        System.out.println("=======LEFT BUMPER====SPEAKER HOLDING=======");
+        //m_mechanismSubsystem.setState(MechanismStates.SPEAKER_HOLDING);
+        //System.out.println("=======LEFT BUMPER====SPEAKER HOLDING=======");
+        m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.SPEAKER);
+        System.out.println("====LEFT BUMPER====PIVOT SPEAKER====");
       }
       
       if(OI.codriver.getRightBumper()){
-        m_mechanismSubsystem.setState(MechanismStates.AMP_HOLDING);
-        System.out.println("=======RIGHT BUMPER====AMP HOLDING=======");
+        //m_mechanismSubsystem.setState(MechanismStates.AMP_HOLDING);
+        //System.out.println("=======RIGHT BUMPER====AMP HOLDING=======");
+        m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.AMP);
+        System.out.println("====RIGHT BUMPER====PIVOT AMP====");
       }
 
       if(OI.codriver.getStartButtonPressed()){
@@ -82,9 +88,9 @@ public class Buttons {
         }
       }
 
-      if(OI.codriver.getBackButtonPressed()){//NEW ADDITION! set to stage
-        System.out.println("back button pressed");
-        m_mechanismSubsystem.setState(MechanismStates.STAGE);
-      }
+      // if(OI.codriver.getBackButtonPressed()){//NEW ADDITION! set to stage
+      //   System.out.println("====BACK BUTTON PRESSED====PIVOT STAGE====");
+      //   m_mechanismSubsystem.setState(MechanismStates.STAGE);
+      // }
   }
 }

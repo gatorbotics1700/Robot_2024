@@ -78,7 +78,7 @@ public class PivotSubsystem{
             pivotState = PivotStates.OFF;
         }
     }
-   
+    
     public void manual() {//limit switches act as a failsafe
         //System.out.println("+++++++++++IN MANUAL++++++++++");
         if((OI.getCodriverRightAxis() < - 0.2) && !stageLimitSwitch.get()) {

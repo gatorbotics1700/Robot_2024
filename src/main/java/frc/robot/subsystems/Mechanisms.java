@@ -25,7 +25,7 @@ public class Mechanisms {
         SPEAKER_HOLDING,
         SHOOTING_SPEAKER,
         SHOOTING_AMP,
-        STAGE,//newly added! (have amp holding run entire time)
+        STAGE, //newly added! (have amp holding run entire time)
         TESTING,
         MANUAL,
         OFF;
