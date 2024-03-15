@@ -33,7 +33,7 @@ public class Buttons {
       
 
     //CODRIVER
-      //if (OI.codriver.getXButton()){}
+      if (OI.codriver.getXButton()){}
 
       if (OI.codriver.getYButton()){ //all off mech
         m_mechanismSubsystem.setState(MechanismStates.OFF);
@@ -53,20 +53,28 @@ public class Buttons {
       }
       
       if (OI.codriver.getBButtonPressed()){ //intaking toggle
-        // if(m_mechanismSubsystem.getMechanismState() == MechanismStates.INTAKING){
-        //   m_mechanismSubsystem.setState(MechanismStates.OFF);
-        //   System.out.println("=======B BUTTON====INTAKING OFF=======");
-        // } else {
-        //   m_mechanismSubsystem.setState(MechanismStates.INTAKING);
-        //   System.out.println("=======B BUTTON====INTAKING ON=======");
-        // }
-        System.out.println("====BACK BUTTON PRESSED====PIVOT STAGE====");
-        m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.STAGE);
+        if(m_mechanismSubsystem.getMechanismState() == MechanismStates.INTAKING){
+          m_mechanismSubsystem.setState(MechanismStates.OFF);
+          System.out.println("=======B BUTTON====INTAKING OFF=======");
+        } else {
+          m_mechanismSubsystem.setState(MechanismStates.INTAKING);
+          System.out.println("=======B BUTTON====INTAKING ON=======");
+        }
       }
 
       if(OI.codriver.getLeftBumper()){
-        //m_mechanismSubsystem.setState(MechanismStates.SPEAKER_HOLDING);
-        //System.out.println("=======LEFT BUMPER====SPEAKER HOLDING=======");
+        // //sets state to off so the motors don't immediately go the other way from amp holding
+        // //then warms up speaker motors (codriver has to click twice)
+        ////this button works under the assumption that the driver will primarily go to amp
+        // System.out.println("=======LEFT BUMPER====OFF THEN SPEAKER HOLDING=======");
+        // if(m_mechanismSubsystem.getMechanismState() == MechanismStates.AMP_HOLDING){
+        //   m_mechanismSubsystem.setState(MechanismStates.OFF);
+        // }else if(m_mechanismSubsystem.getMechanismState() == MechanismStates.OFF){
+        //   m_mechanismSubsystem.setState(MechanismStates.SPEAKER_HOLDING);
+        // }
+
+
+        //TESTING
         m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.SPEAKER);
         System.out.println("====LEFT BUMPER====PIVOT SPEAKER====");
       }
@@ -74,6 +82,8 @@ public class Buttons {
       if(OI.codriver.getRightBumper()){
         //m_mechanismSubsystem.setState(MechanismStates.AMP_HOLDING);
         //System.out.println("=======RIGHT BUMPER====AMP HOLDING=======");
+
+        //TESTING
         m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.AMP);
         System.out.println("====RIGHT BUMPER====PIVOT AMP====");
       }
@@ -88,9 +98,9 @@ public class Buttons {
         }
       }
 
-      // if(OI.codriver.getBackButtonPressed()){//NEW ADDITION! set to stage
-      //   System.out.println("====BACK BUTTON PRESSED====PIVOT STAGE====");
-      //   m_mechanismSubsystem.setState(MechanismStates.STAGE);
-      // }
+      if(OI.codriver.getBackButtonPressed()){//NEW ADDITION! set to stage
+        System.out.println("====BACK BUTTON PRESSED====PIVOT STAGE====");
+        m_mechanismSubsystem.setState(MechanismStates.STAGE);
+      }
   }
 }
