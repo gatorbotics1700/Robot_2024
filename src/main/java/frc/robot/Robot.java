@@ -152,8 +152,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() { 
         //m_drivetrainSubsystem.driveTeleop();
         //m_drivetrainSubsystem.drive();   
-        //m_mechanismSubsystem.periodic();
-        m_pivotSubsystem.periodic();
+        m_mechanismSubsystem.periodic();
         m_buttons.buttonsPeriodic();
     }
 
@@ -185,10 +184,10 @@ public class Robot extends TimedRobot {
       //m_pivotSubsystem.setState(PivotStates.SPEAKER);
         //OFFSETS
        // m_drivetrainSubsystem.driveTeleop();
-        m_pivotSubsystem.periodic();
-        //m_pivotSubsystem.pivot.setSelectedSensorPosition(90*2048*100/360);
-        System.out.println("SENSOR POSITION: " + m_pivotSubsystem.pivot.getSelectedSensorPosition());
-        m_pivotSubsystem.setState(PivotStates.SPEAKER);
+       m_pivotSubsystem.pivot.setSelectedSensorPosition(90*2048*100/360);//this is correct
+       System.out.println("SENSOR POSITION: " + m_pivotSubsystem.pivot.getSelectedSensorPosition());//this is correct
+       
+       
        //m_drivetrainSubsystem.setSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(0.3, 0, 0, m_drivetrainSubsystem.getPoseRotation()));
        //m_drivetrainSubsystem.drive();
 
