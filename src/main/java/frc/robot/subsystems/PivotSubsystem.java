@@ -57,6 +57,8 @@ public class PivotSubsystem{
     public void init(){
         setState(PivotStates.OFF);
         pivot.setSelectedSensorPosition(AMP_ANGLE*PIVOT_TICKS_PER_DEGREE);//sets encoder to recognize starting position as amp (flat to ground is 0 deg)
+        // setSelectedSensorPosition() takes in sensorPos, pidIdx, and timeoutMs, so TODO add kPIDLoopIdx and kTimeoutMs
+        // ^ test this by changing the angle constants back to original versions and see print values are nonzero (should be abt 90 degrees and 51200 ticks)
         System.out.println("********PIVOT POSITION IN INIT: " + pivot.getSelectedSensorPosition());
     }
 
