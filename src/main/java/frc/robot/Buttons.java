@@ -69,7 +69,8 @@ public class Buttons {
         // System.out.println("=======LEFT BUMPER====OFF THEN SPEAKER HOLDING=======");
         // if(m_mechanismSubsystem.getMechanismState() == MechanismStates.AMP_HOLDING){
         //   m_mechanismSubsystem.setState(MechanismStates.OFF);
-        // }else if(m_mechanismSubsystem.getMechanismState() == MechanismStates.OFF){
+        // }else if(m_mechanismSubsystem.getMechanismState() == MechanismStates.OFF ||
+          //      m_mechanismSubsystem.getMechanismState() == MechanismStates.INTAKING){
         //   m_mechanismSubsystem.setState(MechanismStates.SPEAKER_HOLDING);
         // }
 
