@@ -12,7 +12,7 @@ public class PivotSubsystem{
     private DigitalInput ampLimitSwitch;
     private DigitalInput stageLimitSwitch;
 
-    private static final double _kP = 0.1;//TODO tune PID
+    private static final double _kP = 0.03;//TODO tune PID
     private static final double _kI = 0.0;
     private static final double _kD = 0.0;
     private static final int _kIzone = 0;
@@ -20,13 +20,13 @@ public class PivotSubsystem{
 
     private Gains pivotGains = new Gains(_kP, _kI, _kD, _kIzone, _kPeakOutput);
 
-    private final double PIVOT_TICKS_PER_DEGREE = 2048*100*(1/360);//TODO sanity check
+    private final double PIVOT_TICKS_PER_DEGREE = 2048 * 100 / 360;//TODO sanity check
     private final double MANUAL_SPEED = 0.1;
     // TODO check if angle values work - changed so that selectedSensorPosition is 0 in init (amp)
-    private final double AMP_ANGLE = 0;//93; //try 93 for now, 96 is more realistic
-    private final double SPEAKER_ANGLE = -48;//45;//TODO test
-    private final double STAGE_ANGLE = -68;//25;
-    private double deadband = 5 * PIVOT_TICKS_PER_DEGREE; //TODO change deadband (in ticks)
+    private final double AMP_ANGLE = 0.0;//93; //try 93 for now, 96 is more realistic
+    private final double SPEAKER_ANGLE = -55.0;//45;//TODO test
+    private final double STAGE_ANGLE = -70.0;//25;
+    private double deadband = 2 * PIVOT_TICKS_PER_DEGREE; //TODO change deadband (in ticks)
     
     public static enum PivotStates{
         AMP,
@@ -41,7 +41,7 @@ public class PivotSubsystem{
 
     public PivotSubsystem(){
         ampLimitSwitch = new DigitalInput(9); 
-        stageLimitSwitch = new DigitalInput(8);
+        stageLimitSwitch = new DigitalInput(5);
 
         pivot = new TalonFX(Constants.PIVOT_MOTOR_CAN_ID);
         pivot.setNeutralMode(NeutralMode.Brake);
@@ -63,7 +63,7 @@ public class PivotSubsystem{
     public void periodic(){
         System.out.println("CURRENT PIVOT STATE: " + pivotState);
         System.out.println("position ticks: " + pivot.getSelectedSensorPosition());
-        System.out.println(pivot.getSelectedSensorPosition()/PIVOT_TICKS_PER_DEGREE);
+        System.out.println("ANGLE IN DEGREES: " + pivot.getSelectedSensorPosition()/PIVOT_TICKS_PER_DEGREE);
         if((pivotState == PivotStates.AMP) && !atAmp() && !ampLimitSwitch.get()){
             setPivot(AMP_ANGLE);
         }else if((pivotState == PivotStates.SPEAKER) && !atSpeaker()){

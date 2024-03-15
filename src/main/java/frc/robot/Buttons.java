@@ -61,7 +61,7 @@ public class Buttons {
         //   System.out.println("=======B BUTTON====INTAKING ON=======");
         // }
         System.out.println("====BACK BUTTON PRESSED====PIVOT STAGE====");
-        m_mechanismSubsystem.setState(MechanismStates.STAGE);
+        m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.STAGE);
       }
 
       if(OI.codriver.getLeftBumper()){

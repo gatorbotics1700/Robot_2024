@@ -10,6 +10,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Mechanisms;
 import frc.robot.subsystems.Mechanisms.MechanismStates;
+import frc.robot.subsystems.PivotSubsystem.PivotStates;
 import frc.robot.subsystems.SensorSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
@@ -142,7 +143,8 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() { //BEFORE TESTING: MAKE SURE YOU HAVE EITHER DEPLOYED OR ADDED DRIVETRAIN INIT
         //m_drivetrainSubsystem.onEnable(); 
-        m_mechanismSubsystem.init();
+        //m_mechanismSubsystem.init();
+        m_pivotSubsystem.init();
     }
 
     /* This function is called periodically during operator control. */
@@ -150,7 +152,8 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() { 
         //m_drivetrainSubsystem.driveTeleop();
         //m_drivetrainSubsystem.drive();   
-         m_mechanismSubsystem.periodic();
+        //m_mechanismSubsystem.periodic();
+        m_pivotSubsystem.periodic();
         m_buttons.buttonsPeriodic();
     }
 
@@ -182,10 +185,10 @@ public class Robot extends TimedRobot {
       //m_pivotSubsystem.setState(PivotStates.SPEAKER);
         //OFFSETS
        // m_drivetrainSubsystem.driveTeleop();
-       m_pivotSubsystem.pivot.setSelectedSensorPosition(90*2048*100/360);
-       System.out.println("SENSOR POSITION: " + m_pivotSubsystem.pivot.getSelectedSensorPosition());
-       
-       
+        m_pivotSubsystem.periodic();
+        //m_pivotSubsystem.pivot.setSelectedSensorPosition(90*2048*100/360);
+        System.out.println("SENSOR POSITION: " + m_pivotSubsystem.pivot.getSelectedSensorPosition());
+        m_pivotSubsystem.setState(PivotStates.SPEAKER);
        //m_drivetrainSubsystem.setSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(0.3, 0, 0, m_drivetrainSubsystem.getPoseRotation()));
        //m_drivetrainSubsystem.drive();
 
