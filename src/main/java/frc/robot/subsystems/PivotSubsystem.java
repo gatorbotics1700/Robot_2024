@@ -44,7 +44,6 @@ public class PivotSubsystem{
 
         pivot = new TalonFX(Constants.PIVOT_MOTOR_CAN_ID);
         pivot.setNeutralMode(NeutralMode.Brake);
-        pivot.setSelectedSensorPosition(AMP_ANGLE*PIVOT_TICKS_PER_DEGREE);//sets encoder to recognize starting position as amp (flat to ground is 0 deg)
         pivot.configAllowableClosedloopError(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 		/* Config Position Closed Loop gains in slot0, typically kF stays zero. */
             pivot.config_kP(Constants.kPIDLoopIdx, pivotGains.kP, Constants.kTimeoutMs);
@@ -56,6 +55,8 @@ public class PivotSubsystem{
     
     public void init(){
         setState(PivotStates.OFF);
+        pivot.setSelectedSensorPosition(AMP_ANGLE*PIVOT_TICKS_PER_DEGREE);//sets encoder to recognize starting position as amp (flat to ground is 0 deg)
+        System.out.println("********PIVOT POSITION IN INIT: " + pivot.getSelectedSensorPosition());
     }
 
     public void periodic(){
