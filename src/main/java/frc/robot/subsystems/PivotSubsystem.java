@@ -22,9 +22,10 @@ public class PivotSubsystem{
 
     private final double PIVOT_TICKS_PER_DEGREE = 2048*100*(1/360);//TODO sanity check
     private final double MANUAL_SPEED = 0.1;
-    private final double AMP_ANGLE = 93; //try 93 for now, 96 is more realistic
-    private final double SPEAKER_ANGLE = 45;//TODO test
-    private final double STAGE_ANGLE = 25;
+    // TODO check if angle values work - changed so that selectedSensorPosition is 0 in init (amp)
+    private final double AMP_ANGLE = 0;//93; //try 93 for now, 96 is more realistic
+    private final double SPEAKER_ANGLE = -48;//45;//TODO test
+    private final double STAGE_ANGLE = -68;//25;
     private double deadband = 5 * PIVOT_TICKS_PER_DEGREE; //TODO change deadband (in ticks)
     
     public static enum PivotStates{
