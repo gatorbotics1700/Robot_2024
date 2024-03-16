@@ -90,8 +90,8 @@ public class ShooterSubsystem {
             mid.setControl(midDutyCycleOut.withOutput(0)); // TODO check - we might not want this if we want to warmup mid
             low.setControl(lowDutyCycleOut.withOutput(-LOW_INTAKING_SPEED));
         } else if(currentShooterState == ShooterStates.SWALLOWING){ 
-            high.setControl(highDutyCycleOut.withOutput(TESTING_SPEED)); // TODO double check if we need high running - prob good idea in case note gets stuck between high and mid
-            mid.setControl(midDutyCycleOut.withOutput(-TESTING_SPEED));
+            high.setControl(highDutyCycleOut.withOutput(-TESTING_SPEED)); // TODO double check if we need high running - prob good idea in case note gets stuck between high and mid
+            mid.setControl(midDutyCycleOut.withOutput(TESTING_SPEED));
             low.setControl(lowDutyCycleOut.withOutput(-AMP_SPEED));
         }else if(currentShooterState == ShooterStates.OFF){
             high.setControl(highDutyCycleOut.withOutput(0));

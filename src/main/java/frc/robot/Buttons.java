@@ -4,6 +4,7 @@ import frc.robot.subsystems.PivotSubsystem.PivotStates;
 import frc.robot.subsystems.Mechanisms;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.Mechanisms.MechanismStates;
+import frc.robot.subsystems.SensorSubsystem;
 
 import com.ctre.phoenix6.mechanisms.MechanismState;
 
@@ -13,6 +14,7 @@ public class Buttons {
     
   private DrivetrainSubsystem m_drivetrainSubsystem = Robot.m_drivetrainSubsystem;
   private Mechanisms m_mechanismSubsystem = Robot.m_mechanismSubsystem;
+  private SensorSubsystem m_SensorSubsystem = Robot.m_sensorSubsystem;
   
   public void buttonsPeriodic(){
     //DRIVER
@@ -103,8 +105,12 @@ public class Buttons {
       }
 
       if(OI.codriver.getPOV() > 225 && OI.codriver.getPOV() < 315){
-        System.out.println("========SWALLOWING NOTE BACK IN========");
-        m_mechanismSubsystem.setState(MechanismStates.SWALLOWING);
+        if(m_SensorSubsystem.detectNote()){
+          m_mechanismSubsystem.setState(MechanismStates.OFF);
+        } else {
+          System.out.println("========SWALLOWING NOTE BACK IN========");
+          m_mechanismSubsystem.setState(MechanismStates.SWALLOWING);
+        }
       }
   }
 }
