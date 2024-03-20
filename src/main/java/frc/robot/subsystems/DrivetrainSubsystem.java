@@ -13,7 +13,7 @@ import frc.com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import frc.com.swervedrivespecialties.swervelib.SwerveModule;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Twist2d;
+//import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import java.util.function.DoubleSupplier;
 
 import frc.robot.Constants;
-import frc.robot.GeometryUtils;
+//import frc.robot.GeometryUtils;
 import frc.robot.LimelightHelpers;
 import frc.robot.OI;
 
@@ -76,16 +76,16 @@ public class DrivetrainSubsystem {
    private SwerveDrivePoseEstimator positionManager;
    private ShuffleboardTab tab;
 
-   private static final double driftKP= 0.0; 
-   private static final double driftKI= 0.0; 
-   private static final double driftKD= 0.0;
-   private static final double driftRotKP= 0.0; 
-   private static final double driftRotKI= 0.0; 
-   private static final double driftRotKD= 0.0;
+   // private static final double driftKP= 0.0; 
+   // private static final double driftKI= 0.0; 
+   // private static final double driftKD= 0.0;
+   // private static final double driftRotKP= 0.0; 
+   // private static final double driftRotKI= 0.0; 
+   // private static final double driftRotKD= 0.0;
 
-   private PIDController turnController;
-   private PIDController xController;
-   private PIDController yController;
+   // private PIDController turnController;
+   // private PIDController xController;
+   // private PIDController yController;
 
    //ChassisSpeeds takes in y velocity, x velocity, speed of rotation
    private ChassisSpeeds chassisSpeeds; //sets expected chassis speed to be called the next time drive is run
@@ -186,12 +186,12 @@ public class DrivetrainSubsystem {
 
       slowDrive = false;
 
-      turnController = new PIDController(driftRotKP, driftRotKI, driftRotKP); 
-      xController = new PIDController(driftKP, driftKI, driftKD);
-      yController = new PIDController(driftKP, driftKI, driftKD);
-      xController.reset();
-      yController.reset();
-      turnController.reset();
+      // turnController = new PIDController(driftRotKP, driftRotKI, driftRotKP); 
+      // xController = new PIDController(driftKP, driftKI, driftKD);
+      // yController = new PIDController(driftKP, driftKI, driftKD);
+      // xController.reset();
+      // yController.reset();
+      // turnController.reset();
    }
   
    //from pigeon used for updating our odometry
