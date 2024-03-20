@@ -46,6 +46,7 @@ public class PivotSubsystem{
         SPEAKER,
         STAGE, //TODO add to buttons/mechanisms
         MANUAL,
+        SELF_ADJUST,
         OFF;
         //TODO add climb state?
     }
@@ -88,6 +89,9 @@ public class PivotSubsystem{
             setPivot(STAGE_ANGLE);
         }else if(pivotState == PivotStates.MANUAL){
             manual();
+        } else if(pivotState == PivotStates.SELF_ADJUST) {
+            System.out.println("SELF ADJUSTING FOR SPEAKER SHOOTING");
+            setPivot(getSpeakerPivotAngle());
         }else if(pivotState == PivotStates.OFF){
             pivot.set(ControlMode.PercentOutput, 0);  
         }else{
