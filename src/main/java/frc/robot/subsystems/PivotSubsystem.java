@@ -169,15 +169,15 @@ public class PivotSubsystem{
         double d; // robot's distance from speaker
         if(onBlue == true){
             if(yPos < LOWER_FIELD_SPEAKER){
-                d = Math.sqrt(Math.pow((LOWER_FIELD_SPEAKER - yPos), 2) + Math.pow((xPos - SPEAKER_TARGET_DEPTH), 2));
+                d = Math.sqrt(Math.pow(Math.pow((xPos - SPEAKER_TARGET_DEPTH), 2) + (LOWER_FIELD_SPEAKER - yPos), 2));
             } else {
-                d = Math.sqrt(Math.pow((yPos - LOWER_FIELD_SPEAKER), 2) + Math.pow((xPos - SPEAKER_TARGET_DEPTH), 2));
+                d = Math.sqrt(Math.pow(Math.pow((xPos - SPEAKER_TARGET_DEPTH), 2) + (yPos - LOWER_FIELD_SPEAKER), 2));
             }
         } else {
             if(yPos < LOWER_FIELD_SPEAKER){
-                d = Math.sqrt(Math.pow((FIELD_LENGTH-SPEAKER_TARGET_DEPTH-xPos),2)+Math.pow((LOWER_FIELD_SPEAKER-yPos), 2));
+                d = Math.sqrt(Math.pow((FIELD_LENGTH - SPEAKER_TARGET_DEPTH - xPos), 2) + Math.pow((LOWER_FIELD_SPEAKER - yPos), 2));
             } else{
-                d = Math.sqrt(Math.pow((FIELD_LENGTH-SPEAKER_TARGET_DEPTH-xPos),2)+Math.pow((yPos-LOWER_FIELD_SPEAKER), 2));
+                d = Math.sqrt(Math.pow((FIELD_LENGTH - SPEAKER_TARGET_DEPTH - xPos), 2) + Math.pow((yPos - LOWER_FIELD_SPEAKER), 2));
             }
         }
         return -(90 - Math.atan(PIVOT_TO_SPEAKER_HEIGHT / (d + ROBOT_CENTER_TO_PIVOT_DISTANCE)));
