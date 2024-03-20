@@ -24,6 +24,7 @@ public class Mechanisms {
         AMP_HOLDING,
         SPEAKER_HOLDING,
         SHOOTING_SPEAKER,
+        // SPEAKER_PIVOT_ADJUST, // shooting speaker with a self-adjusting pivot
         SHOOTING_AMP,
         STAGE, //newly added! (have amp holding run entire time)
         TESTING,
@@ -69,7 +70,7 @@ public class Mechanisms {
             intakeSubsystem.setState(IntakeStates.OFF);
             shooterSubsystem.setState(ShooterStates.AMP_HOLDING);
         } else if(mechanismState == MechanismStates.SPEAKER_HOLDING){
-            pivotSubsystem.setState(PivotStates.SPEAKER);
+            pivotSubsystem.setState(PivotStates.SELF_ADJUST);//SPEAKER);
             intakeSubsystem.setState(IntakeStates.OFF);
             shooterSubsystem.setState(ShooterStates.SPEAKER_HOLDING);
         } else if(mechanismState == MechanismStates.SHOOTING_AMP){
@@ -77,13 +78,17 @@ public class Mechanisms {
             intakeSubsystem.setState(IntakeStates.OFF);
             shooterSubsystem.setState(ShooterStates.AMP);
         } else if(mechanismState == MechanismStates.SHOOTING_SPEAKER){
-            pivotSubsystem.setState(PivotStates.SPEAKER); 
+            pivotSubsystem.setState(PivotStates.SELF_ADJUST);//SPEAKER); 
             intakeSubsystem.setState(IntakeStates.OFF);
             shooterSubsystem.setState(ShooterStates.SPEAKER);
             if(System.currentTimeMillis()-stateStartTime >= SPEAKER_SHOOTING_TIME){ 
               //  System.out.println("++++++++++SETTING INTAKING+++++++++");
                 mechanismState = MechanismStates.INTAKING;//sets to intaking right after shooting
             }
+        // } else if(mechanismState == MechanismStates.SPEAKER_PIVOT_ADJUST){
+        //     pivotSubsystem.setState(PivotStates.SELF_ADJUST);
+        //     intakeSubsystem.setState(IntakeStates.OFF);
+        //     shooterSubsystem.setState(ShooterStates.SPEAKER);
         } else if(mechanismState == MechanismStates.STAGE) {
             pivotSubsystem.setState(PivotStates.STAGE); 
             //other states should be maintained (ex intaking, holding state, etc.)

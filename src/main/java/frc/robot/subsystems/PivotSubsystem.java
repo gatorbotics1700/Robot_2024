@@ -180,7 +180,7 @@ public class PivotSubsystem{
                 d = Math.sqrt(Math.pow((FIELD_LENGTH-SPEAKER_TARGET_DEPTH-xPos),2)+Math.pow((yPos-LOWER_FIELD_SPEAKER), 2));
             }
         }
-        return Math.atan(PIVOT_TO_SPEAKER_HEIGHT / (d + ROBOT_CENTER_TO_PIVOT_DISTANCE));
+        return -(90 - Math.atan(PIVOT_TO_SPEAKER_HEIGHT / (d + ROBOT_CENTER_TO_PIVOT_DISTANCE)));
     }
 
 }
