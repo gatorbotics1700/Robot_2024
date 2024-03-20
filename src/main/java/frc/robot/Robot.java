@@ -152,7 +152,8 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() { 
         //m_drivetrainSubsystem.driveTeleop();
         //m_drivetrainSubsystem.drive();   
-        m_mechanismSubsystem.periodic();
+        m_pivotSubsystem.periodic();
+        //m_mechanismSubsystem.periodic();
         m_buttons.buttonsPeriodic();
     }
 

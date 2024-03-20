@@ -12,7 +12,7 @@ public class PivotSubsystem{
     private DigitalInput ampLimitSwitch;
     private DigitalInput stageLimitSwitch;
 
-    private static final double _kP = 0.03;//TODO tune PID
+    private static final double _kP = 0.02;//0.03;//TODO tune PID
     private static final double _kI = 0.0;
     private static final double _kD = 0.0;
     private static final int _kIzone = 0;
@@ -27,8 +27,8 @@ public class PivotSubsystem{
     //we want amp angle to be like 90 degrees and parallel to floor to be 0 degrees for clarity
     private final double AMP_ANGLE = 0.0;//93; //try 93 for now, 96 is more realistic
     private final double SPEAKER_ANGLE = -55.0;//45;//TODO test
-    private final double STAGE_ANGLE = -70.0;//25;
-    private double deadband = 2 * PIVOT_TICKS_PER_DEGREE;
+    private final double STAGE_ANGLE = -75.0;//-70.0;//25;
+    private double deadband = 1 * PIVOT_TICKS_PER_DEGREE;
     
     public static enum PivotStates{
         AMP,
@@ -64,10 +64,10 @@ public class PivotSubsystem{
 
     public void periodic(){
         System.out.println("CURRENT PIVOT STATE: " + pivotState);
-        System.out.println("position ticks: " + pivot.getSelectedSensorPosition());//prints O.0
-        System.out.println(pivot.getSelectedSensorPosition()/PIVOT_TICKS_PER_DEGREE);
-        System.out.println("is at amp: " + atAmp());
-        System.out.println("is at speaker: " + atSpeaker())
+        //System.out.println("position ticks: " + pivot.getSelectedSensorPosition());//prints O.0
+        //System.out.println(pivot.getSelectedSensorPosition()/PIVOT_TICKS_PER_DEGREE);
+        //System.out.println("is at amp: " + atAmp());
+        //System.out.println("is at speaker: " + atSpeaker());
         if((pivotState == PivotStates.AMP) && !atAmp() && !ampLimitSwitch.get()){
             setPivot(AMP_ANGLE);
         }else if((pivotState == PivotStates.SPEAKER) && !atSpeaker()){
@@ -85,7 +85,7 @@ public class PivotSubsystem{
         }
     }
     
-    public void manual() {//limit switches act as a failsafe
+    public void manual() {
         //System.out.println("+++++++++++IN MANUAL++++++++++");
         if((OI.getCodriverRightAxis() < - 0.2) && !stageLimitSwitch.get()) {
             //System.out.println("TOWARDS STAGE");
@@ -95,6 +95,15 @@ public class PivotSubsystem{
             pivot.set(ControlMode.PercentOutput, -MANUAL_SPEED);  
         } else {
             pivot.set(ControlMode.PercentOutput, 0); 
+        }
+
+
+        //TODO add a way for driver to re-zero it
+         //in case pid motor zero gets mesed up during a match
+        if(stageLimitSwitch.get()){
+            //set to correct degrees at stage
+        }else if(ampLimitSwitch.get()){
+            //zero at amp
         }
     }
 

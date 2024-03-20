@@ -33,7 +33,12 @@ public class Buttons {
       
 
     //CODRIVER
-      if (OI.codriver.getXButton()){}
+      if (OI.codriver.getXButton()){
+
+        //TESTING
+        System.out.println("====X BUTTON PRESSED====PIVOT STAGE====");
+        m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.STAGE);
+      }
 
       if (OI.codriver.getYButton()){ //all off mech
         m_mechanismSubsystem.setState(MechanismStates.OFF);
@@ -97,11 +102,6 @@ public class Buttons {
           System.out.println("in manual pivot!");
           m_mechanismSubsystem.setState(MechanismStates.MANUAL);
         }
-      }
-
-      if(OI.codriver.getBackButtonPressed()){//NEW ADDITION! set to stage
-        System.out.println("====BACK BUTTON PRESSED====PIVOT STAGE====");
-        m_mechanismSubsystem.setState(MechanismStates.STAGE);
       }
   }
 }
