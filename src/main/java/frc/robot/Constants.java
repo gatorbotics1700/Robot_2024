@@ -71,6 +71,7 @@ public final class Constants {
     public static final double STEER_MOTOR_MAX_VOLTAGE = 0.6;
 
     public static final double METERS_PER_INCH = 0.0254;
+    public static final double INCHES_PER_METER = 39.3701;
 
     public static final int INTAKE_MOTOR_CAN_ID = 28;
     public static final int PIVOT_MOTOR_CAN_ID = 32; 

@@ -4,8 +4,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants;
 import frc.robot.OI;
+import frc.robot.Robot;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class PivotSubsystem{
     public TalonFX pivot;
@@ -29,6 +32,14 @@ public class PivotSubsystem{
     private final double SPEAKER_ANGLE = -55.0;//45;//TODO test
     private final double STAGE_ANGLE = -75.0;//-70.0;//25;
     private double deadband = 1 * PIVOT_TICKS_PER_DEGREE;
+
+    private boolean onBlue = true; // true if on blue alliance, false if on red alliance
+    private final double FIELD_LENGTH = 653.2; // horizontal length of field (long side) in inches
+    private final double FIELD_WIDTH = 323.28; // vertical length of field (short side) in inches
+    private final double LOWER_FIELD_SPEAKER = 104.64; // distance from bottom of field to middle of speaker
+    private final double PIVOT_TO_SPEAKER_HEIGHT = 65.875; // measured in inches TODO may want to double check measurement
+    private final double SPEAKER_TARGET_DEPTH = 9; // speaker depth is 18, and we are aiming for the middle
+    private final double ROBOT_CENTER_TO_PIVOT_DISTANCE = 6.5;
     
     public static enum PivotStates{
         AMP,
@@ -146,6 +157,26 @@ public class PivotSubsystem{
 
     public boolean getStageLimitSwitch(){ // false when NOT pressed, true when pressed
         return stageLimitSwitch.get();
+    }
+
+    public double getSpeakerPivotAngle(){ 
+        double xPos = (Constants.INCHES_PER_METER) * Robot.m_drivetrainSubsystem.getPoseX(); // meters
+        double yPos = (Constants.INCHES_PER_METER) * Robot.m_drivetrainSubsystem.getPoseY(); // meters
+        double d; // robot's distance from speaker
+        if(onBlue == true){
+            if(yPos < LOWER_FIELD_SPEAKER){
+                d = Math.sqrt(Math.pow((LOWER_FIELD_SPEAKER - yPos), 2) + Math.pow((xPos - SPEAKER_TARGET_DEPTH), 2));
+            } else {
+                d = Math.sqrt(Math.pow((yPos - LOWER_FIELD_SPEAKER), 2) + Math.pow((xPos - SPEAKER_TARGET_DEPTH), 2));
+            }
+        } else {
+            if(yPos < LOWER_FIELD_SPEAKER){
+                d = Math.sqrt(Math.pow((FIELD_LENGTH-SPEAKER_TARGET_DEPTH-xPos),2)+Math.pow((LOWER_FIELD_SPEAKER-yPos), 2));
+            } else{
+                d = Math.sqrt(Math.pow((FIELD_LENGTH-SPEAKER_TARGET_DEPTH-xPos),2)+Math.pow((yPos-LOWER_FIELD_SPEAKER), 2));
+            }
+        }
+        return Math.atan(PIVOT_TO_SPEAKER_HEIGHT / (d + ROBOT_CENTER_TO_PIVOT_DISTANCE));
     }
 
 }
