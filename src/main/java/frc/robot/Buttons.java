@@ -30,22 +30,22 @@ public class Buttons {
         m_drivetrainSubsystem.stopDrive(); 
       }*/
       
-      if (OI.m_controller.getLeftBumper()){ //emergency stop EVERYTHING
+      if (OI.driver.getLeftBumper()){ //emergency stop EVERYTHING
        // m_drivetrainSubsystem.stopDrive(); 
       }
-      if (OI.m_controller_two.getAButton()){ 
+      if (OI.codriver.getAButton()){ 
         m_mechanismSubsystem.setState(MechanismStates.SHOOTING_AMP);
         System.out.println("=====A BUTTON=====SHOOTING IN AMP!!");
       }
-      if (OI.m_controller_two.getXButton()){ 
+      if (OI.codriver.getXButton()){ 
         m_mechanismSubsystem.setState(MechanismStates.SHOOTING_SPEAKER);
         System.out.println("=======X BUTTON======SHOOTING IN SPEAKER!!");
       }
-      if (OI.m_controller_two.getYButton()){ 
+      if (OI.codriver.getYButton()){ 
         m_mechanismSubsystem.setState(MechanismStates.OFF);
         System.out.println("=======Y BUTTON====MECHANISMS STOP=======");
       }
-      if (OI.m_controller_two.getBButton()){
+      if (OI.codriver.getBButton()){
         if(m_mechanismSubsystem.getMechanismState() == MechanismStates.INTAKING){
           m_mechanismSubsystem.setState(MechanismStates.OFF);
         } else {
@@ -53,10 +53,10 @@ public class Buttons {
         }
         // TODO: for transition, we can use this button to turn both on and off at same time
       }
-      if(OI.m_controller_two.getLeftBumper()){
+      if(OI.codriver.getLeftBumper()){
         m_mechanismSubsystem.setState(MechanismStates.AMP_HOLDING);
       }
-      if(OI.m_controller_two.getRightBumper()){
+      if(OI.codriver.getRightBumper()){
         m_mechanismSubsystem.setState(MechanismStates.SPEAKER_HOLDING);
       }
   }

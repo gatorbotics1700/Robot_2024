@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 // import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Mechanisms;
+import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.Mechanisms.MechanismStates;
 import frc.robot.subsystems.SensorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -35,9 +36,12 @@ public class Robot extends TimedRobot {
     private final SendableChooser<Boolean> inverted = new SendableChooser<>();
     private final SendableChooser<Boolean> allianceChooser = new SendableChooser<>();
 
-    public static final IntakeSubsystem m_intakingSubsystem = new IntakeSubsystem();
+    public static final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
     public static final Mechanisms m_mechanismSubsystem = new Mechanisms();
     public static final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+    public static final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
+
+
     // public static final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(); //if anything breaks in the future it might be this
     public static Buttons m_buttons = new Buttons();
     public static final SensorSubsystem m_sensorSubsystem = new SensorSubsystem();
