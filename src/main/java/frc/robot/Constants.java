@@ -24,6 +24,7 @@ public final class Constants {
     public static final int DRIVETRAIN_PIGEON_ID = 6; 
 
     public static final double TICKS_PER_REV = 2048;
+    public static final double INCHES_PER_METER = 39.3701;
 
     public static final double SWERVE_GEAR_RATIO = 6.75; 
     public static final double SWERVE_WHEEL_DIAMETER = 4.0; //inches

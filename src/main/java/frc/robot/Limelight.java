@@ -12,6 +12,7 @@ public class Limelight {
     private final double aprilTagHeight = 0; //speaker april tag
     private final double limelightHeight = 0;
     private final double limelightAngle = 0;
+    private final double pivotToSpeakerHeight = 68.39; //inches
 
     private PIDController turnController;
     private static final double turnKP= 0.0; 
@@ -50,10 +51,12 @@ public class Limelight {
         if(turnAtSetpoint()){
             speedRotate = 0;
             System.out.println("At rotational setpoint");
-        } 
+        }
 
         drivetrainSubsystem.setSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, speedRotate, drivetrainSubsystem.getPoseRotation()));  
     } 
 
-    
+    public double getDesiredPivotAngle(){
+        return Math.atan(pivotToSpeakerHeight/(getDistance()+6));
+    }
 }
