@@ -3,7 +3,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants;
+import frc.robot.Limelight;
 import frc.robot.OI;
+import frc.robot.Robot;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
@@ -18,8 +21,10 @@ public class PivotSubsystem{
     private static final int _kIzone = 0;
     private static final double _kPeakOutput = 1.0;
 
+
     private Gains pivotGains = new Gains(_kP, _kI, _kD, _kIzone, _kPeakOutput);
     private PivotStates pivotState;
+    private Limelight limelight;
 
     private final double PIVOT_TICKS_PER_DEGREE = 2048 * 100 / 360;
     private final double MANUAL_SPEED = 0.1;
@@ -31,6 +36,7 @@ public class PivotSubsystem{
     private double deadband = 1 * PIVOT_TICKS_PER_DEGREE;
     
     public static enum PivotStates{
+        INPUT,
         AMP,
         SUBWOOFER,
         STAGE,
@@ -41,6 +47,7 @@ public class PivotSubsystem{
     }
 
     public PivotSubsystem(){
+        limelight = Robot.m_limelight;
         pivot = new TalonFX(Constants.PIVOT_MOTOR_CAN_ID);
         ampLimitSwitch = new DigitalInput(9); 
         stageLimitSwitch = new DigitalInput(5);
@@ -71,7 +78,10 @@ public class PivotSubsystem{
         //System.out.println("is at subwoofer: " + atSubwoofer());
         //System.out.println("is at stage: " + atStage());
         //System.out.println("is at under stage: " + atUnderStage());
-        if((pivotState == PivotStates.AMP) && !atAmp() && !ampLimitSwitch.get()){
+        if(pivotState == PivotStates.INPUT){
+            System.out.println("********************************* " + limelight.getDesiredPivotAngle());
+            setPivot(limelight.getDesiredPivotAngle());
+        }else if((pivotState == PivotStates.AMP) && !atAmp() && !ampLimitSwitch.get()){
             setPivot(AMP_ANGLE);
         }else if((pivotState == PivotStates.SUBWOOFER) && !atSubwoofer()){
             setPivot(SUBWOOFER_ANGLE);

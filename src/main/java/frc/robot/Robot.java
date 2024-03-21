@@ -29,7 +29,7 @@ import frc.robot.autonomous.Paths;
 public class Robot extends TimedRobot {
     private final SendableChooser<Boolean> inverted = new SendableChooser<>();
     private final SendableChooser<Paths.AUTO_OPTIONS> auto_chooser = new SendableChooser<>();
-
+    public static final Limelight m_limelight = new Limelight();
     public static final SensorSubsystem m_sensorSubsystem = new SensorSubsystem();
     public static final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
     public static final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();

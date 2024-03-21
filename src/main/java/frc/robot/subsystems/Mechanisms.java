@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import frc.robot.Limelight;
 import frc.robot.Robot;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.PivotSubsystem.PivotStates;
@@ -17,6 +18,8 @@ public class Mechanisms {
     private static final int SPEAKER_SHOOTING_TIME = 2000;
 
     private MechanismStates mechanismState;
+    private Limelight limelight;
+
 
     public static enum MechanismStates{
         INTAKING,
@@ -33,14 +36,17 @@ public class Mechanisms {
     }
 
     public Mechanisms(){
+        limelight = Robot.m_limelight;
         shooterSubsystem = Robot.m_shooterSubsystem;
         sensorSubsystem = Robot.m_sensorSubsystem;
         intakeSubsystem = Robot.m_intakeSubsystem;
         pivotSubsystem = Robot.m_pivotSubsystem;
+        
         init();
     }
 
     public void init(){
+        limelight.init();
         shooterSubsystem.init();
         intakeSubsystem.init();
         pivotSubsystem.init();
@@ -105,9 +111,9 @@ public class Mechanisms {
             shooterSubsystem.setState(ShooterStates.OFF);
             intakeSubsystem.setState(IntakeStates.OFF);
         }else if (mechanismState == MechanismStates.TESTING){
-            //pivotSubsystem.setState(PivotStates.MANUAL);
-            shooterSubsystem.setState(ShooterStates.TESTING);
-            //intakeSubsystem.setState(IntakeStates.INTAKING);
+            pivotSubsystem.setState(PivotStates.INPUT);
+            shooterSubsystem.setState(ShooterStates.OFF);
+            intakeSubsystem.setState(IntakeStates.OFF);
         }else if (mechanismState == MechanismStates.MANUAL){
             pivotSubsystem.setState(PivotStates.MANUAL);
         } else {

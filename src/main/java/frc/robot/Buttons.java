@@ -13,7 +13,7 @@ public class Buttons {
     
   private DrivetrainSubsystem m_drivetrainSubsystem = Robot.m_drivetrainSubsystem;
   private Mechanisms m_mechanismSubsystem = Robot.m_mechanismSubsystem;
-  private Limelight m_limelight = new Limelight();
+  private Limelight m_limelight = Robot.m_limelight;
   
   public void buttonsPeriodic(){
     //DRIVER
@@ -116,6 +116,20 @@ public class Buttons {
           System.out.println("in manual pivot!");
           m_mechanismSubsystem.setState(MechanismStates.MANUAL);
         }
+      }
+
+      if(OI.codriver.getBackButtonPressed()){
+        // if(m_mechanismSubsystem.pivotSubsystem.getState() == PivotStates.INPUT){
+        //   m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.OFF);
+        //   System.out.println("=======BACK BUTTON====INPUT OFF=======");
+        // } else {
+        //   m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.INPUT);
+        //   System.out.println("=======BACK BUTTON====INPUT ON=======");
+        // }
+
+        //TESTING
+        m_mechanismSubsystem.setState(MechanismStates.TESTING);
+        //System.out.println("****************************************************");
       }
   }
 }

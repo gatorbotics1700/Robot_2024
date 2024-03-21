@@ -9,8 +9,8 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class Limelight {
     public NetworkTable networkTable = NetworkTableInstance.getDefault().getTable("limelight");
-    private final double aprilTagHeight = 34; //speaker april tag
-    private final double limelightHeight = 12;
+    private final double aprilTagHeight = 37; // top speaker april tag
+    private final double limelightHeight = 11; 
     private final double limelightAngle = 0;
     private final double pivotToSpeakerHeight = 68.39; //inches
 
@@ -25,6 +25,8 @@ public class Limelight {
 
     public void init() {
         networkTable.getEntry("pipeline").setNumber(0.0);
+        turnController = new PIDController(turnKP, turnKI, turnKD); 
+        turnController.reset();
     }
 
     public double getTv(){
@@ -60,6 +62,6 @@ public class Limelight {
     } 
 
     public double getDesiredPivotAngle(){
-        return Math.toDegrees(Math.atan(pivotToSpeakerHeight/(getDistance()+6)));
+        return -(98 - Math.toDegrees(Math.atan(pivotToSpeakerHeight/(getDistance()+6))));
     }
 }
