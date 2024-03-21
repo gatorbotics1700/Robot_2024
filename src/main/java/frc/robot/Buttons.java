@@ -13,6 +13,7 @@ public class Buttons {
     
   private DrivetrainSubsystem m_drivetrainSubsystem = Robot.m_drivetrainSubsystem;
   private Mechanisms m_mechanismSubsystem = Robot.m_mechanismSubsystem;
+  private Limelight m_limelight = new Limelight();
   
   public void buttonsPeriodic(){
     //DRIVER
@@ -32,6 +33,12 @@ public class Buttons {
         }else{
           m_drivetrainSubsystem.setSlowDrive(true);
         }
+      }
+
+      if(OI.driver.getXButtonPressed()){
+        System.out.println("ty: " + m_limelight.getTy());
+        System.out.println("distance: " + m_limelight.getDistance());
+        System.out.println("desired pivot angle: " + m_limelight.getDesiredPivotAngle());
       }
       
 

@@ -64,7 +64,7 @@ public class PivotSubsystem{
     }
 
     public void periodic(){
-        System.out.println("CURRENT PIVOT STATE: " + pivotState);
+        //System.out.println("CURRENT PIVOT STATE: " + pivotState);
         //System.out.println("position ticks: " + pivot.getSelectedSensorPosition());//prints O.0
         //System.out.println(pivot.getSelectedSensorPosition()/PIVOT_TICKS_PER_DEGREE);
         //System.out.println("is at amp: " + atAmp());
@@ -85,7 +85,7 @@ public class PivotSubsystem{
         //}else if(pivotState == PivotStates.OFF){
            // pivot.set(ControlMode.PercentOutput, 0);  
         }else{
-            System.out.println("=========UNRECOGNIZED PIVOT STATE: " + pivotState.toString() + "========");
+            //System.out.println("=========UNRECOGNIZED PIVOT STATE: " + pivotState.toString() + "========");
             pivotState = PivotStates.OFF;
         }
     }
@@ -114,9 +114,9 @@ public class PivotSubsystem{
 
     public void setPivot(double desiredAngle){
         double desiredTicks = desiredAngle * PIVOT_TICKS_PER_DEGREE; //calculates right ticks
-        System.out.println("desiredTicks: " + desiredTicks);
+        //System.out.println("desiredTicks: " + desiredTicks);
         double diff = desiredTicks - pivot.getSelectedSensorPosition();
-        System.out.println("diff: " + diff);
+        //System.out.println("diff: " + diff);
 
         if(Math.abs(diff) > deadband){ //sets motor to right ticks
             pivot.set(ControlMode.Position, Math.signum(diff) * desiredTicks);
