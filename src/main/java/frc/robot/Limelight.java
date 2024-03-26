@@ -20,6 +20,7 @@ public class Limelight {
     private static final double turnKD= 0.0; 
 
     private static final double TURN_DEADBAND = 3;
+    private static final double MAX_PIVOT_ANGLE = 98.0; // relative to the limelight angle (zero) the amp is 98 degrees
 
     private DrivetrainSubsystem drivetrainSubsystem;
 
@@ -62,6 +63,6 @@ public class Limelight {
     } 
 
     public double getDesiredPivotAngle(){
-        return -(98 - Math.toDegrees(Math.atan(pivotToSpeakerHeight/(getDistance()+6))));
+        return -(MAX_PIVOT_ANGLE - Math.toDegrees(Math.atan(pivotToSpeakerHeight/(getDistance()+6))));
     }
 }

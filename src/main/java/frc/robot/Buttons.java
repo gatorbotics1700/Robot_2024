@@ -119,16 +119,16 @@ public class Buttons {
       }
 
       if(OI.codriver.getBackButtonPressed()){
-        // if(m_mechanismSubsystem.pivotSubsystem.getState() == PivotStates.INPUT){
-        //   m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.OFF);
-        //   System.out.println("=======BACK BUTTON====INPUT OFF=======");
-        // } else {
-        //   m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.INPUT);
-        //   System.out.println("=======BACK BUTTON====INPUT ON=======");
-        // }
+        if(m_mechanismSubsystem.pivotSubsystem.getState() == PivotStates.INPUT){
+          m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.OFF);
+          System.out.println("=======BACK BUTTON====INPUT OFF=======");
+        } else {
+          m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.INPUT);
+          System.out.println("=======BACK BUTTON====INPUT ON=======");
+        }
 
         //TESTING
-        m_mechanismSubsystem.setState(MechanismStates.TESTING);
+        // m_mechanismSubsystem.setState(MechanismStates.TESTING);
         //System.out.println("****************************************************");
       }
   }

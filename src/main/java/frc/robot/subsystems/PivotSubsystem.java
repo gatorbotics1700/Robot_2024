@@ -21,6 +21,7 @@ public class PivotSubsystem{
     private static final int _kIzone = 0;
     private static final double _kPeakOutput = 1.0;
 
+    private boolean isFirstTimeInInput;
 
     private Gains pivotGains = new Gains(_kP, _kI, _kD, _kIzone, _kPeakOutput);
     private PivotStates pivotState;
@@ -33,6 +34,7 @@ public class PivotSubsystem{
     private final double SUBWOOFER_ANGLE = -47.0;//THIS ANGLE IS GREAT DO NOT CHANGE
     private final double STAGE_ANGLE = -60.0; //THIS ANGLE IS GREAT DO NOT CHANGE
     private final double UNDER_STAGE_ANGLE = -75.0;//-70.0;//25; //TODO: test
+    private double inputAngle;
     private double deadband = 1 * PIVOT_TICKS_PER_DEGREE;
     
     public static enum PivotStates{
@@ -68,6 +70,7 @@ public class PivotSubsystem{
         System.out.println("********PIVOT POSITION IN INIT: " + pivot.getSelectedSensorPosition());
         
         setState(PivotStates.OFF);
+        isFirstTimeInInput = true;
     }
 
     public void periodic(){
@@ -79,8 +82,12 @@ public class PivotSubsystem{
         //System.out.println("is at stage: " + atStage());
         //System.out.println("is at under stage: " + atUnderStage());
         if(pivotState == PivotStates.INPUT){
-            System.out.println("********************************* " + limelight.getDesiredPivotAngle());
-            setPivot(limelight.getDesiredPivotAngle());
+            if(isFirstTimeInInput){
+                inputAngle = limelight.getDesiredPivotAngle();
+                isFirstTimeInInput = false;
+            }
+            System.out.println("********************************* " + inputAngle);
+            setPivot(inputAngle);
         }else if((pivotState == PivotStates.AMP) && !atAmp() && !ampLimitSwitch.get()){
             setPivot(AMP_ANGLE);
         }else if((pivotState == PivotStates.SUBWOOFER) && !atSubwoofer()){
@@ -136,6 +143,7 @@ public class PivotSubsystem{
     }
 
     public void setState(PivotStates newState) {
+        isFirstTimeInInput = true;
         pivotState = newState;
     }
 
@@ -166,5 +174,6 @@ public class PivotSubsystem{
     public boolean getStageLimitSwitch(){ // false when NOT pressed, true when pressed
         return stageLimitSwitch.get();
     }
+
 
 }
