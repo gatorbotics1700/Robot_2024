@@ -12,9 +12,11 @@ public class BlinkinLEDController {
         /*
          * Fixed Palette Pattern
          */
-        RAINBOW_RAINBOW_PALETTE(-0.99),
         RAINBOW_PARTY_PALETTE(-0.97),
-        RAINBOW_OCEAN_PALETTE(-0.95),
+        RED(+0.61),
+        ORANGE(+0.65),
+        LIME(+0.73),
+        DARK_BLUE(+0.85),
         BLACK(+0.99);
         public final double value;
         private BlinkinPattern(double value) {

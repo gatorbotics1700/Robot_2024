@@ -182,7 +182,7 @@ public class Robot extends TimedRobot {
     /* This function is called periodically during test mode. */
     @Override
     public void testPeriodic() {
-        m_blinkinLEDController.setPattern(BlinkinPattern.BLACK);
+        m_blinkinLEDController.setPattern(BlinkinPattern.BLACK); 
       //m_sensorSubsystem.detectNote();
       //m_mechanismSubsystem.intakeSubsystem.testIntake();
       //m_pivotSubsystem.setState(PivotStates.SPEAKER);

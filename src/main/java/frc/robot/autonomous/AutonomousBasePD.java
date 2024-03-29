@@ -8,6 +8,7 @@ import frc.robot.Robot;
 import frc.robot.autonomous.PDState.AutoStates;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Mechanisms;
+import frc.robot.subsystems.BlinkinLEDController.BlinkinPattern;
 import frc.robot.subsystems.Mechanisms.MechanismStates;
 import frc.robot.subsystems.PivotSubsystem.PivotStates;
 
@@ -87,6 +88,7 @@ public class AutonomousBasePD extends AutonomousBase{
             moveToNextState();
             return; //first is a pass through state, we don't have to call drive we can just move on
         } else if(currentState.name == AutoStates.DRIVE_WITH_INTAKING){
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.DARK_BLUE);
             setInitialMechState(Mechanisms.MechanismStates.INTAKING_WITH_SHOOTER_WARMUP);
             driveToLocation(currentState.coordinate);
             if(robotAtSetpoint() && (System.currentTimeMillis() - startTimeForState >= 2000)){
@@ -94,6 +96,7 @@ public class AutonomousBasePD extends AutonomousBase{
                 System.out.println("REACHED SETPOINT");
             }
         } else if (currentState.name == AutoStates.DRIVE_WITH_HOLDING_SPEAKER){
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.ORANGE);
             setInitialMechState(Mechanisms.MechanismStates.SPEAKER_HOLDING);
             driveToLocation(currentState.coordinate);
             if(robotAtSetpoint() && mechanismSubsystem.pivotSubsystem.getSpeakerLimitSwitch()){
@@ -101,6 +104,7 @@ public class AutonomousBasePD extends AutonomousBase{
                 System.out.println("REACHED SETPOINT");
             }
         } else if (currentState.name == AutoStates.DRIVE_WITH_HOLDING_AMP){
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.ORANGE);
             setInitialMechState(Mechanisms.MechanismStates.AMP_HOLDING);
             driveToLocation(currentState.coordinate);
             if(robotAtSetpoint()){
@@ -108,30 +112,36 @@ public class AutonomousBasePD extends AutonomousBase{
                 System.out.println("REACHED SETPOINT");
             }
         } else if(currentState.name == AutoStates.HOLDING_TIMED){ //for preloaded note where shooter might not have warmed up
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.ORANGE);
             setInitialMechState(Mechanisms.MechanismStates.SPEAKER_HOLDING);
             if(System.currentTimeMillis()-startTimeForState >= 1750){ //TODO: maybe lower time - if we have alr shot it should be warmed up to a degree so lower to 1 sec?
                 moveToNextState();
             }
         } else if(currentState.name == AutoStates.SHOOTING_SPEAKER){ //assumes we have alr warmed up
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
             setInitialMechState(Mechanisms.MechanismStates.SHOOTING_SPEAKER);
             if(mechanismSubsystem.getMechanismState() == MechanismStates.INTAKING){
                 moveToNextState();
             }
         }else if(currentState.name == AutoStates.SHOOTING_AMP){
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
             setInitialMechState(Mechanisms.MechanismStates.SHOOTING_AMP);
             if(System.currentTimeMillis()-startTimeForState >=6000){
                 moveToNextState();
             }
         } else if(currentState.name == AutoStates.STOP){
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.RED);
             drivetrainSubsystem.stopDrive();
             mechanismSubsystem.setState(Mechanisms.MechanismStates.OFF);
             //System.out.println("stopped in auto");
         } else if(currentState.name == AutoStates.DRIVE_MECH_OFF){
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.BLACK);
             setInitialMechState(Mechanisms.MechanismStates.OFF);
             if(robotAtSetpoint()){
                 moveToNextState();
             }
         } else {
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.BLACK);
             System.out.println("============================UNRECOGNIZED STATE!!!! PANICK!!!! " + currentState.name + "============================"); 
             drivetrainSubsystem.stopDrive();
         } 
