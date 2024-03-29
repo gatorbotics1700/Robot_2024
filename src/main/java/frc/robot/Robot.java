@@ -6,6 +6,9 @@ package frc.robot;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import frc.robot.subsystems.BlinkinLEDController;
+import frc.robot.subsystems.BlinkinLEDController.BlinkinPattern;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Mechanisms;
@@ -17,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autonomous.AutonomousBase;
 import frc.robot.autonomous.Paths;
+import frc.robot.subsystems.BlinkinLEDController;
 
 
 /*
@@ -38,7 +42,7 @@ public class Robot extends TimedRobot {
     public static final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(); //if anything breaks in the future it might be this
     private AutonomousBase m_auto; 
     public static Buttons m_buttons = new Buttons();
-
+    public static final BlinkinLEDController m_blinkinLEDController = new BlinkinLEDController();
   
     /**
     * This function is run when the robot is turned on and should be used for any
@@ -172,12 +176,13 @@ public class Robot extends TimedRobot {
         //m_mechanismSubsystem.pivotSubsystem.setState(PivotStates.MANUAL);
         
         
-        m_drivetrainSubsystem.onEnable();
+       // m_drivetrainSubsystem.onEnable();
     }
 
     /* This function is called periodically during test mode. */
     @Override
     public void testPeriodic() {
+        m_blinkinLEDController.setPattern(BlinkinPattern.BLACK);
       //m_sensorSubsystem.detectNote();
       //m_mechanismSubsystem.intakeSubsystem.testIntake();
       //m_pivotSubsystem.setState(PivotStates.SPEAKER);
@@ -187,8 +192,8 @@ public class Robot extends TimedRobot {
        
        
        
-       m_drivetrainSubsystem.setSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(0.3, 0, 0, m_drivetrainSubsystem.getPoseRotation()));
-       m_drivetrainSubsystem.drive();
+       //m_drivetrainSubsystem.setSpeed(ChassisSpeeds.fromFieldRelativeSpeeds(0.3, 0, 0, m_drivetrainSubsystem.getPoseRotation()));
+      // m_drivetrainSubsystem.drive();
 
         //m_intakeSubsystem.testIntake();
         //m_shooterSubsystem.testShooter();
