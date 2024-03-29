@@ -9,18 +9,15 @@ import frc.robot.Constants;
 //code came from this chief delphi post: https://www.chiefdelphi.com/t/rev-blinkin-example-code/452871/3
 public class BlinkinLEDController {
     public enum BlinkinPattern {
-        /*
-         * Fixed Palette Pattern
-         */
         RAINBOW_PARTY_PALETTE(-0.97),
-        RED(+0.61),
-        ORANGE(+0.65),
-        LIME(+0.73),
-        DARK_BLUE(+0.85),
-        BLACK(+0.99);
+        DARK_RED(+0.58), //good
+        RED_ORANGE(+0.62), //good
+        LIME(+0.73), //good
+        DARK_BLUE(+0.85), //good
+        BLACK(+0.99); //good
         public final double value;
         private BlinkinPattern(double value) {
-            this.value = value;
+          this.value = value;
         }
   };
   private static BlinkinLEDController m_controller = null;

@@ -96,7 +96,7 @@ public class AutonomousBasePD extends AutonomousBase{
                 System.out.println("REACHED SETPOINT");
             }
         } else if (currentState.name == AutoStates.DRIVE_WITH_HOLDING_SPEAKER){
-            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.ORANGE);
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.RED_ORANGE);
             setInitialMechState(Mechanisms.MechanismStates.SPEAKER_HOLDING);
             driveToLocation(currentState.coordinate);
             if(robotAtSetpoint() && mechanismSubsystem.pivotSubsystem.getSpeakerLimitSwitch()){
@@ -104,7 +104,7 @@ public class AutonomousBasePD extends AutonomousBase{
                 System.out.println("REACHED SETPOINT");
             }
         } else if (currentState.name == AutoStates.DRIVE_WITH_HOLDING_AMP){
-            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.ORANGE);
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.RED_ORANGE);
             setInitialMechState(Mechanisms.MechanismStates.AMP_HOLDING);
             driveToLocation(currentState.coordinate);
             if(robotAtSetpoint()){
@@ -112,7 +112,7 @@ public class AutonomousBasePD extends AutonomousBase{
                 System.out.println("REACHED SETPOINT");
             }
         } else if(currentState.name == AutoStates.HOLDING_TIMED){ //for preloaded note where shooter might not have warmed up
-            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.ORANGE);
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.RED_ORANGE);
             setInitialMechState(Mechanisms.MechanismStates.SPEAKER_HOLDING);
             if(System.currentTimeMillis()-startTimeForState >= 1750){ //TODO: maybe lower time - if we have alr shot it should be warmed up to a degree so lower to 1 sec?
                 moveToNextState();
@@ -130,7 +130,7 @@ public class AutonomousBasePD extends AutonomousBase{
                 moveToNextState();
             }
         } else if(currentState.name == AutoStates.STOP){
-            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.RED);
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.DARK_RED);
             drivetrainSubsystem.stopDrive();
             mechanismSubsystem.setState(Mechanisms.MechanismStates.OFF);
             //System.out.println("stopped in auto");
@@ -141,7 +141,7 @@ public class AutonomousBasePD extends AutonomousBase{
                 moveToNextState();
             }
         } else {
-            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.BLACK);
+            //Robot.m_blinkinLEDController.setPattern(BlinkinPattern.BLACK);
             System.out.println("============================UNRECOGNIZED STATE!!!! PANICK!!!! " + currentState.name + "============================"); 
             drivetrainSubsystem.stopDrive();
         } 

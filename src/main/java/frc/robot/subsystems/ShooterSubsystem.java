@@ -6,6 +6,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 
 import frc.robot.Constants;
+import frc.robot.Robot;
+import frc.robot.subsystems.BlinkinLEDController.BlinkinPattern;
  
 
 public class ShooterSubsystem {
@@ -60,30 +62,37 @@ public class ShooterSubsystem {
     public void periodic(){
         System.out.println("CURRENT SHOOTER STATE: " + currentShooterState);
         if (currentShooterState == ShooterStates.INTAKING){
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
             high.setControl(highDutyCycleOut.withOutput(0));
             mid.setControl(midDutyCycleOut.withOutput(0));
             low.setControl(lowDutyCycleOut.withOutput(LOW_INTAKING_SPEED));
         }else if (currentShooterState == ShooterStates.WARMUP){ //same as speaking holding but doesnt assume we have a note
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
             high.setControl(highDutyCycleOut.withOutput(HIGH_SPEAKER_SPEED));
             mid.setControl(midDutyCycleOut.withOutput(-MID_SPEAKER_SPEED));
             low.setControl(lowDutyCycleOut.withOutput(LOW_INTAKING_SPEED));
         }else if (currentShooterState == ShooterStates.AMP_HOLDING) { // DO NOT TOUCH THESE VALUES!!
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
             high.setControl(highDutyCycleOut.withOutput(0));
             mid.setControl(midDutyCycleOut.withOutput(TESTING_SPEED));//(AMP_SPEED));//.35 IS PERFECT IN LAB, BUT .5 (SAME AS IN AMP WORKS BETTER IN PRACTICE) 
             low.setControl(lowDutyCycleOut.withOutput(0));
         } else if(currentShooterState == ShooterStates.SPEAKER_HOLDING){
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
             high.setControl(highDutyCycleOut.withOutput(HIGH_SPEAKER_SPEED));
             mid.setControl(midDutyCycleOut.withOutput(-MID_SPEAKER_SPEED)); //negative
             low.setControl(lowDutyCycleOut.withOutput(0));
         }else if(currentShooterState == ShooterStates.AMP){ // DO NOT TOUCH THESE VALUES!!
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
             high.setControl(highDutyCycleOut.withOutput(0)); //TESTING_SPEED)); //AMP SPEED FOR MID/HIGH AT .35 WORKS!!!! 3/2 .45 WORKS FOR SHOOTING INTO AMP
             mid.setControl(midDutyCycleOut.withOutput(TESTING_SPEED));
             low.setControl(lowDutyCycleOut.withOutput(AMP_SPEED)); // LOW SPEED AT .25 IS GREAT, and .35 is better
         }else if(currentShooterState == ShooterStates.SPEAKER){
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
             high.setControl(highDutyCycleOut.withOutput(HIGH_SPEAKER_SPEED));
             mid.setControl(midDutyCycleOut.withOutput(-MID_SPEAKER_SPEED)); //negative
             low.setControl(lowDutyCycleOut.withOutput(LOW_SHOOTING_SPEED)); //TESTING
         }else if(currentShooterState == ShooterStates.OFF){
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
             high.setControl(highDutyCycleOut.withOutput(0));
             mid.setControl(midDutyCycleOut.withOutput(0));
             low.setControl(lowDutyCycleOut.withOutput(0));
@@ -92,6 +101,7 @@ public class ShooterSubsystem {
             mid.setControl(midDutyCycleOut.withOutput(TESTING_SPEED));
             // low.setControl(lowDutyCycleOut.withOutput(TESTING_SPEED));
         }else{
+            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.DARK_RED);
             high.setControl(highDutyCycleOut.withOutput(0));
             mid.setControl(midDutyCycleOut.withOutput(0));
             low.setControl(lowDutyCycleOut.withOutput(0));
