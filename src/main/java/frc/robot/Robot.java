@@ -8,19 +8,17 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.BlinkinLEDController;
-import frc.robot.subsystems.BlinkinLEDController.BlinkinPattern;
-import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.Mechanisms;
-import frc.robot.subsystems.Mechanisms.MechanismStates;
-import frc.robot.subsystems.SensorSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.PivotSubsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.autonomous.AutonomousBase;
-import frc.robot.autonomous.Paths;
-import frc.robot.subsystems.BlinkinLEDController;
+// import frc.robot.subsystems.DrivetrainSubsystem;
+// import frc.robot.subsystems.IntakeSubsystem;
+// import frc.robot.subsystems.Mechanisms;
+// import frc.robot.subsystems.Mechanisms.MechanismStates;
+// import frc.robot.subsystems.SensorSubsystem;
+// import frc.robot.subsystems.ShooterSubsystem;
+// import frc.robot.subsystems.PivotSubsystem;
+// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import frc.robot.autonomous.AutonomousBase;
+// import frc.robot.autonomous.Paths;
 
 
 /*
@@ -31,17 +29,17 @@ import frc.robot.subsystems.BlinkinLEDController;
  */
 
 public class Robot extends TimedRobot {
-    private final SendableChooser<Boolean> inverted = new SendableChooser<>();
-    private final SendableChooser<Paths.AUTO_OPTIONS> auto_chooser = new SendableChooser<>();
+    // private final SendableChooser<Boolean> inverted = new SendableChooser<>();
+    // private final SendableChooser<Paths.AUTO_OPTIONS> auto_chooser = new SendableChooser<>();
 
-    public static final SensorSubsystem m_sensorSubsystem = new SensorSubsystem();
-    public static final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
-    public static final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-    public static final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-    public static final Mechanisms m_mechanismSubsystem = new Mechanisms();
-    public static final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(); //if anything breaks in the future it might be this
-    private AutonomousBase m_auto; 
-    public static Buttons m_buttons = new Buttons();
+    // public static final SensorSubsystem m_sensorSubsystem = new SensorSubsystem();
+    // public static final PivotSubsystem m_pivotSubsystem = new PivotSubsystem();
+    // public static final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+    // public static final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+    // public static final Mechanisms m_mechanismSubsystem = new Mechanisms();
+    // public static final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(); //if anything breaks in the future it might be this
+    // private AutonomousBase m_auto; 
+    // public static Buttons m_buttons = new Buttons();
     public static final BlinkinLEDController m_blinkinLEDController = new BlinkinLEDController();
   
     /**
@@ -50,51 +48,51 @@ public class Robot extends TimedRobot {
     */
     @Override
     public void robotInit() { //creates options for different autopaths, names are placeholders    
-        System.out.println("#I'm Awake");
-        auto_chooser.setDefaultOption("PD testPath", Paths.AUTO_OPTIONS.PD_TESTPATH);
-        //red paths
-        auto_chooser.addOption("noGo-R!", Paths.AUTO_OPTIONS.R_NO_GO);
-        auto_chooser.addOption("R-3 Piece 1", Paths.AUTO_OPTIONS.R_THREE_PIECE_1);
-        auto_chooser.addOption("R-3 Piece 2", Paths.AUTO_OPTIONS.R_THREE_PIECE_2);
-        auto_chooser.addOption("R-3 Piece 3 Top", Paths.AUTO_OPTIONS.R_THREE_PIECE_3_TOP);
-        auto_chooser.addOption("R-3 Piece 3 Bottom", Paths.AUTO_OPTIONS.R_THREE_PIECE_3_BOTTOM);
-        auto_chooser.addOption("R-4 Piece 1", Paths.AUTO_OPTIONS.R_FOUR_PIECE_1);
-        auto_chooser.addOption("R-4 Piece 2", Paths.AUTO_OPTIONS.R_FOUR_PIECE_2);
-        auto_chooser.addOption("R-4 Piece 3", Paths.AUTO_OPTIONS.R_FOUR_PIECE_3);
-        auto_chooser.addOption("R-5 Piece 2", Paths.AUTO_OPTIONS.R_FIVE_PIECE_2);
-        auto_chooser.addOption("R-Anaika's Dream 1", Paths.AUTO_OPTIONS.R_ANAIKAS_DREAM_1);
-        auto_chooser.addOption("R-Bread", Paths.AUTO_OPTIONS.R_BREAD);
-        auto_chooser.addOption("R-Fallback 1", Paths.AUTO_OPTIONS.R_FALLBACK_1);
-        auto_chooser.addOption("R-Fallback 2", Paths.AUTO_OPTIONS.R_FALLBACK_2);
-        auto_chooser.addOption("R-Fallback 3", Paths.AUTO_OPTIONS.R_FALLBACK_3);
-        auto_chooser.addOption("R-3 Piece 1 ALT", Paths.AUTO_OPTIONS.R_THREE_PIECE_1_ALT);
-        auto_chooser.addOption("R-3 Piece 2 ALT", Paths.AUTO_OPTIONS.R_THREE_PIECE_2_ALT);
-        auto_chooser.addOption("R-1 Piece AMP", Paths.AUTO_OPTIONS.R_ONE_PIECE_AMP);
-        auto_chooser.addOption("R-LEAVE", Paths.AUTO_OPTIONS.R_LEAVE);
-        //blue paths
-        auto_chooser.addOption("noGo-B!", Paths.AUTO_OPTIONS.B_NO_GO);
-        auto_chooser.addOption("B-3 Piece 1", Paths.AUTO_OPTIONS.B_THREE_PIECE_1);
-        auto_chooser.addOption("B-3 Piece 2", Paths.AUTO_OPTIONS.B_THREE_PIECE_2);
-        auto_chooser.addOption("B-3 Piece 3 Top", Paths.AUTO_OPTIONS.B_THREE_PIECE_3_TOP);
-        auto_chooser.addOption("B-3 Piece 3 Bottom", Paths.AUTO_OPTIONS.B_THREE_PIECE_3_BOTTOM);
-        auto_chooser.addOption("B-4 Piece 1", Paths.AUTO_OPTIONS.B_FOUR_PIECE_1);
-        auto_chooser.addOption("B-4 Piece 2", Paths.AUTO_OPTIONS.B_FOUR_PIECE_2);
-        auto_chooser.addOption("B-4 Piece 3", Paths.AUTO_OPTIONS.B_FOUR_PIECE_3);
-        auto_chooser.addOption("B-5 Piece 1", Paths.AUTO_OPTIONS.B_FIVE_PIECE_1);
-        auto_chooser.addOption("B-Anaika's Dream 2", Paths.AUTO_OPTIONS.B_ANAIKAS_DREAM_2);
-        auto_chooser.addOption("B-Bread", Paths.AUTO_OPTIONS.B_BREAD);
-        auto_chooser.addOption("B-Fallback 1", Paths.AUTO_OPTIONS.B_FALLBACK_1);
-        auto_chooser.addOption("B-Fallback 2", Paths.AUTO_OPTIONS.B_FALLBACK_2);
-        auto_chooser.addOption("B-Fallback 3", Paths.AUTO_OPTIONS.B_FALLBACK_3);
-        auto_chooser.addOption("B-3 Piece 1 ALT", Paths.AUTO_OPTIONS.B_THREE_PIECE_1_ALT);
-        auto_chooser.addOption("B-3 Piece 2 ALT", Paths.AUTO_OPTIONS.B_THREE_PIECE_2_ALT);
-        auto_chooser.addOption("B-1 Piece AMP", Paths.AUTO_OPTIONS.B_ONE_PIECE_AMP);
-        auto_chooser.addOption("B-LEAVE", Paths.AUTO_OPTIONS.B_LEAVE);
+        // System.out.println("#I'm Awake");
+        // auto_chooser.setDefaultOption("PD testPath", Paths.AUTO_OPTIONS.PD_TESTPATH);
+        // //red paths
+        // auto_chooser.addOption("noGo-R!", Paths.AUTO_OPTIONS.R_NO_GO);
+        // auto_chooser.addOption("R-3 Piece 1", Paths.AUTO_OPTIONS.R_THREE_PIECE_1);
+        // auto_chooser.addOption("R-3 Piece 2", Paths.AUTO_OPTIONS.R_THREE_PIECE_2);
+        // auto_chooser.addOption("R-3 Piece 3 Top", Paths.AUTO_OPTIONS.R_THREE_PIECE_3_TOP);
+        // auto_chooser.addOption("R-3 Piece 3 Bottom", Paths.AUTO_OPTIONS.R_THREE_PIECE_3_BOTTOM);
+        // auto_chooser.addOption("R-4 Piece 1", Paths.AUTO_OPTIONS.R_FOUR_PIECE_1);
+        // auto_chooser.addOption("R-4 Piece 2", Paths.AUTO_OPTIONS.R_FOUR_PIECE_2);
+        // auto_chooser.addOption("R-4 Piece 3", Paths.AUTO_OPTIONS.R_FOUR_PIECE_3);
+        // auto_chooser.addOption("R-5 Piece 2", Paths.AUTO_OPTIONS.R_FIVE_PIECE_2);
+        // auto_chooser.addOption("R-Anaika's Dream 1", Paths.AUTO_OPTIONS.R_ANAIKAS_DREAM_1);
+        // auto_chooser.addOption("R-Bread", Paths.AUTO_OPTIONS.R_BREAD);
+        // auto_chooser.addOption("R-Fallback 1", Paths.AUTO_OPTIONS.R_FALLBACK_1);
+        // auto_chooser.addOption("R-Fallback 2", Paths.AUTO_OPTIONS.R_FALLBACK_2);
+        // auto_chooser.addOption("R-Fallback 3", Paths.AUTO_OPTIONS.R_FALLBACK_3);
+        // auto_chooser.addOption("R-3 Piece 1 ALT", Paths.AUTO_OPTIONS.R_THREE_PIECE_1_ALT);
+        // auto_chooser.addOption("R-3 Piece 2 ALT", Paths.AUTO_OPTIONS.R_THREE_PIECE_2_ALT);
+        // auto_chooser.addOption("R-1 Piece AMP", Paths.AUTO_OPTIONS.R_ONE_PIECE_AMP);
+        // auto_chooser.addOption("R-LEAVE", Paths.AUTO_OPTIONS.R_LEAVE);
+        // //blue paths
+        // auto_chooser.addOption("noGo-B!", Paths.AUTO_OPTIONS.B_NO_GO);
+        // auto_chooser.addOption("B-3 Piece 1", Paths.AUTO_OPTIONS.B_THREE_PIECE_1);
+        // auto_chooser.addOption("B-3 Piece 2", Paths.AUTO_OPTIONS.B_THREE_PIECE_2);
+        // auto_chooser.addOption("B-3 Piece 3 Top", Paths.AUTO_OPTIONS.B_THREE_PIECE_3_TOP);
+        // auto_chooser.addOption("B-3 Piece 3 Bottom", Paths.AUTO_OPTIONS.B_THREE_PIECE_3_BOTTOM);
+        // auto_chooser.addOption("B-4 Piece 1", Paths.AUTO_OPTIONS.B_FOUR_PIECE_1);
+        // auto_chooser.addOption("B-4 Piece 2", Paths.AUTO_OPTIONS.B_FOUR_PIECE_2);
+        // auto_chooser.addOption("B-4 Piece 3", Paths.AUTO_OPTIONS.B_FOUR_PIECE_3);
+        // auto_chooser.addOption("B-5 Piece 1", Paths.AUTO_OPTIONS.B_FIVE_PIECE_1);
+        // auto_chooser.addOption("B-Anaika's Dream 2", Paths.AUTO_OPTIONS.B_ANAIKAS_DREAM_2);
+        // auto_chooser.addOption("B-Bread", Paths.AUTO_OPTIONS.B_BREAD);
+        // auto_chooser.addOption("B-Fallback 1", Paths.AUTO_OPTIONS.B_FALLBACK_1);
+        // auto_chooser.addOption("B-Fallback 2", Paths.AUTO_OPTIONS.B_FALLBACK_2);
+        // auto_chooser.addOption("B-Fallback 3", Paths.AUTO_OPTIONS.B_FALLBACK_3);
+        // auto_chooser.addOption("B-3 Piece 1 ALT", Paths.AUTO_OPTIONS.B_THREE_PIECE_1_ALT);
+        // auto_chooser.addOption("B-3 Piece 2 ALT", Paths.AUTO_OPTIONS.B_THREE_PIECE_2_ALT);
+        // auto_chooser.addOption("B-1 Piece AMP", Paths.AUTO_OPTIONS.B_ONE_PIECE_AMP);
+        // auto_chooser.addOption("B-LEAVE", Paths.AUTO_OPTIONS.B_LEAVE);
 
-        SmartDashboard.putData("Auto Choices", auto_chooser); 
+        // SmartDashboard.putData("Auto Choices", auto_chooser); 
         
-        inverted.setDefaultOption("true", true);
-        inverted.addOption("false", false);
+        // inverted.setDefaultOption("true", true);
+        // inverted.addOption("false", false);
     }
 
     /*
@@ -107,10 +105,10 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-        SmartDashboard.putNumber("x odometry",m_drivetrainSubsystem.getPoseX()/Constants.METERS_PER_INCH);
-        SmartDashboard.putNumber("y odometry",m_drivetrainSubsystem.getPoseY()/Constants.METERS_PER_INCH);
-        SmartDashboard.putNumber("angle odometry",m_drivetrainSubsystem.getPoseDegrees()%360);
-        SmartDashboard.putBoolean("detect note", m_mechanismSubsystem.getSensorSubsystem().detectNote());
+        // SmartDashboard.putNumber("x odometry",m_drivetrainSubsystem.getPoseX()/Constants.METERS_PER_INCH);
+        // SmartDashboard.putNumber("y odometry",m_drivetrainSubsystem.getPoseY()/Constants.METERS_PER_INCH);
+        // SmartDashboard.putNumber("angle odometry",m_drivetrainSubsystem.getPoseDegrees()%360);
+        // SmartDashboard.putBoolean("detect note", m_mechanismSubsystem.getSensorSubsystem().detectNote());
     }
 
     /*
@@ -125,10 +123,10 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        m_mechanismSubsystem.init();
-        Paths.AUTO_OPTIONS selectedAuto = auto_chooser.getSelected(); 
-        m_auto = Paths.constructAuto(selectedAuto); 
-        m_auto.init();
+        // m_mechanismSubsystem.init();
+        // Paths.AUTO_OPTIONS selectedAuto = auto_chooser.getSelected(); 
+        // m_auto = Paths.constructAuto(selectedAuto); 
+        // m_auto.init();
         
     }
 
@@ -136,27 +134,27 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         
-        m_mechanismSubsystem.periodic();
-        m_drivetrainSubsystem.drive();
-        m_auto.periodic();
+        // m_mechanismSubsystem.periodic();
+        // m_drivetrainSubsystem.drive();
+        // m_auto.periodic();
 
     }
 
     /* This function is called once when teleop is enabled. */
     @Override
     public void teleopInit() { //BEFORE TESTING: MAKE SURE YOU HAVE EITHER DEPLOYED OR ADDED DRIVETRAIN INIT
-        m_drivetrainSubsystem.onEnable(); 
-        m_mechanismSubsystem.setState(MechanismStates.OFF);
-        m_mechanismSubsystem.init();
+        // m_drivetrainSubsystem.onEnable(); 
+        // m_mechanismSubsystem.setState(MechanismStates.OFF);
+        // m_mechanismSubsystem.init();
     }
 
     /* This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() { 
-        m_drivetrainSubsystem.driveTeleop();
-        m_drivetrainSubsystem.drive();   
-        m_mechanismSubsystem.periodic();
-        m_buttons.buttonsPeriodic();
+        // m_drivetrainSubsystem.driveTeleop();
+        // m_drivetrainSubsystem.drive();   
+        // m_mechanismSubsystem.periodic();
+        // m_buttons.buttonsPeriodic();
     }
 
     /* This function is called once when the robot is disabled. */
@@ -177,12 +175,14 @@ public class Robot extends TimedRobot {
         
         
        // m_drivetrainSubsystem.onEnable();
+        //m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
+
     }
 
     /* This function is called periodically during test mode. */
     @Override
     public void testPeriodic() {
-        m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
+        m_blinkinLEDController.setPattern(0.93);
       //m_sensorSubsystem.detectNote();
       //m_mechanismSubsystem.intakeSubsystem.testIntake();
       //m_pivotSubsystem.setState(PivotStates.SPEAKER);

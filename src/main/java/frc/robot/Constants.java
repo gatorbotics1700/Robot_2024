@@ -79,5 +79,5 @@ public final class Constants {
     public static final int SHOOTER_HIGH_CAN_ID = 34;
     public static final int SHOOTER_MID_CAN_ID = 38;
 
-    public static final int LED_PORT = 9;
+    public static final int LED_PORT = 1;
 }

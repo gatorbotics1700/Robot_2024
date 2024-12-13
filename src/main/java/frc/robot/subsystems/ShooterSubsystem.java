@@ -1,119 +1,119 @@
-package frc.robot.subsystems;
+// package frc.robot.subsystems;
 
-//v6 for mid, high motors
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.controls.DutyCycleOut;
+// //v6 for mid, high motors
+// import com.ctre.phoenix6.hardware.TalonFX;
+// import com.ctre.phoenix6.signals.NeutralModeValue;
+// import com.ctre.phoenix6.controls.DutyCycleOut;
 
-import frc.robot.Constants;
-import frc.robot.Robot;
-import frc.robot.subsystems.BlinkinLEDController.BlinkinPattern;
+// import frc.robot.Constants;
+// import frc.robot.Robot;
+// import frc.robot.subsystems.BlinkinLEDController.BlinkinPattern;
  
 
-public class ShooterSubsystem {
+// public class ShooterSubsystem {
     
-    private final DutyCycleOut lowDutyCycleOut = new DutyCycleOut(0);
-    private final DutyCycleOut midDutyCycleOut = new DutyCycleOut(0);
-    private final DutyCycleOut highDutyCycleOut = new DutyCycleOut(0);
+//     private final DutyCycleOut lowDutyCycleOut = new DutyCycleOut(0);
+//     private final DutyCycleOut midDutyCycleOut = new DutyCycleOut(0);
+//     private final DutyCycleOut highDutyCycleOut = new DutyCycleOut(0);
     
-    private TalonFX high; 
-    private TalonFX mid;
-    private TalonFX low;
+//     private TalonFX high; 
+//     private TalonFX mid;
+//     private TalonFX low;
 
-    private final double TESTING_SPEED = 0.5;
-    private final double AMP_SPEED = 0.2; //35; //0.3; // DO NOT TOUCH THIS VALUE!!
-    private final double LOW_SHOOTING_SPEED = 0.7; //0.7;
-    private final double HIGH_SPEAKER_SPEED = 0.7; //0.7;
-    private final double MID_SPEAKER_SPEED = 0.7; //0.7;
-    private final double LOW_INTAKING_SPEED = 0.3;
+//     private final double TESTING_SPEED = 0.5;
+//     private final double AMP_SPEED = 0.2; //35; //0.3; // DO NOT TOUCH THIS VALUE!!
+//     private final double LOW_SHOOTING_SPEED = 0.7; //0.7;
+//     private final double HIGH_SPEAKER_SPEED = 0.7; //0.7;
+//     private final double MID_SPEAKER_SPEED = 0.7; //0.7;
+//     private final double LOW_INTAKING_SPEED = 0.3;
     
-    public static enum ShooterStates {
-        OFF,
-        INTAKING,
-        WARMUP, //for auto only
-        AMP_HOLDING,
-        SPEAKER_HOLDING,
-        AMP,
-        SPEAKER,
-        TESTING; 
-    }
+//     public static enum ShooterStates {
+//         OFF,
+//         INTAKING,
+//         WARMUP, //for auto only
+//         AMP_HOLDING,
+//         SPEAKER_HOLDING,
+//         AMP,
+//         SPEAKER,
+//         TESTING; 
+//     }
 
-    private ShooterStates currentShooterState;
+//     private ShooterStates currentShooterState;
 
-    public ShooterSubsystem() {
-        high = new TalonFX(Constants.SHOOTER_HIGH_CAN_ID);//TODO mid and high are KRAKENS!!!!
-        mid = new TalonFX(Constants.SHOOTER_MID_CAN_ID);
-        low = new TalonFX(Constants.LOW_MOTOR_CAN_ID);
+//     public ShooterSubsystem() {
+//         high = new TalonFX(Constants.SHOOTER_HIGH_CAN_ID);//TODO mid and high are KRAKENS!!!!
+//         mid = new TalonFX(Constants.SHOOTER_MID_CAN_ID);
+//         low = new TalonFX(Constants.LOW_MOTOR_CAN_ID);
         
-        init();
-    }
+//         init();
+//     }
 
-    public void init(){
-        high.setInverted(true);
-        mid.setInverted(false);
-        low.setInverted(false);
+//     public void init(){
+//         high.setInverted(true);
+//         mid.setInverted(false);
+//         low.setInverted(false);
 
-        high.setNeutralMode(NeutralModeValue.Coast);
-        mid.setNeutralMode(NeutralModeValue.Coast);
-        low.setNeutralMode(NeutralModeValue.Brake);
-        currentShooterState = ShooterStates.OFF;
-    }
+//         high.setNeutralMode(NeutralModeValue.Coast);
+//         mid.setNeutralMode(NeutralModeValue.Coast);
+//         low.setNeutralMode(NeutralModeValue.Brake);
+//         currentShooterState = ShooterStates.OFF;
+//     }
 
-    public void periodic(){
-        System.out.println("CURRENT SHOOTER STATE: " + currentShooterState);
-        if (currentShooterState == ShooterStates.INTAKING){
-            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
-            high.setControl(highDutyCycleOut.withOutput(0));
-            mid.setControl(midDutyCycleOut.withOutput(0));
-            low.setControl(lowDutyCycleOut.withOutput(LOW_INTAKING_SPEED));
-        }else if (currentShooterState == ShooterStates.WARMUP){ //same as speaking holding but doesnt assume we have a note
-            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
-            high.setControl(highDutyCycleOut.withOutput(HIGH_SPEAKER_SPEED));
-            mid.setControl(midDutyCycleOut.withOutput(-MID_SPEAKER_SPEED));
-            low.setControl(lowDutyCycleOut.withOutput(LOW_INTAKING_SPEED));
-        }else if (currentShooterState == ShooterStates.AMP_HOLDING) { // DO NOT TOUCH THESE VALUES!!
-            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
-            high.setControl(highDutyCycleOut.withOutput(0));
-            mid.setControl(midDutyCycleOut.withOutput(TESTING_SPEED));//(AMP_SPEED));//.35 IS PERFECT IN LAB, BUT .5 (SAME AS IN AMP WORKS BETTER IN PRACTICE) 
-            low.setControl(lowDutyCycleOut.withOutput(0));
-        } else if(currentShooterState == ShooterStates.SPEAKER_HOLDING){
-            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
-            high.setControl(highDutyCycleOut.withOutput(HIGH_SPEAKER_SPEED));
-            mid.setControl(midDutyCycleOut.withOutput(-MID_SPEAKER_SPEED)); //negative
-            low.setControl(lowDutyCycleOut.withOutput(0));
-        }else if(currentShooterState == ShooterStates.AMP){ // DO NOT TOUCH THESE VALUES!!
-            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
-            high.setControl(highDutyCycleOut.withOutput(0)); //TESTING_SPEED)); //AMP SPEED FOR MID/HIGH AT .35 WORKS!!!! 3/2 .45 WORKS FOR SHOOTING INTO AMP
-            mid.setControl(midDutyCycleOut.withOutput(TESTING_SPEED));
-            low.setControl(lowDutyCycleOut.withOutput(AMP_SPEED)); // LOW SPEED AT .25 IS GREAT, and .35 is better
-        }else if(currentShooterState == ShooterStates.SPEAKER){
-            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
-            high.setControl(highDutyCycleOut.withOutput(HIGH_SPEAKER_SPEED));
-            mid.setControl(midDutyCycleOut.withOutput(-MID_SPEAKER_SPEED)); //negative
-            low.setControl(lowDutyCycleOut.withOutput(LOW_SHOOTING_SPEED)); //TESTING
-        }else if(currentShooterState == ShooterStates.OFF){
-            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
-            high.setControl(highDutyCycleOut.withOutput(0));
-            mid.setControl(midDutyCycleOut.withOutput(0));
-            low.setControl(lowDutyCycleOut.withOutput(0));
-        } else if(currentShooterState == ShooterStates.TESTING){
-            //high.setControl(highDutyCycleOut.withOutput(TESTING_SPEED));
-            mid.setControl(midDutyCycleOut.withOutput(TESTING_SPEED));
-            // low.setControl(lowDutyCycleOut.withOutput(TESTING_SPEED));
-        }else{
-            Robot.m_blinkinLEDController.setPattern(BlinkinPattern.DARK_RED);
-            high.setControl(highDutyCycleOut.withOutput(0));
-            mid.setControl(midDutyCycleOut.withOutput(0));
-            low.setControl(lowDutyCycleOut.withOutput(0));
-            System.out.println("====UNRECOGNIZED SHOOTER STATE!!!!!==== current shooter state: " + currentShooterState);
-        }
-    }
+//     public void periodic(){
+//         System.out.println("CURRENT SHOOTER STATE: " + currentShooterState);
+//         if (currentShooterState == ShooterStates.INTAKING){
+//             Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
+//             high.setControl(highDutyCycleOut.withOutput(0));
+//             mid.setControl(midDutyCycleOut.withOutput(0));
+//             low.setControl(lowDutyCycleOut.withOutput(LOW_INTAKING_SPEED));
+//         }else if (currentShooterState == ShooterStates.WARMUP){ //same as speaking holding but doesnt assume we have a note
+//             Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
+//             high.setControl(highDutyCycleOut.withOutput(HIGH_SPEAKER_SPEED));
+//             mid.setControl(midDutyCycleOut.withOutput(-MID_SPEAKER_SPEED));
+//             low.setControl(lowDutyCycleOut.withOutput(LOW_INTAKING_SPEED));
+//         }else if (currentShooterState == ShooterStates.AMP_HOLDING) { // DO NOT TOUCH THESE VALUES!!
+//             Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
+//             high.setControl(highDutyCycleOut.withOutput(0));
+//             mid.setControl(midDutyCycleOut.withOutput(TESTING_SPEED));//(AMP_SPEED));//.35 IS PERFECT IN LAB, BUT .5 (SAME AS IN AMP WORKS BETTER IN PRACTICE) 
+//             low.setControl(lowDutyCycleOut.withOutput(0));
+//         } else if(currentShooterState == ShooterStates.SPEAKER_HOLDING){
+//             Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
+//             high.setControl(highDutyCycleOut.withOutput(HIGH_SPEAKER_SPEED));
+//             mid.setControl(midDutyCycleOut.withOutput(-MID_SPEAKER_SPEED)); //negative
+//             low.setControl(lowDutyCycleOut.withOutput(0));
+//         }else if(currentShooterState == ShooterStates.AMP){ // DO NOT TOUCH THESE VALUES!!
+//             Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
+//             high.setControl(highDutyCycleOut.withOutput(0)); //TESTING_SPEED)); //AMP SPEED FOR MID/HIGH AT .35 WORKS!!!! 3/2 .45 WORKS FOR SHOOTING INTO AMP
+//             mid.setControl(midDutyCycleOut.withOutput(TESTING_SPEED));
+//             low.setControl(lowDutyCycleOut.withOutput(AMP_SPEED)); // LOW SPEED AT .25 IS GREAT, and .35 is better
+//         }else if(currentShooterState == ShooterStates.SPEAKER){
+//             Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
+//             high.setControl(highDutyCycleOut.withOutput(HIGH_SPEAKER_SPEED));
+//             mid.setControl(midDutyCycleOut.withOutput(-MID_SPEAKER_SPEED)); //negative
+//             low.setControl(lowDutyCycleOut.withOutput(LOW_SHOOTING_SPEED)); //TESTING
+//         }else if(currentShooterState == ShooterStates.OFF){
+//             Robot.m_blinkinLEDController.setPattern(BlinkinPattern.LIME);
+//             high.setControl(highDutyCycleOut.withOutput(0));
+//             mid.setControl(midDutyCycleOut.withOutput(0));
+//             low.setControl(lowDutyCycleOut.withOutput(0));
+//         } else if(currentShooterState == ShooterStates.TESTING){
+//             //high.setControl(highDutyCycleOut.withOutput(TESTING_SPEED));
+//             mid.setControl(midDutyCycleOut.withOutput(TESTING_SPEED));
+//             // low.setControl(lowDutyCycleOut.withOutput(TESTING_SPEED));
+//         }else{
+//           //  Robot.m_blinkinLEDController.setPattern(BlinkinPattern.DARK_RED);
+//             high.setControl(highDutyCycleOut.withOutput(0));
+//             mid.setControl(midDutyCycleOut.withOutput(0));
+//             low.setControl(lowDutyCycleOut.withOutput(0));
+//             System.out.println("====UNRECOGNIZED SHOOTER STATE!!!!!==== current shooter state: " + currentShooterState);
+//         }
+//     }
 
-    public void setState(ShooterStates newState) {
-        currentShooterState = newState;
-    }
+//     public void setState(ShooterStates newState) {
+//         currentShooterState = newState;
+//     }
 
-    public void testShooter(){
-        low.setControl(lowDutyCycleOut.withOutput(0.2));
-    }
-}
+//     public void testShooter(){
+//         low.setControl(lowDutyCycleOut.withOutput(0.2));
+//     }
+// }
